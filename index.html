@@ -259,10 +259,7 @@ async function fetchWithRetry(hotelId, date, retries = 4) {
       const timeoutId = setTimeout(() => controller.abort(), 15000);
       
       const response = await fetch(url, {
-        signal: controller.signal,
-        headers: {
-          'Accept': 'application/json'
-        }
+        signal: controller.signal
       });
       clearTimeout(timeoutId);
 
@@ -273,9 +270,10 @@ async function fetchWithRetry(hotelId, date, retries = 4) {
       const data = await response.json();
       return { hotelId, success: true, data };
     } catch (error) {
-      if ((error.status === 429 || error.name === 'AbortError') && i < retries) {
-        const baseWait = 3000 * Math.pow(1.5, i); 
-        const jitter = Math.random() * 1000;
+      if (i < retries) {
+        // Retry on any network failure (Failed to Fetch), timeout, or 429 error
+        const baseWait = 2000 * Math.pow(1.5, i); 
+        const jitter = Math.random() * 500;
         await new Promise(r => setTimeout(r, baseWait + jitter));
         continue;
       }
