@@ -155,6 +155,19 @@
         <input type="date" id="checkinDate">
       </div>
 
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+        <div class="input-group">
+          <label>Concurrency (Parallel Requests)</label>
+          <input type="number" id="concurrency" value="3" min="1" max="10">
+          <p class="helper">Lower numbers (e.g. 2-3) help prevent rate limits</p>
+        </div>
+        <div class="input-group">
+          <label>Delay Between Requests (ms)</label>
+          <input type="number" id="requestDelay" value="300" min="0" max="5000">
+          <p class="helper">Adds pause time between requests</p>
+        </div>
+      </div>
+
       <div class="btn-row">
         <button class="btn-primary" id="fetchBtn">Fetch Prices</button>
         <button class="btn-secondary" id="clearBtn">Clear Results</button>
@@ -306,7 +319,8 @@ async function fetchBulk() {
   allResults = [];
   progressBar.classList.add('active');
 
-  const concurrency = 5; // Parallel workers to respect MMT rate limits
+  const concurrency = parseInt(document.getElementById('concurrency').value) || 3;
+  const delay = parseInt(document.getElementById('requestDelay').value) || 300;
   let processedCount = 0;
   let nextIndex = 0;
 
@@ -324,7 +338,7 @@ async function fetchBulk() {
       updateSummary(allResults, date);
 
       // Brief delay between requests to keep the server happy
-      await new Promise(r => setTimeout(r, 50));
+      await new Promise(r => setTimeout(r, delay));
     }
   }
 
