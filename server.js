@@ -107,7 +107,11 @@ app.post('/api/prices/bulk', async (req, res) => {
   res.json({ date, results });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`Open http://localhost:${PORT} in your browser`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Open http://localhost:${PORT} in your browser`);
+  });
+}
+
+module.exports = app;
