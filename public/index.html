@@ -17,7 +17,7 @@
       background: #fff;
       padding: 24px;
       border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       margin-bottom: 20px;
     }
     h1 { font-size: 1.5rem; font-weight: 600; color: #1a1a1a; }
@@ -132,13 +132,46 @@
     .hidden { display: none !important; }
     .expandable { cursor: pointer; }
     .expand-btn { font-size: 0.7rem; color: #2563eb; background: none; border: none; padding: 0; }
+
+    .inv-cell {
+      text-align: center;
+      padding: 6px 8px !important;
+      border-left: 1px solid #f1f5f9;
+    }
+    .inv-count {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .inv-count.soldout {
+      color: #94a3b8;
+    }
+    .inv-count.low {
+      color: #ea580c;
+    }
+    .inv-count.available {
+      color: #059669;
+    }
+    .inv-price {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .inv-error {
+      color: #ef4444;
+      font-size: 0.75rem;
+    }
+    .inv-pending {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Hotel Price Checker</h1>
-      <p class="subtitle">Bulk fetch prices from MMT Connect API</p>
+      <p class="subtitle">Bulk fetch prices directly from MMT Connect API (Client-side)</p>
     </header>
 
     <div class="card">
@@ -150,13 +183,32 @@
         <p class="helper">Paste up to 500 hotel IDs. Supports newlines, commas, or spaces as separators.</p>
       </div>
 
-      <div class="input-group">
-        <label>Check-in Date</label>
-        <input type="date" id="checkinDate">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+        <div class="input-group" style="margin-bottom: 0;">
+          <label>Start Date</label>
+          <input type="date" id="startDate">
+        </div>
+        <div class="input-group" style="margin-bottom: 0;">
+          <label>End Date</label>
+          <input type="date" id="endDate">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+        <div class="input-group">
+          <label>Concurrency (Parallel Requests)</label>
+          <input type="number" id="concurrency" value="3" min="1" max="10">
+          <p class="helper">Lower numbers (e.g. 2-3) help prevent rate limits</p>
+        </div>
+        <div class="input-group">
+          <label>Delay Between Requests (ms)</label>
+          <input type="number" id="requestDelay" value="300" min="0" max="5000">
+          <p class="helper">Adds pause time between requests</p>
+        </div>
       </div>
 
       <div class="btn-row">
-        <button class="btn-primary" id="fetchBtn">Fetch Prices</button>
+        <button class="btn-primary" id="fetchBtn">Fetch Inventory & Prices</button>
         <button class="btn-secondary" id="clearBtn">Clear Results</button>
         <button class="btn-secondary" id="exportCsvBtn" class="hidden">Export CSV</button>
         <button class="btn-secondary" id="exportJsonBtn" class="hidden">Export JSON</button>
@@ -212,7 +264,8 @@
 
 <script>
 const hotelIdsInput = document.getElementById('hotelIds');
-const checkinDateInput = document.getElementById('checkinDate');
+const startDateInput = document.getElementById('startDate');
+const endDateInput = document.getElementById('endDate');
 const fetchBtn = document.getElementById('fetchBtn');
 const clearBtn = document.getElementById('clearBtn');
 const exportCsvBtn = document.getElementById('exportCsvBtn');
@@ -228,13 +281,22 @@ const statSuccess = document.getElementById('statSuccess');
 const statFailed = document.getElementById('statFailed');
 const statDate = document.getElementById('statDate');
 
-let allResults = [];
+let allResults = {}; // Grouped by hotelId
+let datesList = [];  // List of active dates being checked
 
-// Set default date to tomorrow
-const tomorrow = new Date();
+// Set default date range: tomorrow to tomorrow + 6 days (7 days total)
+const today = new Date();
+const tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 1);
-checkinDateInput.value = tomorrow.toISOString().split('T')[0];
-checkinDateInput.min = new Date().toISOString().split('T')[0];
+
+const nextWeek = new Date(tomorrow);
+nextWeek.setDate(nextWeek.getDate() + 6);
+
+startDateInput.value = tomorrow.toISOString().split('T')[0];
+startDateInput.min = today.toISOString().split('T')[0];
+
+endDateInput.value = nextWeek.toISOString().split('T')[0];
+endDateInput.min = tomorrow.toISOString().split('T')[0];
 
 function parseHotelIds(text) {
   return text
@@ -249,54 +311,188 @@ function updateProgress(percent, text) {
   statusEl.textContent = text;
 }
 
+const MMT_API_BASE = 'https://connect.mmtapi.com/price';
+
+async function fetchWithRetry(hotelId, date, retries = 4) {
+  const url = `${MMT_API_BASE}?hotelId=${encodeURIComponent(hotelId)}&date=${encodeURIComponent(date)}`;
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      
+      const response = await fetch(url, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw { status: response.status, message: `HTTP error ${response.status}` };
+      }
+      
+      const data = await response.json();
+      return { hotelId, success: true, data };
+    } catch (error) {
+      if (i < retries) {
+        // Retry on any network failure (Failed to Fetch), timeout, or 429 error
+        const baseWait = 2000 * Math.pow(1.5, i); 
+        const jitter = Math.random() * 500;
+        await new Promise(r => setTimeout(r, baseWait + jitter));
+        continue;
+      }
+      return {
+        hotelId,
+        success: false,
+        error: error.message || error.toString() || 'Request failed',
+        status: error.status
+      };
+    }
+  }
+}
+
+function getDatesInRange(startDateStr, endDateStr) {
+  const dates = [];
+  const start = new Date(startDateStr);
+  const end = new Date(endDateStr);
+  
+  if (isNaN(start) || isNaN(end) || start > end) return [];
+  
+  // Cap at 15 days to respect API limits
+  const diffTime = Math.abs(end - start);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+  const daysLimit = 15;
+  
+  const limit = Math.min(diffDays, daysLimit);
+  
+  const current = new Date(start);
+  for (let i = 0; i < limit; i++) {
+    dates.push(current.toISOString().split('T')[0]);
+    current.setDate(current.getDate() + 1);
+  }
+  return dates;
+}
+
+function formatDateHeader(dateStr) {
+  const [year, month, day] = dateStr.split('-');
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${parseInt(day)} ${months[parseInt(month) - 1]}`;
+}
+
 async function fetchBulk() {
   const ids = parseHotelIds(hotelIdsInput.value);
-  const date = checkinDateInput.value;
+  const startDate = startDateInput.value;
+  const endDate = endDateInput.value;
 
   if (ids.length === 0) {
     alert('Please enter at least one hotel ID');
     return;
   }
-  if (!date) {
-    alert('Please select a check-in date');
+  if (!startDate || !endDate) {
+    alert('Please select start and end dates');
+    return;
+  }
+  
+  const dates = getDatesInRange(startDate, endDate);
+  if (dates.length === 0) {
+    alert('Invalid date range. Make sure End Date is on or after Start Date.');
     return;
   }
 
   fetchBtn.disabled = true;
   fetchBtn.textContent = 'Fetching...';
+  
+  allResults = {};
+  datesList = dates;
+  
   clearResults();
-  allResults = [];
   progressBar.classList.add('active');
 
-  const chunkSize = 20; // Process 20 hotels per request
+  // Build task list
+  const tasks = [];
+  ids.forEach(hotelId => {
+    allResults[hotelId] = {
+      hotelId,
+      hotelName: '-',
+      rating: '-',
+      dates: {}
+    };
+    
+    dates.forEach(date => {
+      tasks.push({ hotelId, date });
+      allResults[hotelId].dates[date] = { status: 'pending' };
+    });
+  });
+
+  const totalTasks = tasks.length;
+  const concurrency = parseInt(document.getElementById('concurrency').value) || 3;
+  const delay = parseInt(document.getElementById('requestDelay').value) || 300;
+  
   let processedCount = 0;
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < totalTasks) {
+      const current = nextIndex++;
+      const { hotelId, date } = tasks[current];
+      
+      const result = await fetchWithRetry(hotelId, date);
+      
+      if (result.success && result.data) {
+        const d = result.data;
+        if (d.hotelName && d.hotelName !== 'Unknown') {
+          allResults[hotelId].hotelName = d.hotelName;
+        }
+        if (d.rating) {
+          allResults[hotelId].rating = `${d.rating}/5 (${d.reviewCount || 0} reviews)`;
+        }
+        
+        // Sum unique roomCode availCounts to get total inventory
+        const uniqueRooms = {};
+        const rooms = d.rooms || [];
+        let lowestPrice = null;
+        
+        rooms.forEach(r => {
+          if (r.roomCode && r.availCount !== undefined) {
+            uniqueRooms[r.roomCode] = Math.max(uniqueRooms[r.roomCode] || 0, r.availCount);
+          }
+          const price = r.price?.totalAmount;
+          if (price && (lowestPrice === null || price < lowestPrice)) {
+            lowestPrice = price;
+          }
+        });
+        
+        const totalInventory = Object.values(uniqueRooms).reduce((sum, count) => sum + count, 0);
+        
+        allResults[hotelId].dates[date] = {
+          status: 'success',
+          inventory: totalInventory,
+          price: lowestPrice,
+          hasRooms: rooms.length > 0
+        };
+      } else {
+        allResults[hotelId].dates[date] = {
+          status: 'failed',
+          error: result.error || 'Failed',
+          httpStatus: result.status
+        };
+      }
+      
+      processedCount++;
+      const percent = Math.round((processedCount / totalTasks) * 100);
+      updateProgress(percent, `Fetched ${processedCount} of ${totalTasks} requests...`);
+      renderResults(allResults, dates);
+      updateSummary(allResults, dates);
+
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+
+  const workers = [];
+  for (let w = 0; w < Math.min(concurrency, tasks.length); w++) {
+    workers.push(worker());
+  }
 
   try {
-    for (let i = 0; i < ids.length; i += chunkSize) {
-      const chunk = ids.slice(i, i + chunkSize);
-      
-      const response = await fetch('/api/prices/bulk', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ hotelIds: chunk, date })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      allResults.push(...(data.results || []));
-      
-      processedCount += chunk.length;
-      const percent = Math.round((processedCount / ids.length) * 100);
-      updateProgress(percent, `Fetched ${processedCount} of ${ids.length} hotels...`);
-
-      // Render incrementally
-      renderResults(allResults, date);
-      updateSummary(allResults, date);
-    }
-    
+    await Promise.all(workers);
     statusEl.textContent = 'Fetch complete!';
     statusEl.style.color = '#059669';
   } catch (error) {
@@ -304,96 +500,140 @@ async function fetchBulk() {
     statusEl.style.color = '#dc2626';
   } finally {
     fetchBtn.disabled = false;
-    fetchBtn.textContent = 'Fetch Prices';
+    fetchBtn.textContent = 'Fetch Inventory & Prices';
     setTimeout(() => { progressBar.classList.remove('active'); }, 2000);
   }
 }
 
-function renderResults(results, date) {
+function renderResults(groupedResults, dates) {
+  // Rebuild table headers dynamically
+  const tableHead = document.querySelector('#resultsTable thead');
+  let headerHtml = `
+    <tr>
+      <th style="width: 50px;">#</th>
+      <th style="width: 150px;">Hotel ID</th>
+      <th>Hotel Name</th>
+      <th style="width: 110px;">Rating</th>
+  `;
+  
+  dates.forEach(date => {
+    headerHtml += `<th class="inv-cell" style="width: 90px;">${formatDateHeader(date)}</th>`;
+  });
+  
+  headerHtml += `
+      <th style="width: 100px;">Status</th>
+    </tr>
+  `;
+  tableHead.innerHTML = headerHtml;
+
   resultsBody.innerHTML = '';
   emptyState.classList.add('hidden');
   exportCsvBtn.classList.remove('hidden');
   exportJsonBtn.classList.remove('hidden');
 
-  results.forEach((result, index) => {
+  const hotelIds = Object.keys(groupedResults);
+  
+  hotelIds.forEach((hotelId, index) => {
     const row = document.createElement('tr');
-    const isSuccess = result.success;
-
-    if (isSuccess && result.data) {
-      const d = result.data;
-      const hotelName = d.hotelName || 'Unknown';
-      const rating = d.rating ? `${d.rating}/5 (${d.reviewCount || 0} reviews)` : 'N/A';
-      const rooms = d.rooms || [];
-
-      // Find lowest price
-      let lowestPrice = null;
-      let lowestRoom = null;
-      rooms.forEach(r => {
-        const currentPrice = r.price?.totalAmount;
-        if (currentPrice && (lowestPrice === null || currentPrice < lowestPrice)) {
-          lowestPrice = currentPrice;
-          lowestRoom = r;
-        }
-      });
-
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td><code>${result.hotelId}</code></td>
-        <td>${hotelName}</td>
-        <td>${rating}</td>
-        <td class="price">₹${lowestPrice?.toLocaleString() || 'N/A'}</td>
-        <td>
-          <button class="expand-btn" onclick="toggleRooms(this)">Show ${rooms.length} rooms ▼</button>
-          <div class="rooms-detail hidden"></div>
-        </td>
-        <td class="success">✓ Success</td>
-      `;
-
-      // Store room data for expansion
-      const detailDiv = row.querySelector('.rooms-detail');
-      detailDiv.innerHTML = rooms.map(r => `
-        <div class="room-row">
-          <strong>${r.roomType || 'Room'}</strong>: ₹${r.price?.totalAmount?.toLocaleString() || 'N/A'}
-          <span class="rooms">(${r.availCount !== undefined ? r.availCount : 'N/A'} left, ${r.ratePlan || 'Room Only'})</span>
-        </div>
-      `).join('');
-
-    } else {
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td><code>${result.hotelId}</code></td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td class="error">✗ ${result.error || 'Failed'} ${result.status ? `(${result.status})` : ''}</td>
-      `;
+    const hotelData = groupedResults[hotelId];
+    
+    let rowHtml = `
+      <td>${index + 1}</td>
+      <td><code>${hotelId}</code></td>
+      <td>${hotelData.hotelName}</td>
+      <td>${hotelData.rating}</td>
+    `;
+    
+    let allDone = true;
+    let anyError = false;
+    
+    dates.forEach(date => {
+      const dateData = hotelData.dates[date];
+      
+      if (!dateData || dateData.status === 'pending') {
+        rowHtml += `<td class="inv-cell"><span class="inv-pending">-</span></td>`;
+        allDone = false;
+      } else if (dateData.status === 'failed') {
+        rowHtml += `
+          <td class="inv-cell" title="${dateData.error}">
+            <span class="inv-error">Error</span>
+          </td>
+        `;
+        anyError = true;
+      } else {
+        const count = dateData.inventory;
+        const price = dateData.price;
+        
+        let countClass = 'available';
+        if (count === 0) countClass = 'soldout';
+        else if (count <= 2) countClass = 'low';
+        
+        const countText = count === 0 ? 'Sold Out' : `${count}`;
+        const priceText = price ? `₹${price.toLocaleString()}` : '';
+        
+        rowHtml += `
+          <td class="inv-cell">
+            <div class="inv-count ${countClass}">${countText}</div>
+            ${priceText ? `<div class="inv-price">${priceText}</div>` : ''}
+          </td>
+        `;
+      }
+    });
+    
+    let statusText = '✓ Success';
+    let statusClass = 'success';
+    if (!allDone) {
+      statusText = 'Fetching...';
+      statusClass = 'inv-pending';
+    } else if (anyError) {
+      statusText = '⚠ Partial Error';
+      statusClass = 'error';
     }
-
+    
+    rowHtml += `<td class="${statusClass}">${statusText}</td>`;
+    row.innerHTML = rowHtml;
     resultsBody.appendChild(row);
   });
 }
 
-function toggleRooms(btn) {
-  const detail = btn.nextElementSibling;
-  const isHidden = detail.classList.toggle('hidden');
-  btn.textContent = isHidden ? 'Show rooms ▼' : 'Hide rooms ▲';
-}
-
-function updateSummary(results, date) {
-  const success = results.filter(r => r.success).length;
-  const failed = results.filter(r => !r.success).length;
-
-  statTotal.textContent = results.length;
-  statSuccess.textContent = success;
-  statFailed.textContent = failed;
-  statDate.textContent = date;
-
+function updateSummary(groupedResults, dates) {
+  const hotelIds = Object.keys(groupedResults);
+  let totalRequests = hotelIds.length * dates.length;
+  let successfulRequests = 0;
+  let failedRequests = 0;
+  
+  hotelIds.forEach(id => {
+    dates.forEach(date => {
+      const d = groupedResults[id].dates[date];
+      if (d) {
+        if (d.status === 'success') successfulRequests++;
+        else if (d.status === 'failed') failedRequests++;
+      }
+    });
+  });
+  
+  statTotal.textContent = `${hotelIds.length} hotels (${totalRequests} total)`;
+  statSuccess.textContent = successfulRequests;
+  statFailed.textContent = failedRequests;
+  statDate.textContent = dates.length > 1 ? `${formatDateHeader(dates[0])} to ${formatDateHeader(dates[dates.length - 1])}` : (dates[0] ? formatDateHeader(dates[0]) : '-');
+  
   summaryEl.classList.remove('hidden');
 }
 
 function clearResults() {
   resultsBody.innerHTML = '';
+  const tableHead = document.querySelector('#resultsTable thead');
+  tableHead.innerHTML = `
+    <tr>
+      <th style="width: 60px;">#</th>
+      <th style="width: 200px;">Hotel ID</th>
+      <th>Hotel Name</th>
+      <th style="width: 120px;">Rating</th>
+      <th style="width: 150px;">Lowest Price</th>
+      <th>Room Details</th>
+      <th style="width: 100px;">Status</th>
+    </tr>
+  `;
   emptyState.classList.remove('hidden');
   summaryEl.classList.add('hidden');
   exportCsvBtn.classList.add('hidden');
@@ -402,32 +642,57 @@ function clearResults() {
 }
 
 function exportData(format) {
-  if (allResults.length === 0) return;
+  const hotelIds = Object.keys(allResults);
+  if (hotelIds.length === 0) return;
 
   if (format === 'csv') {
-    const headers = ['Hotel ID', 'Hotel Name', 'Rating', 'Lowest Price (INR)', 'Status', 'Error'];
-    const rows = allResults.map(r => {
-      if (r.success && r.data) {
-        const d = r.data;
-        const prices = d.rooms?.map(x => x.price?.totalAmount).filter(x => x) || [];
-        const lowest = prices.length > 0 ? Math.min(...prices) : 0;
-        return [
-          r.hotelId,
-          `"${(d.hotelName || '').replace(/"/g, '""')}"`,
-          d.rating || '',
-          lowest || '',
-          'Success',
-          ''
-        ];
-      } else {
-        return [r.hotelId, '', '', '', 'Failed', `"${(r.error || '').replace(/"/g, '""')}"`];
-      }
+    const headers = ['Hotel ID', 'Hotel Name', 'Rating'];
+    datesList.forEach(date => {
+      headers.push(date);
     });
+    headers.push('Status');
+    
+    const rows = hotelIds.map(hotelId => {
+      const hotel = allResults[hotelId];
+      const row = [
+        hotelId,
+        `"${(hotel.hotelName || '').replace(/"/g, '""')}"`,
+        hotel.rating || ''
+      ];
+      
+      let allDone = true;
+      let anyError = false;
+      
+      datesList.forEach(date => {
+        const dateData = hotel.dates[date];
+        if (!dateData || dateData.status === 'pending') {
+          row.push('Pending');
+          allDone = false;
+        } else if (dateData.status === 'failed') {
+          row.push('Error');
+          anyError = true;
+        } else {
+          row.push(dateData.inventory);
+        }
+      });
+      
+      let status = 'Success';
+      if (!allDone) status = 'Fetching';
+      else if (anyError) status = 'Partial Error';
+      row.push(status);
+      
+      return row;
+    });
+    
     const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    downloadFile(csv, `hotel-prices-${checkinDateInput.value}.csv`, 'text/csv');
+    const start = datesList[0];
+    const end = datesList[datesList.length - 1];
+    downloadFile(csv, `hotel-inventory-${start}-to-${end}.csv`, 'text/csv');
   } else {
     const json = JSON.stringify(allResults, null, 2);
-    downloadFile(json, `hotel-prices-${checkinDateInput.value}.json`, 'application/json');
+    const start = datesList[0];
+    const end = datesList[datesList.length - 1];
+    downloadFile(json, `hotel-inventory-${start}-to-${end}.json`, 'application/json');
   }
 }
 
