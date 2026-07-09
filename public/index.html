@@ -198,6 +198,35 @@
       color: #ffffff;
       border-color: #2563eb;
     }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .tab-btn.active {
+      background: #eff6ff;
+      color: #2563eb;
+      border-bottom: 2px solid #2563eb;
+      border-radius: 6px 6px 0 0;
+    }
   </style>
 </head>
 <body>
@@ -208,6 +237,15 @@
     </header>
 
     <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" id="tabMmt" onclick="switchTab('mmt')">MMT Price Checker</button>
+        <button class="tab-btn" id="tabFh" onclick="switchTab('fh')">Fetch FH Status</button>
+      </div>
+
+      <div id="mappingStatus" style="font-size: 0.8rem; color: #64748b; margin-bottom: 16px; display: flex; align-items: center; gap: 6px;">
+        <span class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background-color: #e2e8f0; display: inline-block;"></span>
+        <span class="status-text">Loading FH Mapping from Google Sheets...</span>
+      </div>
       <div class="input-group">
         <label>Hotel IDs (one per line, or comma/space separated)</label>
         <textarea id="hotelIds" placeholder="202307182100313629
@@ -321,8 +359,130 @@ const statSuccess = document.getElementById('statSuccess');
 const statFailed = document.getElementById('statFailed');
 const statDate = document.getElementById('statDate');
 
-let allResults = {}; // Grouped by hotelId
+let activeTab = 'mmt';
+let fhMapByFhId = {};
+let fhMapByMmtId = {};
+let isMappingLoaded = false;
+let mappingError = null;
+
+let allResults = {}; // Grouped by input ID
 let datesList = [];  // List of active dates being checked
+
+function parseCSV(text) {
+  const lines = [];
+  let row = [""];
+  let insideQuote = false;
+  
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+    
+    if (char === '"') {
+      if (insideQuote && nextChar === '"') {
+        row[row.length - 1] += '"';
+        i++;
+      } else {
+        insideQuote = !insideQuote;
+      }
+    } else if (char === ',' && !insideQuote) {
+      row.push("");
+    } else if ((char === '\r' || char === '\n') && !insideQuote) {
+      if (char === '\r' && nextChar === '\n') {
+        i++;
+      }
+      lines.push(row);
+      row = [""];
+    } else {
+      row[row.length - 1] += char;
+    }
+  }
+  if (row.length > 1 || row[0] !== "") {
+    lines.push(row);
+  }
+  return lines;
+}
+
+function updateMappingStatus(status, value) {
+  const dot = document.querySelector('#mappingStatus .status-dot');
+  const text = document.querySelector('#mappingStatus .status-text');
+  if (!dot || !text) return;
+  
+  if (status === 'loaded') {
+    dot.style.backgroundColor = '#22c55e';
+    text.textContent = `FH Mapping Loaded (${value.toLocaleString()} properties)`;
+  } else if (status === 'error') {
+    dot.style.backgroundColor = '#ef4444';
+    text.textContent = `FH Mapping failed: ${value}. Retrying...`;
+  }
+}
+
+async function loadFHMapping() {
+  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu4xfpABff5g4IFxdfWg0F8LxeP0MnsKeBiQQYCxak_e4C9pACQH9G7ZSwrSksRP1-od4ChajRwYKn/pub?gid=1440312549&single=true&output=csv';
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const csvText = await response.text();
+    const rows = parseCSV(csvText);
+    
+    fhMapByFhId = {};
+    fhMapByMmtId = {};
+    
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (row.length < 3) continue;
+      
+      const fhId = row[0]?.trim();
+      const fhStatus = row[1]?.trim();
+      const mmtId = row[2]?.trim();
+      
+      if (!fhId && !mmtId) continue;
+      
+      const item = { fhId, status: fhStatus, mmtId };
+      
+      if (fhId) {
+        fhMapByFhId[fhId] = item;
+      }
+      if (mmtId) {
+        fhMapByMmtId[mmtId] = item;
+      }
+    }
+    
+    isMappingLoaded = true;
+    updateMappingStatus('loaded', Object.keys(fhMapByFhId).length);
+  } catch (err) {
+    console.error('Error loading mapping:', err);
+    updateMappingStatus('error', err.message);
+    setTimeout(loadFHMapping, 5000);
+  }
+}
+
+function switchTab(tab) {
+  activeTab = tab;
+  
+  const tabMmt = document.getElementById('tabMmt');
+  const tabFh = document.getElementById('tabFh');
+  const idsLabel = document.querySelector('.input-group label');
+  
+  if (tab === 'mmt') {
+    tabMmt.classList.add('active');
+    tabFh.classList.remove('active');
+    hotelIdsInput.placeholder = "202307182100313629\n202307182100313630\n202307182100313631";
+    if (idsLabel) idsLabel.textContent = "Hotel IDs (one per line, or comma/space separated)";
+  } else {
+    tabMmt.classList.remove('active');
+    tabFh.classList.add('active');
+    hotelIdsInput.placeholder = "157\n528\n529\n202108201519148957";
+    if (idsLabel) idsLabel.textContent = "FH IDs or MMT Prop IDs (one per line, or comma/space separated)";
+    
+    if (!isMappingLoaded) {
+      loadFHMapping();
+    }
+  }
+  
+  clearResults();
+}
 
 // Set default date range: tomorrow
 const today = new Date();
@@ -485,19 +645,54 @@ async function fetchBulk() {
   clearResults();
   progressBar.classList.add('active');
 
+  if (activeTab === 'fh' && !isMappingLoaded) {
+    alert('FH Mapping is still loading from Google Sheets. Please wait a few seconds.');
+    fetchBtn.disabled = false;
+    fetchBtn.textContent = 'Fetch Inventory & Prices';
+    return;
+  }
+
   // Build task list
   const tasks = [];
-  ids.forEach(hotelId => {
-    allResults[hotelId] = {
+  ids.forEach(inputId => {
+    let hotelId = inputId;
+    let fhId = '-';
+    let fhStatus = 'Unknown';
+    
+    if (activeTab === 'fh') {
+      if (fhMapByFhId[inputId]) {
+        const item = fhMapByFhId[inputId];
+        hotelId = item.mmtId;
+        fhId = item.fhId;
+        fhStatus = item.status;
+      } else if (fhMapByMmtId[inputId]) {
+        const item = fhMapByMmtId[inputId];
+        hotelId = item.mmtId;
+        fhId = item.fhId;
+        fhStatus = item.status;
+      }
+    }
+    
+    allResults[inputId] = {
+      inputId,
       hotelId,
+      fhId,
+      fhStatus,
       hotelName: '-',
       rating: '-',
       dates: {}
     };
     
     dates.forEach(date => {
-      tasks.push({ hotelId, date });
-      allResults[hotelId].dates[date] = { status: 'pending' };
+      if (!hotelId || hotelId === '-') {
+        allResults[inputId].dates[date] = {
+          status: 'failed',
+          error: 'No mapped MMT ID found'
+        };
+      } else {
+        tasks.push({ inputId, hotelId, date });
+        allResults[inputId].dates[date] = { status: 'pending' };
+      }
     });
   });
 
@@ -511,20 +706,19 @@ async function fetchBulk() {
   async function worker() {
     while (nextIndex < totalTasks) {
       const current = nextIndex++;
-      const { hotelId, date } = tasks[current];
+      const { inputId, hotelId, date } = tasks[current];
       
       const result = await fetchWithRetry(hotelId, date);
       
       if (result.success && result.data) {
         const d = result.data;
         if (d.hotelName && d.hotelName !== 'Unknown') {
-          allResults[hotelId].hotelName = d.hotelName;
+          allResults[inputId].hotelName = d.hotelName;
         }
         if (d.rating) {
-          allResults[hotelId].rating = `${d.rating}/5 (${d.reviewCount || 0} reviews)`;
+          allResults[inputId].rating = `${d.rating}/5 (${d.reviewCount || 0} reviews)`;
         }
         
-        // Sum unique roomCode availCounts to get total inventory
         const uniqueRooms = {};
         const rooms = d.rooms || [];
         let lowestPrice = null;
@@ -541,14 +735,14 @@ async function fetchBulk() {
         
         const totalInventory = Object.values(uniqueRooms).reduce((sum, count) => sum + count, 0);
         
-        allResults[hotelId].dates[date] = {
+        allResults[inputId].dates[date] = {
           status: 'success',
           inventory: totalInventory,
           price: lowestPrice,
           hasRooms: rooms.length > 0
         };
       } else {
-        allResults[hotelId].dates[date] = {
+        allResults[inputId].dates[date] = {
           status: 'failed',
           error: result.error || 'Failed',
           httpStatus: result.status
@@ -590,10 +784,23 @@ function renderResults(groupedResults, dates) {
   let headerHtml = `
     <tr>
       <th style="width: 50px;">#</th>
+  `;
+  
+  if (activeTab === 'mmt') {
+    headerHtml += `
       <th style="width: 150px;">Hotel ID</th>
       <th>Hotel Name</th>
       <th style="width: 110px;">Rating</th>
-  `;
+    `;
+  } else {
+    headerHtml += `
+      <th style="width: 90px;">FH ID</th>
+      <th style="width: 100px;">FH Status</th>
+      <th style="width: 150px;">MMT Prop ID</th>
+      <th>Hotel Name</th>
+      <th style="width: 110px;">Rating</th>
+    `;
+  }
   
   dates.forEach(date => {
     headerHtml += `<th class="inv-cell" style="width: 90px;">${formatDateHeader(date)}</th>`;
@@ -611,18 +818,33 @@ function renderResults(groupedResults, dates) {
   exportCsvBtn.classList.remove('hidden');
   exportJsonBtn.classList.remove('hidden');
 
-  const hotelIds = Object.keys(groupedResults);
+  const inputIds = Object.keys(groupedResults);
   
-  hotelIds.forEach((hotelId, index) => {
+  inputIds.forEach((inputId, index) => {
     const row = document.createElement('tr');
-    const hotelData = groupedResults[hotelId];
+    const hotelData = groupedResults[inputId];
     
-    let rowHtml = `
-      <td>${index + 1}</td>
-      <td><code>${hotelId}</code></td>
-      <td>${hotelData.hotelName}</td>
-      <td>${hotelData.rating}</td>
-    `;
+    let rowHtml = `<td>${index + 1}</td>`;
+    
+    if (activeTab === 'mmt') {
+      rowHtml += `
+        <td><code>${hotelData.hotelId}</code></td>
+        <td>${hotelData.hotelName}</td>
+        <td>${hotelData.rating}</td>
+      `;
+    } else {
+      let statusStyle = '';
+      if (hotelData.fhStatus === 'Live') statusStyle = 'color: #059669; font-weight: 600;';
+      else if (hotelData.fhStatus === 'Churned') statusStyle = 'color: #94a3b8; font-style: italic;';
+      
+      rowHtml += `
+        <td><code>${hotelData.fhId}</code></td>
+        <td style="${statusStyle}">${hotelData.fhStatus}</td>
+        <td><code>${hotelData.hotelId}</code></td>
+        <td>${hotelData.hotelName}</td>
+        <td>${hotelData.rating}</td>
+      `;
+    }
     
     let allDone = true;
     let anyError = false;
@@ -695,12 +917,12 @@ function renderResults(groupedResults, dates) {
 }
 
 function updateSummary(groupedResults, dates) {
-  const hotelIds = Object.keys(groupedResults);
-  let totalRequests = hotelIds.length * dates.length;
+  const inputIds = Object.keys(groupedResults);
+  let totalRequests = inputIds.length * dates.length;
   let successfulRequests = 0;
   let failedRequests = 0;
   
-  hotelIds.forEach(id => {
+  inputIds.forEach(id => {
     dates.forEach(date => {
       const d = groupedResults[id].dates[date];
       if (d) {
@@ -710,7 +932,7 @@ function updateSummary(groupedResults, dates) {
     });
   });
   
-  statTotal.textContent = `${hotelIds.length} hotels (${totalRequests} total)`;
+  statTotal.textContent = `${inputIds.length} hotels (${totalRequests} total)`;
   statSuccess.textContent = successfulRequests;
   statFailed.textContent = failedRequests;
   statDate.textContent = dates.length > 1 ? `${formatDateHeader(dates[0])} to ${formatDateHeader(dates[dates.length - 1])}` : (dates[0] ? formatDateHeader(dates[0]) : '-');
@@ -721,17 +943,34 @@ function updateSummary(groupedResults, dates) {
 function clearResults() {
   resultsBody.innerHTML = '';
   const tableHead = document.querySelector('#resultsTable thead');
-  tableHead.innerHTML = `
+  
+  let headerHtml = `
     <tr>
       <th style="width: 60px;">#</th>
+  `;
+  if (activeTab === 'mmt') {
+    headerHtml += `
       <th style="width: 200px;">Hotel ID</th>
       <th>Hotel Name</th>
       <th style="width: 120px;">Rating</th>
       <th style="width: 150px;">Lowest Price</th>
       <th>Room Details</th>
+    `;
+  } else {
+    headerHtml += `
+      <th style="width: 90px;">FH ID</th>
+      <th style="width: 100px;">FH Status</th>
+      <th style="width: 150px;">MMT Prop ID</th>
+      <th>Hotel Name</th>
+      <th style="width: 120px;">Rating</th>
+    `;
+  }
+  headerHtml += `
       <th style="width: 100px;">Status</th>
     </tr>
   `;
+  tableHead.innerHTML = headerHtml;
+
   emptyState.classList.remove('hidden');
   summaryEl.classList.add('hidden');
   exportCsvBtn.classList.add('hidden');
@@ -740,24 +979,41 @@ function clearResults() {
 }
 
 function exportData(format) {
-  const hotelIds = Object.keys(allResults);
-  if (hotelIds.length === 0) return;
+  const inputIds = Object.keys(allResults);
+  if (inputIds.length === 0) return;
 
   if (format === 'csv') {
-    const headers = ['Hotel ID', 'Hotel Name', 'Rating'];
+    let headers = [];
+    if (activeTab === 'mmt') {
+      headers = ['Hotel ID', 'Hotel Name', 'Rating'];
+    } else {
+      headers = ['FH ID', 'FH Status', 'MMT Prop ID', 'Hotel Name', 'Rating'];
+    }
     datesList.forEach(date => {
       headers.push(date);
     });
     headers.push('Offender');
     headers.push('Status');
     
-    const rows = hotelIds.map(hotelId => {
-      const hotel = allResults[hotelId];
-      const row = [
-        hotelId,
-        `"${(hotel.hotelName || '').replace(/"/g, '""')}"`,
-        hotel.rating || ''
-      ];
+    const rows = inputIds.map(inputId => {
+      const hotel = allResults[inputId];
+      let row = [];
+      
+      if (activeTab === 'mmt') {
+        row = [
+          inputId,
+          `"${(hotel.hotelName || '').replace(/"/g, '""')}"`,
+          hotel.rating || ''
+        ];
+      } else {
+        row = [
+          hotel.fhId || '',
+          hotel.fhStatus || '',
+          hotel.hotelId || '',
+          `"${(hotel.hotelName || '').replace(/"/g, '""')}"`,
+          hotel.rating || ''
+        ];
+      }
       
       let allDone = true;
       let anyError = false;
@@ -825,6 +1081,9 @@ hotelIdsInput.addEventListener('keydown', (e) => {
     fetchBulk();
   }
 });
+
+// Load FH Mapping on page load
+loadFHMapping();
 </script>
 </body>
 </html>
