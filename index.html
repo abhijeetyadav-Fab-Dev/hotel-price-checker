@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotel Price Checker - Bulk MMT API</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -227,6 +228,139 @@
       border-bottom: 2px solid #2563eb;
       border-radius: 6px 6px 0 0;
     }
+    
+    /* Parity Checker Styles */
+    .dropzone {
+      border: 2px dashed #cbd5e1;
+      background: #faf8f6;
+      padding: 32px;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 20px;
+      color: #475569;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+    .dropzone svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+      color: #94a3b8;
+    }
+    .dropzone-text {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .dropzone-sub {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .badge-meet { background: #e0f2fe; color: #0369a1; }
+    .badge-beat { background: #dcfce7; color: #15803d; }
+    .badge-fee { background: #fef3c7; color: #d97706; }
+    .badge-true { background: #fee2e2; color: #b91c1c; }
+    
+    .btn-copy {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-copy:hover {
+      background: #1d4ed8;
+    }
+    
+    /* Rebuttal Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 550px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      transform: translateY(20px);
+      transition: transform 0.2s ease;
+    }
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+    .modal-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #0f172a;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: color 0.15s ease;
+    }
+    .modal-close:hover {
+      color: #475569;
+    }
+    .rebuttal-box {
+      width: 100%;
+      height: 180px;
+      font-family: monospace;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 0.85rem;
+      resize: none;
+      margin-bottom: 16px;
+    }
   </style>
 </head>
 <body>
@@ -240,62 +374,133 @@
       <div class="tabs">
         <button class="tab-btn active" id="tabMmt" onclick="switchTab('mmt')">MMT Price Checker</button>
         <button class="tab-btn" id="tabFh" onclick="switchTab('fh')">Fetch FH Status</button>
+        <button class="tab-btn" id="tabParity" onclick="switchTab('parity')">Parity Checker</button>
       </div>
 
       <div id="mappingStatus" style="font-size: 0.8rem; color: #64748b; margin-bottom: 16px; display: flex; align-items: center; gap: 6px;">
         <span class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background-color: #e2e8f0; display: inline-block;"></span>
         <span class="status-text">Loading FH Mapping from Google Sheets...</span>
       </div>
-      <div class="input-group">
-        <label>Hotel IDs (one per line, or comma/space separated)</label>
-        <textarea id="hotelIds" placeholder="202307182100313629
+
+      <div id="checkerInputs">
+        <div class="input-group">
+          <label>Hotel IDs (one per line, or comma/space separated)</label>
+          <textarea id="hotelIds" placeholder="202307182100313629
 202307182100313630
 202307182100313631"></textarea>
-        <p class="helper">Paste up to 500 hotel IDs. Supports newlines, commas, or spaces as separators.</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 12px;">
-        <div class="input-group" style="margin-bottom: 0;">
-          <label>Start Date</label>
-          <input type="date" id="startDate">
+          <p class="helper">Paste up to 500 hotel IDs. Supports newlines, commas, or spaces as separators.</p>
         </div>
-        <div class="input-group" style="margin-bottom: 0;">
-          <label>End Date</label>
-          <input type="date" id="endDate">
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 12px;">
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>Start Date</label>
+            <input type="date" id="startDate">
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label>End Date</label>
+            <input type="date" id="endDate">
+          </div>
+        </div>
+
+        <div class="preset-container">
+          <span class="preset-label">Duration Presets:</span>
+          <button type="button" class="preset-btn active" id="btnPreset7" onclick="setPresetDays(7)">7 Days</button>
+          <button type="button" class="preset-btn" id="btnPreset14" onclick="setPresetDays(14)">14 Days</button>
+          <button type="button" class="preset-btn" id="btnPreset30" onclick="setPresetDays(30)">30 Days</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="input-group">
+            <label>Concurrency (Parallel Requests)</label>
+            <input type="number" id="concurrency" value="3" min="1" max="10">
+            <p class="helper">Lower numbers (e.g. 2-3) help prevent rate limits</p>
+          </div>
+          <div class="input-group">
+            <label>Delay Between Requests (ms)</label>
+            <input type="number" id="requestDelay" value="300" min="0" max="5000">
+            <p class="helper">Adds pause time between requests</p>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="fetchBtn">Fetch Inventory & Prices</button>
+          <button class="btn-secondary" id="clearBtn">Clear Results</button>
+          <button class="btn-secondary" id="exportCsvBtn" class="hidden">Export CSV</button>
+          <button class="btn-secondary" id="exportJsonBtn" class="hidden">Export JSON</button>
+        </div>
+
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="status" id="status"></p>
+      </div>
+
+      <div id="parityInputs" class="hidden">
+        <div class="dropzone" id="parityDropzone" onclick="document.getElementById('parityFileInput').click()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+          </svg>
+          <div class="dropzone-text">Drag & Drop CPI Excel Report here</div>
+          <div class="dropzone-sub">or click to browse files (processes locally in seconds)</div>
+          <input type="file" id="parityFileInput" accept=".xlsx, .xls" style="display: none;" onchange="handleParityFile(event)">
+        </div>
+
+        <div id="parityDashboard" class="hidden" style="margin-top: 16px;">
+          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; color: #0f172a;">Parity Analysis Dashboard</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="pstatTotal" style="font-size: 1.5rem; font-weight: 700; color: #0f172a;">0</div>
+              <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Total Records</div>
+            </div>
+            <div style="background: #ecfdf5; border: 1px solid #d1fae5; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="pstatMeet" style="font-size: 1.5rem; font-weight: 700; color: #059669;">0</div>
+              <div style="font-size: 0.8rem; color: #059669; margin-top: 4px;">Parity Met / Beats</div>
+            </div>
+            <div style="background: #fffbeb; border: 1px solid #fef3c7; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="pstatFee" style="font-size: 1.5rem; font-weight: 700; color: #d97706;">0</div>
+              <div style="font-size: 0.8rem; color: #d97706; margin-top: 4px;">MMT Fee-Induced Gaps</div>
+            </div>
+            <div style="background: #fef2f2; border: 1px solid #fee2e2; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="pstatTrue" style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">0</div>
+              <div style="font-size: 0.8rem; color: #dc2626; margin-top: 4px;">True Parity Gaps</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center;">
+            <input type="text" id="paritySearch" placeholder="Search by Hotel Name or ID..." style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;" oninput="filterParityTable()">
+            <select id="parityFilter" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff;" onchange="filterParityTable()">
+              <option value="all">Show All Conflicts</option>
+              <option value="true">True Parity Gaps Only</option>
+              <option value="fee">MMT Fee-Induced Gaps Only</option>
+              <option value="meet">Met / MMT Beats Only</option>
+            </select>
+          </div>
+
+          <div style="overflow-x: auto; max-height: 500px; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <table id="parityTable" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+              <thead style="position: sticky; top: 0; background: #f8fafc; border-bottom: 2px solid #e2e8f0; z-index: 10;">
+                <tr>
+                  <th style="padding: 12px 10px; text-align: left; background: #f8fafc;">Hotel Name</th>
+                  <th style="padding: 12px 10px; text-align: left; width: 100px; background: #f8fafc;">Check-In</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">MMT SP</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">Agoda SP</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 70px; background: #f8fafc;">MMT Fee</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">MMT FP</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">Agoda FP</th>
+                  <th style="padding: 12px 10px; text-align: center; width: 140px; background: #f8fafc;">Dispute Cause</th>
+                  <th style="padding: 12px 10px; text-align: center; width: 90px; background: #f8fafc;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="parityTableBody">
+                <tr>
+                  <td colspan="9" style="text-align: center; color: #888; padding: 40px;">Upload a CPI Report to begin.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-      <div class="preset-container">
-        <span class="preset-label">Duration Presets:</span>
-        <button type="button" class="preset-btn active" id="btnPreset7" onclick="setPresetDays(7)">7 Days</button>
-        <button type="button" class="preset-btn" id="btnPreset14" onclick="setPresetDays(14)">14 Days</button>
-        <button type="button" class="preset-btn" id="btnPreset30" onclick="setPresetDays(30)">30 Days</button>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
-        <div class="input-group">
-          <label>Concurrency (Parallel Requests)</label>
-          <input type="number" id="concurrency" value="3" min="1" max="10">
-          <p class="helper">Lower numbers (e.g. 2-3) help prevent rate limits</p>
-        </div>
-        <div class="input-group">
-          <label>Delay Between Requests (ms)</label>
-          <input type="number" id="requestDelay" value="300" min="0" max="5000">
-          <p class="helper">Adds pause time between requests</p>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-primary" id="fetchBtn">Fetch Inventory & Prices</button>
-        <button class="btn-secondary" id="clearBtn">Clear Results</button>
-        <button class="btn-secondary" id="exportCsvBtn" class="hidden">Export CSV</button>
-        <button class="btn-secondary" id="exportJsonBtn" class="hidden">Export JSON</button>
-      </div>
-
-      <div class="progress-bar" id="progressBar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <p class="status" id="status"></p>
     </div>
 
     <div class="summary hidden" id="summary">
@@ -471,22 +676,42 @@ function switchTab(tab) {
   
   const tabMmt = document.getElementById('tabMmt');
   const tabFh = document.getElementById('tabFh');
-  const idsLabel = document.querySelector('.input-group label');
+  const tabParity = document.getElementById('tabParity');
+  
+  const checkerInputs = document.getElementById('checkerInputs');
+  const parityInputs = document.getElementById('parityInputs');
+  
+  const idsLabel = document.querySelector('#checkerInputs .input-group label');
+  const resultsCard = document.querySelector('#resultsTable').closest('.card');
+  
+  // Reset active classes
+  tabMmt.classList.remove('active');
+  tabFh.classList.remove('active');
+  tabParity.classList.remove('active');
   
   if (tab === 'mmt') {
     tabMmt.classList.add('active');
-    tabFh.classList.remove('active');
+    checkerInputs.classList.remove('hidden');
+    parityInputs.classList.add('hidden');
+    resultsCard.classList.remove('hidden');
     hotelIdsInput.placeholder = "202307182100313629\n202307182100313630\n202307182100313631";
     if (idsLabel) idsLabel.textContent = "Hotel IDs (one per line, or comma/space separated)";
-  } else {
-    tabMmt.classList.remove('active');
+  } else if (tab === 'fh') {
     tabFh.classList.add('active');
+    checkerInputs.classList.remove('hidden');
+    parityInputs.classList.add('hidden');
+    resultsCard.classList.remove('hidden');
     hotelIdsInput.placeholder = "157\n528\n529\n202108201519148957";
     if (idsLabel) idsLabel.textContent = "FH IDs or MMT Prop IDs (one per line, or comma/space separated)";
     
     if (!isMappingLoaded) {
       loadFHMapping();
     }
+  } else if (tab === 'parity') {
+    tabParity.classList.add('active');
+    checkerInputs.classList.add('hidden');
+    parityInputs.classList.remove('hidden');
+    resultsCard.classList.add('hidden');
   }
   
   clearResults();
@@ -968,6 +1193,23 @@ function updateSummary(groupedResults, dates) {
 }
 
 function clearResults() {
+  if (activeTab === 'parity') {
+    const tbody = document.getElementById('parityTableBody');
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #888; padding: 40px;">Upload a CPI Report to begin.</td></tr>`;
+    }
+    const dashboard = document.getElementById('parityDashboard');
+    if (dashboard) {
+      dashboard.classList.add('hidden');
+    }
+    const fileInput = document.getElementById('parityFileInput');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+    parityData = [];
+    return;
+  }
+
   resultsBody.innerHTML = '';
   const tableHead = document.querySelector('#resultsTable thead');
   
@@ -1097,6 +1339,258 @@ function downloadFile(content, filename, mime) {
   URL.revokeObjectURL(url);
 }
 
+// Parity Checker Global State
+let parityData = [];
+
+// Drag and drop events for dropzone
+const dropzone = document.getElementById('parityDropzone');
+if (dropzone) {
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropzone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    }, false);
+  });
+  
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropzone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+    }, false);
+  });
+  
+  dropzone.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    if (files.length) {
+      document.getElementById('parityFileInput').files = files;
+      handleParityFile({ target: { files: files } });
+    }
+  }, false);
+}
+
+function handleParityFile(e) {
+  const files = e.target.files;
+  if (!files || !files.length) return;
+  const file = files[0];
+  
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const data = new Uint8Array(evt.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      
+      const sheetName = workbook.SheetNames.includes('Sheet1') ? 'Sheet1' : workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+      
+      if (!jsonData || jsonData.length === 0) {
+        alert("The uploaded file is empty or invalid.");
+        return;
+      }
+      
+      processParityData(jsonData);
+    } catch (err) {
+      console.error(err);
+      alert("Error reading Excel file: " + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function processParityData(rows) {
+  parityData = [];
+  let meetCount = 0;
+  let feeCount = 0;
+  let trueCount = 0;
+  
+  rows.forEach(row => {
+    // Map columns
+    const hotelId = (row['mmt_hotel_code'] || '').toString().replace('#', '').trim();
+    const hotelName = row['hotelname'] || '-';
+    const checkin = row['checkin'] || '';
+    
+    // Check cheaper keys (fallback to normal keys if needed)
+    const mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_cp_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
+    const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_cp_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? 0);
+    const mmtFee = parseFloat(row['mmt_cheapest_service_fee'] ?? row['mmt_cp_service_fee'] ?? 0);
+    const mmtCoupon = parseFloat(row['mmt_cheapest_coupon_discount'] ?? row['mmt_cp_coupon_discount'] ?? 0);
+    const mmtFp = parseFloat(row['mmt_cheapest_final_price'] ?? row['mmt_cp_final_price'] ?? row['mmt_final_price'] ?? 0);
+    const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? row['agd_cp_final_price'] ?? row['agd_final_price'] ?? 0);
+    
+    if (!hotelId && hotelName === '-') return; // skip empty rows
+    
+    // Categorize
+    let cause = 'Meet / Beat';
+    let badgeClass = 'badge-meet';
+    
+    // MMT is beaten on Final Price (FP) if MMT FP > Agoda FP + 1 (allow 1 unit rounding difference)
+    const isMmtBeatenOnFp = mmtFp > (agdFp + 1);
+    
+    if (isMmtBeatenOnFp) {
+      // Is it due to True Rate discrepancy (Supply Price)?
+      if (mmtSp > (agdSp + 1)) {
+        cause = 'True Parity Gap';
+        badgeClass = 'badge-true';
+        trueCount++;
+      } else {
+        cause = 'MMT Fee-Induced';
+        badgeClass = 'badge-fee';
+        feeCount++;
+      }
+    } else {
+      if (mmtFp < agdFp - 1) {
+        cause = 'MMT Beats';
+        badgeClass = 'badge-beat';
+      }
+      meetCount++;
+    }
+    
+    parityData.push({
+      hotelId,
+      hotelName,
+      checkin,
+      mmtSp,
+      agdSp,
+      mmtFee,
+      mmtCoupon,
+      mmtFp,
+      agdFp,
+      cause,
+      badgeClass
+    });
+  });
+  
+  // Update stats
+  document.getElementById('pstatTotal').textContent = parityData.length;
+  document.getElementById('pstatMeet').textContent = meetCount;
+  document.getElementById('pstatFee').textContent = feeCount;
+  document.getElementById('pstatTrue').textContent = trueCount;
+  
+  // Show dashboard
+  document.getElementById('parityDashboard').classList.remove('hidden');
+  
+  // Render table
+  renderParityTable(parityData);
+}
+
+function renderParityTable(data) {
+  const tbody = document.getElementById('parityTableBody');
+  tbody.innerHTML = '';
+  
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #888; padding: 40px;">No matching records found.</td></tr>`;
+    return;
+  }
+  
+  data.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid #f1f5f9';
+    
+    // Shorten long hotel names for visual excellence
+    const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
+    
+    tr.innerHTML = `
+      <td style="padding: 10px; font-weight: 500;" title="${row.hotelName}">${displayName}<br><span style="font-size:0.75rem; color:#888;">ID: ${row.hotelId}</span></td>
+      <td style="padding: 10px;">${row.checkin}</td>
+      <td style="padding: 10px; text-align: right;">₹${Math.round(row.mmtSp).toLocaleString()}</td>
+      <td style="padding: 10px; text-align: right;">₹${Math.round(row.agdSp).toLocaleString()}</td>
+      <td style="padding: 10px; text-align: right; color:#d97706;">₹${Math.round(row.mmtFee).toLocaleString()}</td>
+      <td style="padding: 10px; text-align: right; font-weight: 600;">₹${Math.round(row.mmtFp).toLocaleString()}</td>
+      <td style="padding: 10px; text-align: right; font-weight: 600; color:#059669;">₹${Math.round(row.agdFp).toLocaleString()}</td>
+      <td style="padding: 10px; text-align: center;">
+        <span class="badge ${row.badgeClass}">${row.cause}</span>
+      </td>
+      <td style="padding: 10px; text-align: center;">
+        <button class="btn-copy" onclick="openRebuttal(${idx})">Defense</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function filterParityTable() {
+  const query = document.getElementById('paritySearch').value.toLowerCase().trim();
+  const filterType = document.getElementById('parityFilter').value;
+  
+  const filtered = parityData.filter(row => {
+    const matchesSearch = row.hotelName.toLowerCase().includes(query) || row.hotelId.toLowerCase().includes(query);
+    
+    let matchesFilter = true;
+    if (filterType === 'true') {
+      matchesFilter = row.cause === 'True Parity Gap';
+    } else if (filterType === 'fee') {
+      matchesFilter = row.cause === 'MMT Fee-Induced';
+    } else if (filterType === 'meet') {
+      matchesFilter = row.cause === 'Meet / Beat' || row.cause === 'MMT Beats';
+    }
+    
+    return matchesSearch && matchesFilter;
+  });
+  
+  renderParityTable(filtered);
+}
+
+// Modal functions
+let currentRebuttalIdx = null;
+
+function openRebuttal(idx) {
+  const row = parityData[idx];
+  currentRebuttalIdx = idx;
+  
+  const hotelName = row.hotelName;
+  const checkin = row.checkin;
+  const mmtSp = Math.round(row.mmtSp);
+  const agdSp = Math.round(row.agdSp);
+  const mmtFp = Math.round(row.mmtFp);
+  const agdFp = Math.round(row.agdFp);
+  const fee = Math.round(row.mmtFee);
+  const coupon = Math.round(row.mmtCoupon);
+  
+  let text = `Hi MMT Team,\n\n`;
+  text += `Regarding the parity query for "${hotelName}" (Check-in: ${checkin}):\n\n`;
+  
+  if (row.cause === 'MMT Fee-Induced') {
+    text += `* Our base Supply Price supplied to MMT is ₹${mmtSp.toLocaleString()}, which is fully in parity/cheaper than Agoda's base Supply Price of ₹${agdSp.toLocaleString()}.\n`;
+    text += `* The difference in final customer price (MMT: ₹${mmtFp.toLocaleString()} vs Agoda: ₹${agdFp.toLocaleString()}) is driven entirely by MMT charging a platform Service Fee of ₹${fee.toLocaleString()} on your site, whereas Agoda does not charge service fees.\n`;
+    text += `* The underlying inventory supply rates we provided are aligned. Please review your platform markup (Service Fee) or adjust your coupon discounts to match the final Agoda guest price. Thank you!`;
+  } else if (row.cause === 'True Parity Gap') {
+    const diff = mmtSp - agdSp;
+    text += `* We noticed a rate discrepancy of ₹${diff.toLocaleString()} on the base Supply Price (MMT: ₹${mmtSp.toLocaleString()} vs Agoda: ₹${agdSp.toLocaleString()}).\n`;
+    text += `* We are investigating this variance with our revenue team to resolve the base rate difference. Thank you for flagging this.`;
+  } else {
+    text += `* The listing is currently in full parity. The customer final prices are aligned or MMT is cheaper (MMT FP: ₹${mmtFp.toLocaleString()} vs Agoda FP: ₹${agdFp.toLocaleString()}). Thank you!`;
+  }
+  
+  document.getElementById('rebuttalText').value = text;
+  document.getElementById('rebuttalModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('rebuttalModal').classList.remove('active');
+}
+
+function copyRebuttal() {
+  const textbox = document.getElementById('rebuttalText');
+  textbox.select();
+  textbox.setSelectionRange(0, 99999);
+  
+  try {
+    navigator.clipboard.writeText(textbox.value);
+    const copyBtn = document.querySelector('.modal-content .btn-primary');
+    const originalText = copyBtn.textContent;
+    copyBtn.textContent = 'Copied! ✓';
+    copyBtn.style.background = '#059669';
+    setTimeout(() => {
+      copyBtn.textContent = originalText;
+      copyBtn.style.background = '#2563eb';
+      closeModal();
+    }, 1500);
+  } catch (err) {
+    alert("Could not copy text. Please select and copy manually.");
+  }
+}
+
 // Event listeners
 fetchBtn.addEventListener('click', fetchBulk);
 clearBtn.addEventListener('click', clearResults);
@@ -1114,5 +1608,20 @@ hotelIdsInput.addEventListener('keydown', (e) => {
 // Load FH Mapping on page load
 loadFHMapping();
 </script>
+
+  <!-- Rebuttal Modal -->
+  <div class="modal-overlay" id="rebuttalModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="rebuttalTitle">Parity Rebuttal Response</span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <textarea class="rebuttal-box" id="rebuttalText" readonly></textarea>
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn-primary" onclick="copyRebuttal()">Copy Rebuttal</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
