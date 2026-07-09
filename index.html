@@ -792,19 +792,17 @@ function renderResults(groupedResults, dates) {
       <th>Hotel Name</th>
       <th style="width: 110px;">Rating</th>
     `;
+    dates.forEach(date => {
+      headerHtml += `<th class="inv-cell" style="width: 90px;">${formatDateHeader(date)}</th>`;
+    });
   } else {
     headerHtml += `
       <th style="width: 90px;">FH ID</th>
       <th style="width: 100px;">FH Status</th>
       <th style="width: 150px;">MMT Prop ID</th>
       <th>Hotel Name</th>
-      <th style="width: 110px;">Rating</th>
     `;
   }
-  
-  dates.forEach(date => {
-    headerHtml += `<th class="inv-cell" style="width: 90px;">${formatDateHeader(date)}</th>`;
-  });
   
   headerHtml += `
       <th class="inv-cell" style="width: 80px; background-color: #fef2f2; color: #991b1b; font-weight: bold;">Offender</th>
@@ -842,7 +840,6 @@ function renderResults(groupedResults, dates) {
         <td style="${statusStyle}">${hotelData.fhStatus}</td>
         <td><code>${hotelData.hotelId}</code></td>
         <td>${hotelData.hotelName}</td>
-        <td>${hotelData.rating}</td>
       `;
     }
     
@@ -854,39 +851,49 @@ function renderResults(groupedResults, dates) {
       const dateData = hotelData.dates[date];
       
       if (!dateData || dateData.status === 'pending') {
-        rowHtml += `<td class="inv-cell"><span class="inv-pending">-</span></td>`;
         allDone = false;
       } else if (dateData.status === 'failed') {
-        rowHtml += `
-          <td class="inv-cell" title="${dateData.error}">
-            <span class="inv-error">Error</span>
-          </td>
-        `;
         anyError = true;
         offenderCount++;
       } else {
         const count = dateData.inventory;
-        const price = dateData.price;
-        
-        let countClass = 'available';
         if (count === 0) {
-          countClass = 'soldout';
           offenderCount++;
-        } else if (count <= 2) {
-          countClass = 'low';
         }
-        
-        const countText = count === 0 ? 'Sold Out' : `${count}`;
-        const priceText = price ? `₹${price.toLocaleString()}` : '';
-        
-        rowHtml += `
-          <td class="inv-cell">
-            <div class="inv-count ${countClass}">${countText}</div>
-            ${priceText ? `<div class="inv-price">${priceText}</div>` : ''}
-          </td>
-        `;
       }
     });
+
+    if (activeTab === 'mmt') {
+      dates.forEach(date => {
+        const dateData = hotelData.dates[date];
+        if (!dateData || dateData.status === 'pending') {
+          rowHtml += `<td class="inv-cell"><span class="inv-pending">-</span></td>`;
+        } else if (dateData.status === 'failed') {
+          rowHtml += `
+            <td class="inv-cell" title="${dateData.error}">
+              <span class="inv-error">Error</span>
+            </td>
+          `;
+        } else {
+          const count = dateData.inventory;
+          const price = dateData.price;
+          
+          let countClass = 'available';
+          if (count === 0) countClass = 'soldout';
+          else if (count <= 2) countClass = 'low';
+          
+          const countText = count === 0 ? 'Sold Out' : `${count}`;
+          const priceText = price ? `₹${price.toLocaleString()}` : '';
+          
+          rowHtml += `
+            <td class="inv-cell">
+              <div class="inv-count ${countClass}">${countText}</div>
+              ${priceText ? `<div class="inv-price">${priceText}</div>` : ''}
+            </td>
+          `;
+        }
+      });
+    }
     
     // Highlight Offender cell
     let offenderClass = 'success';
@@ -962,7 +969,6 @@ function clearResults() {
       <th style="width: 100px;">FH Status</th>
       <th style="width: 150px;">MMT Prop ID</th>
       <th>Hotel Name</th>
-      <th style="width: 120px;">Rating</th>
     `;
   }
   headerHtml += `
@@ -986,12 +992,12 @@ function exportData(format) {
     let headers = [];
     if (activeTab === 'mmt') {
       headers = ['Hotel ID', 'Hotel Name', 'Rating'];
+      datesList.forEach(date => {
+        headers.push(date);
+      });
     } else {
-      headers = ['FH ID', 'FH Status', 'MMT Prop ID', 'Hotel Name', 'Rating'];
+      headers = ['FH ID', 'FH Status', 'MMT Prop ID', 'Hotel Name'];
     }
-    datesList.forEach(date => {
-      headers.push(date);
-    });
     headers.push('Offender');
     headers.push('Status');
     
@@ -1010,8 +1016,7 @@ function exportData(format) {
           hotel.fhId || '',
           hotel.fhStatus || '',
           hotel.hotelId || '',
-          `"${(hotel.hotelName || '').replace(/"/g, '""')}"`,
-          hotel.rating || ''
+          `"${(hotel.hotelName || '').replace(/"/g, '""')}"`
         ];
       }
       
@@ -1022,14 +1027,14 @@ function exportData(format) {
       datesList.forEach(date => {
         const dateData = hotel.dates[date];
         if (!dateData || dateData.status === 'pending') {
-          row.push('Pending');
           allDone = false;
+          if (activeTab === 'mmt') row.push('Pending');
         } else if (dateData.status === 'failed') {
-          row.push('Error');
           anyError = true;
           offenderCount++;
+          if (activeTab === 'mmt') row.push('Error');
         } else {
-          row.push(dateData.inventory);
+          if (activeTab === 'mmt') row.push(dateData.inventory);
           if (dateData.inventory === 0) {
             offenderCount++;
           }
