@@ -431,15 +431,23 @@ async function loadFHMapping() {
     
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
-      if (row.length < 3) continue;
+      if (row.length < 5) continue;
       
       const fhId = row[0]?.trim();
       const fhStatus = row[1]?.trim();
       const mmtId = row[2]?.trim();
+      const trackerStatus = row[3]?.trim();
+      const subStatus = row[4]?.trim();
       
       if (!fhId && !mmtId) continue;
       
-      const item = { fhId, status: fhStatus, mmtId };
+      const item = { 
+        fhId, 
+        status: fhStatus, 
+        mmtId,
+        trackerStatus: trackerStatus || '-',
+        subStatus: subStatus || '-'
+      };
       
       if (fhId) {
         fhMapByFhId[fhId] = item;
@@ -658,6 +666,8 @@ async function fetchBulk() {
     let hotelId = inputId;
     let fhId = '-';
     let fhStatus = 'Unknown';
+    let trackerStatus = '-';
+    let subStatus = '-';
     
     if (activeTab === 'fh') {
       if (fhMapByFhId[inputId]) {
@@ -665,11 +675,15 @@ async function fetchBulk() {
         hotelId = item.mmtId;
         fhId = item.fhId;
         fhStatus = item.status;
+        trackerStatus = item.trackerStatus || '-';
+        subStatus = item.subStatus || '-';
       } else if (fhMapByMmtId[inputId]) {
         const item = fhMapByMmtId[inputId];
         hotelId = item.mmtId;
         fhId = item.fhId;
         fhStatus = item.status;
+        trackerStatus = item.trackerStatus || '-';
+        subStatus = item.subStatus || '-';
       }
     }
     
@@ -678,6 +692,8 @@ async function fetchBulk() {
       hotelId,
       fhId,
       fhStatus,
+      trackerStatus,
+      subStatus,
       hotelName: '-',
       rating: '-',
       dates: {}
@@ -800,6 +816,8 @@ function renderResults(groupedResults, dates) {
       <th style="width: 90px;">FH ID</th>
       <th style="width: 100px;">FH Status</th>
       <th style="width: 150px;">MMT Prop ID</th>
+      <th style="width: 150px;">Tracker Status</th>
+      <th style="width: 130px;">Sub Status</th>
       <th>Hotel Name</th>
     `;
   }
@@ -839,6 +857,8 @@ function renderResults(groupedResults, dates) {
         <td><code>${hotelData.fhId}</code></td>
         <td style="${statusStyle}">${hotelData.fhStatus}</td>
         <td><code>${hotelData.hotelId}</code></td>
+        <td>${hotelData.trackerStatus}</td>
+        <td>${hotelData.subStatus}</td>
         <td>${hotelData.hotelName}</td>
       `;
     }
@@ -968,6 +988,8 @@ function clearResults() {
       <th style="width: 90px;">FH ID</th>
       <th style="width: 100px;">FH Status</th>
       <th style="width: 150px;">MMT Prop ID</th>
+      <th style="width: 150px;">Tracker Status</th>
+      <th style="width: 130px;">Sub Status</th>
       <th>Hotel Name</th>
     `;
   }
@@ -996,7 +1018,7 @@ function exportData(format) {
         headers.push(date);
       });
     } else {
-      headers = ['FH ID', 'FH Status', 'MMT Prop ID', 'Hotel Name'];
+      headers = ['FH ID', 'FH Status', 'MMT Prop ID', 'Tracker Status', 'Sub Status', 'Hotel Name'];
     }
     headers.push('Offender');
     headers.push('Status');
@@ -1016,6 +1038,8 @@ function exportData(format) {
           hotel.fhId || '',
           hotel.fhStatus || '',
           hotel.hotelId || '',
+          `"${(hotel.trackerStatus || '').replace(/"/g, '""')}"`,
+          `"${(hotel.subStatus || '').replace(/"/g, '""')}"`,
           `"${(hotel.hotelName || '').replace(/"/g, '""')}"`
         ];
       }
