@@ -274,6 +274,7 @@
     .badge-beat { background: #dcfce7; color: #15803d; }
     .badge-fee { background: #fef3c7; color: #d97706; }
     .badge-true { background: #fee2e2; color: #b91c1c; }
+    .badge-unavailable { background: #f1f5f9; color: #64748b; }
     
     .btn-copy {
       background: #2563eb;
@@ -473,8 +474,11 @@
               <option value="all">Show All Conflicts</option>
               <option value="true">True Parity Gaps Only</option>
               <option value="fee">MMT Fee-Induced Gaps Only</option>
+              <option value="unfair">MMT Unfair Advantage Only</option>
               <option value="meet">Met / MMT Beats Only</option>
+              <option value="unavailable">Data Unavailable Only</option>
             </select>
+            <button class="btn-secondary" onclick="exportFilteredParityCSV()" style="padding: 10px 16px;">Export Parity CSV</button>
           </div>
 
           <div style="overflow-x: auto; max-height: 500px; border: 1px solid #e2e8f0; border-radius: 8px;">
@@ -1341,6 +1345,35 @@ function downloadFile(content, filename, mime) {
 
 // Parity Checker Global State
 let parityData = [];
+let currentCaseId = null;
+
+// Date conversion helpers
+function parseExcelDate(val) {
+  if (val === undefined || val === null || val === '') return '';
+  
+  // Check if it is a numeric serial date (e.g. 46210)
+  if (typeof val === 'number' || (!isNaN(val) && !isNaN(parseFloat(val)) && !String(val).includes('-') && !String(val).includes('/'))) {
+    const num = parseFloat(val);
+    // Excel base date correction
+    const dateObj = new Date((num - (num > 60 ? 25569 : 25568)) * 86400 * 1000);
+    return formatDateDDMMMYYYY(dateObj);
+  }
+  
+  // Otherwise parse standard date string
+  const dateObj = new Date(val);
+  if (!isNaN(dateObj.getTime())) {
+    return formatDateDDMMMYYYY(dateObj);
+  }
+  return String(val);
+}
+
+function formatDateDDMMMYYYY(date) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}
 
 // Drag and drop events for dropzone
 const dropzone = document.getElementById('parityDropzone');
@@ -1400,56 +1433,92 @@ function handleParityFile(e) {
 
 function processParityData(rows) {
   parityData = [];
+  const seen = new Set();
+  
   let meetCount = 0;
   let feeCount = 0;
   let trueCount = 0;
   
   rows.forEach(row => {
-    // Map columns
     const hotelId = (row['mmt_hotel_code'] || '').toString().replace('#', '').trim();
     const hotelName = row['hotelname'] || '-';
-    const checkin = row['checkin'] || '';
     
-    // Check cheaper keys (fallback to normal keys if needed)
-    const mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_cp_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
-    const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_cp_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? 0);
-    const mmtFee = parseFloat(row['mmt_cheapest_service_fee'] ?? row['mmt_cp_service_fee'] ?? 0);
-    const mmtCoupon = parseFloat(row['mmt_cheapest_coupon_discount'] ?? row['mmt_cp_coupon_discount'] ?? 0);
-    const mmtFp = parseFloat(row['mmt_cheapest_final_price'] ?? row['mmt_cp_final_price'] ?? row['mmt_final_price'] ?? 0);
-    const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? row['agd_cp_final_price'] ?? row['agd_final_price'] ?? 0);
+    // Parse Dates cleanly
+    const checkin = parseExcelDate(row['checkin']);
+    const checkout = parseExcelDate(row['checkout']);
     
-    if (!hotelId && hotelName === '-') return; // skip empty rows
+    // Case ID / UUID
+    const uuid = (row['uuid'] || '').toString().trim();
+    const caseId = uuid || `${hotelId}_${checkin}`;
     
-    // Categorize
-    let cause = 'Meet / Beat';
+    if (!hotelId && hotelName === '-') return; // Skip empty rows
+    
+    // Deduplication check: [Property ID + Checkin Date + Case ID]
+    const dedupKey = `${hotelId}_${checkin}_${caseId}`;
+    if (seen.has(dedupKey)) {
+      return; // Skip duplicate rows
+    }
+    seen.add(dedupKey);
+    
+    // Map numerical price fields
+    const mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
+    const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? 0);
+    const mmtFee = parseFloat(row['mmt_cheapest_service_fee'] ?? 0);
+    const mmtCoupon = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
+    const mmtFp = parseFloat(row['mmt_cheapest_final_price'] ?? 0);
+    const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? 0);
+    
+    let cause = 'Parity Met';
     let badgeClass = 'badge-meet';
     
-    // MMT is beaten on Final Price (FP) if MMT FP > Agoda FP + 1 (allow 1 unit rounding difference)
-    const isMmtBeatenOnFp = mmtFp > (agdFp + 1);
-    
-    if (isMmtBeatenOnFp) {
-      // Is it due to True Rate discrepancy (Supply Price)?
-      if (mmtSp > (agdSp + 1)) {
-        cause = 'True Parity Gap';
-        badgeClass = 'badge-true';
-        trueCount++;
-      } else {
-        cause = 'MMT Fee-Induced';
-        badgeClass = 'badge-fee';
-        feeCount++;
-      }
+    // Evaluation Logic
+    if (agdSp === 0 || agdFp === 0 || mmtSp === 0 || mmtFp === 0) {
+      cause = 'Data Unavailable';
+      badgeClass = 'badge-unavailable';
     } else {
-      if (mmtFp < agdFp - 1) {
-        cause = 'MMT Beats';
-        badgeClass = 'badge-beat';
+      const isMmtBeatenOnFp = mmtFp > (agdFp + 1);
+      const isAgdBeatenOnFp = agdFp > (mmtFp + 1);
+      
+      if (isMmtBeatenOnFp) {
+        // MMT final price is higher (beaten)
+        if (mmtSp <= agdSp) {
+          // Base rates are in parity, self-inflicted by MMT fee/coupon
+          cause = 'MMT Fee-Induced Gap';
+          badgeClass = 'badge-fee';
+          feeCount++;
+        } else {
+          // MMT SP > Agoda SP
+          cause = 'True Parity Gap';
+          badgeClass = 'badge-true';
+          trueCount++;
+        }
+      } else if (isAgdBeatenOnFp) {
+        // Agoda final price is higher (MMT beats Agoda)
+        if (agdSp < mmtSp && (mmtFee > 0 || mmtCoupon > 0)) {
+          // Agoda base rate is cheaper, but MMT beats them due to coupon discounts or fee mechanisms
+          cause = 'MMT Fee-Induced Gap';
+          badgeClass = 'badge-fee';
+          feeCount++;
+        } else {
+          // Unexplained margin sacrifice or unfair price positioning by MMT
+          cause = 'MMT Unfair Advantage';
+          badgeClass = 'badge-beat';
+          meetCount++;
+        }
+      } else {
+        // Equal final prices
+        cause = 'Parity Met';
+        badgeClass = 'badge-meet';
+        meetCount++;
       }
-      meetCount++;
     }
     
     parityData.push({
+      caseId,
       hotelId,
       hotelName,
       checkin,
+      checkout,
       mmtSp,
       agdSp,
       mmtFee,
@@ -1483,11 +1552,10 @@ function renderParityTable(data) {
     return;
   }
   
-  data.forEach((row, idx) => {
+  data.forEach((row) => {
     const tr = document.createElement('tr');
     tr.style.borderBottom = '1px solid #f1f5f9';
     
-    // Shorten long hotel names for visual excellence
     const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
     
     tr.innerHTML = `
@@ -1502,7 +1570,7 @@ function renderParityTable(data) {
         <span class="badge ${row.badgeClass}">${row.cause}</span>
       </td>
       <td style="padding: 10px; text-align: center;">
-        <button class="btn-copy" onclick="openRebuttal(${idx})">Defense</button>
+        <button class="btn-copy" onclick="openRebuttal('${row.caseId}')">Defense</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -1520,9 +1588,13 @@ function filterParityTable() {
     if (filterType === 'true') {
       matchesFilter = row.cause === 'True Parity Gap';
     } else if (filterType === 'fee') {
-      matchesFilter = row.cause === 'MMT Fee-Induced';
+      matchesFilter = row.cause === 'MMT Fee-Induced Gap';
+    } else if (filterType === 'unfair') {
+      matchesFilter = row.cause === 'MMT Unfair Advantage';
     } else if (filterType === 'meet') {
-      matchesFilter = row.cause === 'Meet / Beat' || row.cause === 'MMT Beats';
+      matchesFilter = row.cause === 'Meet / Beat' || row.cause === 'MMT Beats' || row.cause === 'Parity Met';
+    } else if (filterType === 'unavailable') {
+      matchesFilter = row.cause === 'Data Unavailable';
     }
     
     return matchesSearch && matchesFilter;
@@ -1531,13 +1603,7 @@ function filterParityTable() {
   renderParityTable(filtered);
 }
 
-// Modal functions
-let currentRebuttalIdx = null;
-
-function openRebuttal(idx) {
-  const row = parityData[idx];
-  currentRebuttalIdx = idx;
-  
+function getRebuttalTextContent(row) {
   const hotelName = row.hotelName;
   const checkin = row.checkin;
   const mmtSp = Math.round(row.mmtSp);
@@ -1545,22 +1611,34 @@ function openRebuttal(idx) {
   const mmtFp = Math.round(row.mmtFp);
   const agdFp = Math.round(row.agdFp);
   const fee = Math.round(row.mmtFee);
-  const coupon = Math.round(row.mmtCoupon);
   
   let text = `Hi MMT Team,\n\n`;
   text += `Regarding the parity query for "${hotelName}" (Check-in: ${checkin}):\n\n`;
   
-  if (row.cause === 'MMT Fee-Induced') {
+  if (row.cause === 'MMT Fee-Induced Gap') {
     text += `* Our base Supply Price supplied to MMT is ₹${mmtSp.toLocaleString()}, which is fully in parity/cheaper than Agoda's base Supply Price of ₹${agdSp.toLocaleString()}.\n`;
     text += `* The difference in final customer price (MMT: ₹${mmtFp.toLocaleString()} vs Agoda: ₹${agdFp.toLocaleString()}) is driven entirely by MMT charging a platform Service Fee of ₹${fee.toLocaleString()} on your site, whereas Agoda does not charge service fees.\n`;
     text += `* The underlying inventory supply rates we provided are aligned. Please review your platform markup (Service Fee) or adjust your coupon discounts to match the final Agoda guest price. Thank you!`;
   } else if (row.cause === 'True Parity Gap') {
-    const diff = mmtSp - agdSp;
+    const diff = Math.abs(mmtSp - agdSp);
     text += `* We noticed a rate discrepancy of ₹${diff.toLocaleString()} on the base Supply Price (MMT: ₹${mmtSp.toLocaleString()} vs Agoda: ₹${agdSp.toLocaleString()}).\n`;
     text += `* We are investigating this variance with our revenue team to resolve the base rate difference. Thank you for flagging this.`;
+  } else if (row.cause === 'Data Unavailable') {
+    text = `No parity query can be processed because price data is unavailable for Agoda or MMT on this date.`;
+  } else if (row.cause === 'MMT Unfair Advantage') {
+    text += `* Our rates are aligned. MMT currently holds a pricing advantage (MMT FP: ₹${mmtFp.toLocaleString()} vs Agoda FP: ₹${agdFp.toLocaleString()}). Thank you!`;
   } else {
-    text += `* The listing is currently in full parity. The customer final prices are aligned or MMT is cheaper (MMT FP: ₹${mmtFp.toLocaleString()} vs Agoda FP: ₹${agdFp.toLocaleString()}). Thank you!`;
+    text += `* The listing is currently in full parity. The customer final prices are aligned (MMT FP: ₹${mmtFp.toLocaleString()} vs Agoda FP: ₹${agdFp.toLocaleString()}). Thank you!`;
   }
+  return text;
+}
+
+function openRebuttal(caseId) {
+  const row = parityData.find(r => r.caseId === caseId);
+  if (!row) return;
+  
+  currentCaseId = caseId;
+  const text = getRebuttalTextContent(row);
   
   document.getElementById('rebuttalText').value = text;
   document.getElementById('rebuttalModal').classList.add('active');
@@ -1591,6 +1669,132 @@ function copyRebuttal() {
   }
 }
 
+function downloadSingleParityCSV(row) {
+  const headers = [
+    'Property Name',
+    'Case ID',
+    'Date',
+    'MMT SP',
+    'MMT FP',
+    'Agoda SP',
+    'Agoda FP',
+    'Coupon Applied',
+    'Service Fee',
+    'Burn %',
+    'Final Classification',
+    'Rebuttal/Defense Text'
+  ];
+  
+  const mmtSp = Math.round(row.mmtSp);
+  const mmtFp = Math.round(row.mmtFp);
+  const agdSp = Math.round(row.agdSp);
+  const agdFp = Math.round(row.agdFp);
+  const fee = Math.round(row.mmtFee);
+  const coupon = Math.round(row.mmtCoupon);
+  const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
+  const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
+  const text = getRebuttalTextContent(row);
+  
+  const rowData = [
+    `"${row.hotelName.replace(/"/g, '""')}"`,
+    `"${row.caseId}"`,
+    `"${row.checkin}"`,
+    mmtSp,
+    mmtFp,
+    agdSp,
+    agdFp,
+    `"${couponApplied}"`,
+    fee,
+    `"${burn}"`,
+    `"${row.cause}"`,
+    `"${text.replace(/"/g, '""')}"`
+  ];
+  
+  const csvContent = [headers.join(','), rowData.join(',')].join('\n');
+  downloadFile(csvContent, `parity-defense-${row.hotelId}-${row.checkin}.csv`, 'text/csv');
+}
+
+function downloadCurrentRebuttal() {
+  if (currentCaseId) {
+    const row = parityData.find(r => r.caseId === currentCaseId);
+    if (row) downloadSingleParityCSV(row);
+  }
+}
+
+function exportFilteredParityCSV() {
+  const query = document.getElementById('paritySearch').value.toLowerCase().trim();
+  const filterType = document.getElementById('parityFilter').value;
+  
+  const filtered = parityData.filter(row => {
+    const matchesSearch = row.hotelName.toLowerCase().includes(query) || row.hotelId.toLowerCase().includes(query);
+    
+    let matchesFilter = true;
+    if (filterType === 'true') {
+      matchesFilter = row.cause === 'True Parity Gap';
+    } else if (filterType === 'fee') {
+      matchesFilter = row.cause === 'MMT Fee-Induced Gap';
+    } else if (filterType === 'unfair') {
+      matchesFilter = row.cause === 'MMT Unfair Advantage';
+    } else if (filterType === 'meet') {
+      matchesFilter = row.cause === 'Meet / Beat' || row.cause === 'MMT Beats' || row.cause === 'Parity Met';
+    } else if (filterType === 'unavailable') {
+      matchesFilter = row.cause === 'Data Unavailable';
+    }
+    
+    return matchesSearch && matchesFilter;
+  });
+  
+  if (filtered.length === 0) {
+    alert("No records to export.");
+    return;
+  }
+  
+  const headers = [
+    'Property Name',
+    'Case ID',
+    'Date',
+    'MMT SP',
+    'MMT FP',
+    'Agoda SP',
+    'Agoda FP',
+    'Coupon Applied',
+    'Service Fee',
+    'Burn %',
+    'Final Classification',
+    'Rebuttal/Defense Text'
+  ];
+  
+  const rows = filtered.map(row => {
+    const mmtSp = Math.round(row.mmtSp);
+    const mmtFp = Math.round(row.mmtFp);
+    const agdSp = Math.round(row.agdSp);
+    const agdFp = Math.round(row.agdFp);
+    const fee = Math.round(row.mmtFee);
+    const coupon = Math.round(row.mmtCoupon);
+    const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
+    const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
+    const text = getRebuttalTextContent(row);
+    
+    return [
+      `"${row.hotelName.replace(/"/g, '""')}"`,
+      `"${row.caseId}"`,
+      `"${row.checkin}"`,
+      mmtSp,
+      mmtFp,
+      agdSp,
+      agdFp,
+      `"${couponApplied}"`,
+      fee,
+      `"${burn}"`,
+      `"${row.cause}"`,
+      `"${text.replace(/"/g, '""')}"`
+    ];
+  });
+  
+  const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadFile(csvContent, `parity-report-export.csv`, 'text/csv');
+}
+
 // Event listeners
 fetchBtn.addEventListener('click', fetchBulk);
 clearBtn.addEventListener('click', clearResults);
@@ -1619,6 +1823,7 @@ loadFHMapping();
       <textarea class="rebuttal-box" id="rebuttalText" readonly></textarea>
       <div style="display: flex; justify-content: flex-end; gap: 8px;">
         <button class="btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn-secondary" onclick="downloadCurrentRebuttal()">Download CSV</button>
         <button class="btn-primary" onclick="copyRebuttal()">Copy Rebuttal</button>
       </div>
     </div>
