@@ -1463,8 +1463,10 @@ function processParityData(rows) {
     // Map numerical price fields
     const mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
     const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? 0);
-    const mmtFee = parseFloat(row['mmt_cheapest_service_fee'] ?? 0);
-    const mmtCoupon = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
+    // NOTE: Source Excel has swapped columns — service_fee actually holds GST,
+    // coupon_discount actually holds the service fee. coupan_price_cheapest is the real coupon.
+    const mmtFee = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
+    const mmtCoupon = parseFloat(row['coupan_price_cheapest'] ?? 0);
     const mmtFp = parseFloat(row['mmt_cheapest_final_price'] ?? 0);
     const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? 0);
     
