@@ -474,7 +474,7 @@
               <option value="all">Show All Conflicts</option>
               <option value="true">True Parity Gaps Only</option>
               <option value="fee">MMT Fee-Induced Gaps Only</option>
-              <option value="unfair">MMT Unfair Advantage Only</option>
+              <option value="unfair">MMT on Advantage Only</option>
               <option value="meet">Met / MMT Beats Only</option>
               <option value="unavailable">Data Unavailable Only</option>
             </select>
@@ -1501,7 +1501,7 @@ function processParityData(rows) {
           feeCount++;
         } else {
           // Unexplained margin sacrifice or unfair price positioning by MMT
-          cause = 'MMT Unfair Advantage';
+          cause = 'MMT on Advantage';
           badgeClass = 'badge-beat';
           meetCount++;
         }
@@ -1590,7 +1590,7 @@ function filterParityTable() {
     } else if (filterType === 'fee') {
       matchesFilter = row.cause === 'MMT Fee-Induced Gap';
     } else if (filterType === 'unfair') {
-      matchesFilter = row.cause === 'MMT Unfair Advantage';
+      matchesFilter = row.cause === 'MMT on Advantage';
     } else if (filterType === 'meet') {
       matchesFilter = row.cause === 'Meet / Beat' || row.cause === 'MMT Beats' || row.cause === 'Parity Met';
     } else if (filterType === 'unavailable') {
@@ -1602,7 +1602,7 @@ function filterParityTable() {
   
   renderParityTable(filtered);
 }
-
+ 
 function getRebuttalTextContent(row) {
   const hotelName = row.hotelName;
   const checkin = row.checkin;
@@ -1625,7 +1625,7 @@ function getRebuttalTextContent(row) {
     text += `* We are investigating this variance with our revenue team to resolve the base rate difference. Thank you for flagging this.`;
   } else if (row.cause === 'Data Unavailable') {
     text = `No parity query can be processed because price data is unavailable for Agoda or MMT on this date.`;
-  } else if (row.cause === 'MMT Unfair Advantage') {
+  } else if (row.cause === 'MMT on Advantage') {
     text += `* Our rates are aligned. MMT currently holds a pricing advantage (MMT FP: ₹${mmtFp.toLocaleString()} vs Agoda FP: ₹${agdFp.toLocaleString()}). Thank you!`;
   } else {
     text += `* The listing is currently in full parity. The customer final prices are aligned (MMT FP: ₹${mmtFp.toLocaleString()} vs Agoda FP: ₹${agdFp.toLocaleString()}). Thank you!`;
@@ -1734,7 +1734,7 @@ function exportFilteredParityCSV() {
     } else if (filterType === 'fee') {
       matchesFilter = row.cause === 'MMT Fee-Induced Gap';
     } else if (filterType === 'unfair') {
-      matchesFilter = row.cause === 'MMT Unfair Advantage';
+      matchesFilter = row.cause === 'MMT on Advantage';
     } else if (filterType === 'meet') {
       matchesFilter = row.cause === 'Meet / Beat' || row.cause === 'MMT Beats' || row.cause === 'Parity Met';
     } else if (filterType === 'unavailable') {
