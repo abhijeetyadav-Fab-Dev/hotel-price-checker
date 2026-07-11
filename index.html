@@ -507,11 +507,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-        </div>
-      </div>
-
       <!-- PLB & VDI Automator View -->
       <div id="plbInputs" class="hidden">
         <div style="margin-bottom: 24px;">
@@ -595,7 +590,15 @@
               <option value="missed">Target Missed Only</option>
               <option value="opportunity">Opportunity Only (Within 10 RNs)</option>
             </select>
-            <button class="btn-secondary" onclick="exportPlbReportExcel()" style="padding: 10px 16px;">Export PLB & VDI Excel</button>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px;">
+            <span style="font-size: 0.85rem; font-weight: 600; color: #334155;">Export / Sync:</span>
+            <button class="btn-secondary" onclick="exportPlbReportExcel()" style="padding: 8px 14px; font-size: 0.85rem;">Download Excel File</button>
+            <div style="border-left: 1px solid #cbd5e1; height: 24px; margin: 0 8px;"></div>
+            <input type="text" id="plbExportSheetUrl" placeholder="Enter target Google Sheet URL or ID..." style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            <input type="text" id="plbExportSheetName" placeholder="Sheet Name (e.g. July)" style="width: 150px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+            <button class="btn-primary" id="btnPushToSheet" onclick="pushPlbDataToGoogleSheet()" style="padding: 8px 14px; font-size: 0.85rem; background: #10b981; border-color: #10b981; color: white;">Push to Google Sheet</button>
           </div>
 
           <div style="overflow-x: auto; max-height: 500px; border: 1px solid #e2e8f0; border-radius: 8px;">
@@ -614,6 +617,7 @@
           </div>
         </div>
       </div>
+    </div>
 
     <div class="summary hidden" id="summary">
     
@@ -2353,6 +2357,92 @@ function exportPlbReportExcel() {
   XLSX.utils.book_append_sheet(wb, ws, "PLB_VDI_Report");
   
   XLSX.writeFile(wb, `PLB_VDI_Report_${plbCurrentMonth}.xlsx`);
+}
+
+async function pushPlbDataToGoogleSheet() {
+  if (plbData.length === 0) {
+    alert("No compiled data available. Please run PLB & VDI automation first.");
+    return;
+  }
+
+  const urlOrId = document.getElementById('plbExportSheetUrl').value.trim();
+  if (!urlOrId) {
+    alert("Please enter the target Google Sheet URL or ID.");
+    return;
+  }
+
+  // Extract Google Sheet ID from URL if full URL is pasted
+  let spreadsheetId = urlOrId;
+  const match = urlOrId.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (match) {
+    spreadsheetId = match[1];
+  }
+
+  const sheetName = document.getElementById('plbExportSheetName').value.trim() || plbCurrentMonth;
+
+  // Let's prepare the matrix data matching the exported Excel structure exactly!
+  const headers = [
+    'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)'
+  ];
+
+  const payloadData = [headers];
+  plbData.forEach(row => {
+    payloadData.push([
+      row.propertyId,
+      row.ingoId,
+      row.name,
+      row.city,
+      row.status,
+      ...row.histRNs,
+      row.avg3M,
+      row.actualRN,
+      row.vdiTarget,
+      row.plbRatio,
+      row.gap,
+      row.freeRNs,
+      row.revenue,
+      row.suggestedTarget,
+      row.suggestedTargetFinal
+    ]);
+  });
+
+  const btn = document.getElementById('btnPushToSheet');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "Syncing...";
+
+  try {
+    // Determine the active origin port or fall back to localhost:3000
+    const localServerUrl = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+      ? `${window.location.origin}/api/google-sheets/write`
+      : 'http://localhost:3000/api/google-sheets/write';
+
+    const response = await fetch(localServerUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        spreadsheetId,
+        sheetName,
+        data: payloadData
+      })
+    });
+
+    const res = await response.json();
+    if (!response.ok) {
+      throw new Error(res.error || `HTTP error ${response.status}`);
+    }
+
+    alert(`Successfully synced ${res.updatedCells} cells to Sheet "${res.sheetName}"!`);
+  } catch (error) {
+    console.error("Sheet sync error:", error);
+    alert(`Sync Failed: ${error.message}\n\nMake sure your local server (run.bat) is running and you have shared the target Google Sheet with this service account email:\n\nsujeet@nifty-seat-268909.iam.gserviceaccount.com`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
 }
 </script>
 

@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const path = require('path');
+const fs = require('fs');
+const { google } = require('googleapis');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,7 +12,7 @@ const MMT_API_BASE = 'https://connect.mmtapi.com/price';
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // Proxy endpoint to avoid CORS issues
 app.get('/api/price', async (req, res) => {
@@ -105,6 +107,84 @@ app.post('/api/prices/bulk', async (req, res) => {
   await Promise.all(workers);
 
   res.json({ date, results });
+});
+
+// Google Sheets writing endpoint using service account key
+app.post('/api/google-sheets/write', async (req, res) => {
+  const { spreadsheetId, sheetName, data } = req.body;
+  if (!spreadsheetId || !data || !Array.isArray(data)) {
+    return res.status(400).json({ error: 'Missing spreadsheetId or data array' });
+  }
+
+  const keyPath = 'C:\\Users\\CS05180\\Downloads\\sujeet_key (1).json';
+  if (!fs.existsSync(keyPath)) {
+    return res.status(500).json({ error: `Service account key not found at: ${keyPath}` });
+  }
+
+  try {
+    const auth = new google.auth.GoogleAuth({
+      keyFile: keyPath,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    // Target a specific sheet name if provided, or default to "PLB_VDI_Report"
+    const targetSheet = sheetName || 'PLB_VDI_Report';
+    const targetRange = `${targetSheet}!A1`;
+
+    // Fetch spreadsheet metadata to check if the sheet already exists
+    const spreadsheet = await sheets.spreadsheets.get({
+      spreadsheetId,
+    });
+    
+    const sheetExists = spreadsheet.data.sheets.some(
+      s => s.properties.title === targetSheet
+    );
+
+    // If the sheet does not exist, add it
+    if (!sheetExists) {
+      await sheets.spreadsheets.batchUpdate({
+        spreadsheetId,
+        resource: {
+          requests: [
+            {
+              addSheet: {
+                properties: {
+                  title: targetSheet,
+                },
+              },
+            },
+          ],
+        },
+      });
+    } else {
+      // Clear target sheet first
+      try {
+        await sheets.spreadsheets.values.clear({
+          spreadsheetId,
+          range: `${targetSheet}!A1:Z1000`,
+        });
+      } catch (clearErr) {
+        console.warn('Could not clear sheet values:', clearErr.message);
+      }
+    }
+
+    // Write the new dataset
+    const response = await sheets.spreadsheets.values.update({
+      spreadsheetId,
+      range: targetRange,
+      valueInputOption: 'USER_ENTERED',
+      resource: {
+        values: data,
+      },
+    });
+
+    res.json({ success: true, updatedCells: response.data.updatedCells, sheetName: targetSheet });
+  } catch (error) {
+    console.error('Google Sheets API Error:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 if (require.main === module) {
