@@ -1461,14 +1461,27 @@ function processParityData(rows) {
     seen.add(dedupKey);
     
     // Map numerical price fields
-    const mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
+    let mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
     const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? 0);
     // NOTE: Source Excel has swapped columns — service_fee actually holds GST,
     // coupon_discount actually holds the service fee. coupan_price_cheapest is the real coupon.
     const mmtFee = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
     const mmtCoupon = parseFloat(row['coupan_price_cheapest'] ?? 0);
-    const mmtFp = parseFloat(row['mmt_cheapest_posttax'] ?? row['mmt_posttax'] ?? 0) - mmtCoupon;
+    let mmtFp = parseFloat(row['mmt_cheapest_posttax'] ?? row['mmt_posttax'] ?? 0) - mmtCoupon;
     const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? 0);
+
+    // GST Adjustment for MMT SP & FP
+    // MakeMyTrip often provides pre-tax prices with GST included (e.g., 2641 instead of 2515).
+    // If MMT is inflated by exactly 5% (1.05) or 12% (1.12) compared to Agoda SP (base), we strip it to deduce the real SP.
+    if (mmtSp > 0 && agdSp > 0) {
+        if (Math.abs((mmtSp / 1.05) - agdSp) <= 2) {
+            mmtSp = mmtSp / 1.05;
+            mmtFp = mmtFp / 1.05;
+        } else if (Math.abs((mmtSp / 1.12) - agdSp) <= 2) {
+            mmtSp = mmtSp / 1.12;
+            mmtFp = mmtFp / 1.12;
+        }
+    }
     
     let cause = 'Parity Met';
     let badgeClass = 'badge-meet';
