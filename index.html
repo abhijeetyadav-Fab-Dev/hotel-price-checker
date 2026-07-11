@@ -275,6 +275,7 @@
     .badge-fee { background: #fef3c7; color: #d97706; }
     .badge-true { background: #fee2e2; color: #b91c1c; }
     .badge-unavailable { background: #f1f5f9; color: #64748b; }
+    .badge-plb { background: #f5f3ff; color: #6d28d9; }
     
     .btn-copy {
       background: #2563eb;
@@ -376,6 +377,7 @@
         <button class="tab-btn active" id="tabMmt" onclick="switchTab('mmt')">MMT Price Checker</button>
         <button class="tab-btn" id="tabFh" onclick="switchTab('fh')">Fetch FH Status</button>
         <button class="tab-btn" id="tabParity" onclick="switchTab('parity')">Parity Checker</button>
+        <button class="tab-btn" id="tabPlb" onclick="switchTab('plb')">PLB & VDI Automator</button>
       </div>
 
       <div id="mappingStatus" style="font-size: 0.8rem; color: #64748b; margin-bottom: 16px; display: flex; align-items: center; gap: 6px;">
@@ -507,7 +509,114 @@
       </div>
     </div>
 
+        </div>
+      </div>
+
+      <!-- PLB & VDI Automator View -->
+      <div id="plbInputs" class="hidden">
+        <div style="margin-bottom: 24px;">
+          <h3 style="font-size: 1.15rem; font-weight: 600; color: #0f172a; margin-bottom: 8px;">1. Set Data Sources (Google Sheets or Local Files)</h3>
+          <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 16px;">Paste public/viewable Google Sheets URLs, or select local CSV/Excel files as fallbacks.</p>
+          
+          <!-- Source A: Live Properties -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #334155;">A. Live Properties List</label>
+            <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 8px;">Maps internal Prop ID to MMT INGO ID. Columns needed: <code>Prop ID</code>, <code>INGO ID</code> (or <code>property_id</code>, <code>MMT ID</code>)</span>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="plbUrlLiveProps" placeholder="Paste Google Sheet URL..." style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+              <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 500;">OR</span>
+              <input type="file" id="plbFileLiveProps" accept=".xlsx, .xls, .csv" style="font-size: 0.85rem;">
+            </div>
+          </div>
+          
+          <!-- Source B: DB Room Nights Query Output -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #334155;">B. Database Actual Room Nights (DB CSV)</label>
+            <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 8px;">Query result with actual booking stay-date room nights. Columns needed: <code>property_id</code>, <code>rns</code> (or <code>count</code>), <code>month</code> (two-digit format like 04, 05, 06, 07)</span>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="plbUrlDbRns" placeholder="Paste Google Sheet URL..." style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+              <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 500;">OR</span>
+              <input type="file" id="plbFileDbRns" accept=".xlsx, .xls, .csv" style="font-size: 0.85rem;">
+            </div>
+          </div>
+          
+          <!-- Source C: MMT Raw Targets Spreadsheet -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+            <label style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #334155;">C. MMT Targets & PLB Ratios</label>
+            <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 8px;">Excel sheet sent by MMT Connect containing VDI targets and PLB ratio rules. Columns needed: <code>hotel_code</code>, <code>Target</code>, <code>PLB Ratio</code></span>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="plbUrlMmtTargets" placeholder="Paste Google Sheet URL..." style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+              <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 500;">OR</span>
+              <input type="file" id="plbFileMmtTargets" accept=".xlsx, .xls, .csv" style="font-size: 0.85rem;">
+            </div>
+          </div>
+          
+          <div class="btn-row" style="margin-bottom: 20px;">
+            <button class="btn-primary" id="btnRunPlb" onclick="runPlbAutomation()">Run PLB & VDI Automation</button>
+            <button class="btn-secondary" onclick="clearPlbInputs()">Clear All</button>
+          </div>
+          
+          <div id="plbStatus" style="font-size: 0.9rem; color: #2563eb; font-weight: 500; margin-bottom: 16px;"></div>
+        </div>
+
+        <div id="plbDashboard" class="hidden">
+          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; color: #0f172a;">PLB & VDI Performance Summary</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatTotal" style="font-size: 1.5rem; font-weight: 700; color: #0f172a;">0</div>
+              <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Total Properties</div>
+            </div>
+            <div style="background: #ecfdf5; border: 1px solid #d1fae5; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatVdi" style="font-size: 1.5rem; font-weight: 700; color: #059669;">0</div>
+              <div style="font-size: 0.8rem; color: #059669; margin-top: 4px;">Active VDI Properties</div>
+            </div>
+            <div style="background: #f5f3ff; border: 1px solid #ddd6fe; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatPlb" style="font-size: 1.5rem; font-weight: 700; color: #6d28d9;">0</div>
+              <div style="font-size: 0.8rem; color: #6d28d9; margin-top: 4px;">Active PLB Properties</div>
+            </div>
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatAchieved" style="font-size: 1.5rem; font-weight: 700; color: #1d4ed8;">0</div>
+              <div style="font-size: 0.8rem; color: #1d4ed8; margin-top: 4px;">Achieved Targets</div>
+            </div>
+            <div style="background: #fffbeb; border: 1px solid #fef3c7; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatOpp" style="font-size: 1.5rem; font-weight: 700; color: #d97706;">0</div>
+              <div style="font-size: 0.8rem; color: #d97706; margin-top: 4px;">Opportunity Hotels</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="plbSearch" placeholder="Search by Hotel Name or ID..." style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;" oninput="filterPlbTable()">
+            <select id="plbFilter" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff;" onchange="filterPlbTable()">
+              <option value="all">Show All Properties</option>
+              <option value="vdi">VDI Only</option>
+              <option value="plb">PLB Only</option>
+              <option value="achieved">Target Achieved Only</option>
+              <option value="missed">Target Missed Only</option>
+              <option value="opportunity">Opportunity Only (Within 10 RNs)</option>
+            </select>
+            <button class="btn-secondary" onclick="exportPlbReportExcel()" style="padding: 10px 16px;">Export PLB & VDI Excel</button>
+          </div>
+
+          <div style="overflow-x: auto; max-height: 500px; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <table id="plbTable" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+              <thead style="position: sticky; top: 0; background: #f8fafc; border-bottom: 2px solid #e2e8f0; z-index: 10;">
+                <tr id="plbTableHeaders">
+                  <!-- Generated dynamically! -->
+                </tr>
+              </thead>
+              <tbody id="plbTableBody">
+                <tr>
+                  <td colspan="12" style="text-align: center; color: #888; padding: 40px;">Select files or paste Google Sheets links above.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     <div class="summary hidden" id="summary">
+    
       <div class="stat">
         <div class="stat-value" id="statTotal">0</div>
         <div class="stat-label">Total Hotels</div>
@@ -681,9 +790,11 @@ function switchTab(tab) {
   const tabMmt = document.getElementById('tabMmt');
   const tabFh = document.getElementById('tabFh');
   const tabParity = document.getElementById('tabParity');
+  const tabPlb = document.getElementById('tabPlb');
   
   const checkerInputs = document.getElementById('checkerInputs');
   const parityInputs = document.getElementById('parityInputs');
+  const plbInputs = document.getElementById('plbInputs');
   
   const idsLabel = document.querySelector('#checkerInputs .input-group label');
   const resultsCard = document.querySelector('#resultsTable').closest('.card');
@@ -692,11 +803,13 @@ function switchTab(tab) {
   tabMmt.classList.remove('active');
   tabFh.classList.remove('active');
   tabParity.classList.remove('active');
+  tabPlb.classList.remove('active');
   
   if (tab === 'mmt') {
     tabMmt.classList.add('active');
     checkerInputs.classList.remove('hidden');
     parityInputs.classList.add('hidden');
+    plbInputs.classList.add('hidden');
     resultsCard.classList.remove('hidden');
     hotelIdsInput.placeholder = "202307182100313629\n202307182100313630\n202307182100313631";
     if (idsLabel) idsLabel.textContent = "Hotel IDs (one per line, or comma/space separated)";
@@ -704,6 +817,7 @@ function switchTab(tab) {
     tabFh.classList.add('active');
     checkerInputs.classList.remove('hidden');
     parityInputs.classList.add('hidden');
+    plbInputs.classList.add('hidden');
     resultsCard.classList.remove('hidden');
     hotelIdsInput.placeholder = "157\n528\n529\n202108201519148957";
     if (idsLabel) idsLabel.textContent = "FH IDs or MMT Prop IDs (one per line, or comma/space separated)";
@@ -715,6 +829,13 @@ function switchTab(tab) {
     tabParity.classList.add('active');
     checkerInputs.classList.add('hidden');
     parityInputs.classList.remove('hidden');
+    plbInputs.classList.add('hidden');
+    resultsCard.classList.add('hidden');
+  } else if (tab === 'plb') {
+    tabPlb.classList.add('active');
+    checkerInputs.classList.add('hidden');
+    parityInputs.classList.add('hidden');
+    plbInputs.classList.remove('hidden');
     resultsCard.classList.add('hidden');
   }
   
@@ -1826,6 +1947,413 @@ hotelIdsInput.addEventListener('keydown', (e) => {
 
 // Load FH Mapping on page load
 loadFHMapping();
+
+// --- PLB & VDI AUTOMATOR IMPLEMENTATION ---
+let plbData = [];
+let plbHistMonths = [];
+let plbCurrentMonth = '';
+
+const plbMonthNames = {
+  '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+  '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
+  '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'
+};
+
+function parseGoogleSheetUrl(url) {
+  const idMatch = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  if (!idMatch) return null;
+  const sheetId = idMatch[1];
+  
+  const gidMatch = url.match(/gid=([0-9]+)/);
+  const gid = gidMatch ? gidMatch[1] : '0';
+  
+  return { sheetId, gid };
+}
+
+async function fetchGoogleSheetCsv(url) {
+  const parsed = parseGoogleSheetUrl(url);
+  if (!parsed) throw new Error("Invalid Google Sheets URL format.");
+  
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${parsed.sheetId}/export?exportFormat=csv&gid=${parsed.gid}`;
+  
+  const response = await fetch(csvUrl);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch sheet. Please verify it is shared as 'Anyone with the link can view'.`);
+  }
+  return await response.text();
+}
+
+function readExcelOrCsv(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+        resolve(jsonData);
+      } catch (err) {
+        reject(err);
+      }
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+async function loadSource(urlId, fileId, label) {
+  const urlInput = document.getElementById(urlId);
+  const fileInput = document.getElementById(fileId);
+  
+  const urlVal = urlInput.value.trim();
+  const files = fileInput.files;
+  
+  if (urlVal) {
+    document.getElementById('plbStatus').textContent = `Fetching ${label} from Google Sheets...`;
+    const csvText = await fetchGoogleSheetCsv(urlVal);
+    const workbook = XLSX.read(csvText, { type: 'string' });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    return XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+  } else if (files && files.length > 0) {
+    document.getElementById('plbStatus').textContent = `Reading local file for ${label}...`;
+    return await readExcelOrCsv(files[0]);
+  } else {
+    throw new Error(`Please provide a Google Sheets URL or select a local file for ${label}.`);
+  }
+}
+
+async function runPlbAutomation() {
+  const btn = document.getElementById('btnRunPlb');
+  const statusDiv = document.getElementById('plbStatus');
+  btn.disabled = true;
+  statusDiv.style.color = '#2563eb';
+  statusDiv.textContent = "Initializing automation process...";
+  
+  try {
+    const livePropsRows = await loadSource('plbUrlLiveProps', 'plbFileLiveProps', 'Live Properties List');
+    const dbRows = await loadSource('plbUrlDbRns', 'plbFileDbRns', 'Database Actual Room Nights');
+    const targetRows = await loadSource('plbUrlMmtTargets', 'plbFileMmtTargets', 'MMT Targets & PLB Ratios');
+    
+    statusDiv.textContent = "Data loaded successfully. Starting compilation & merge...";
+    
+    // Normalize live properties mapping
+    const liveMap = {};
+    livePropsRows.forEach(r => {
+      const propId = (r['Prop ID'] ?? r['property_id'] ?? r['propertyId'] ?? '').toString().trim();
+      const ingoId = (r['INGO ID'] ?? r['MMT ID'] ?? r['hotel_code'] ?? '').toString().trim();
+      const name = (r['Prop Name'] ?? r['property_name'] ?? r['Live Properties'] ?? r['hotelname'] ?? '-').toString().trim();
+      const city = (r['Prop City'] ?? r['property_city'] ?? r['city'] ?? '-').toString().trim();
+      const status = (r['Inv Status'] ?? r['STATUS'] ?? r['status'] ?? 'Live').toString().trim();
+      
+      if (propId && ingoId) {
+        liveMap[propId] = { ingoId, name, city, status };
+      }
+    });
+    
+    // Group actual room nights by property and month
+    const dbRns = {};
+    const monthsSet = new Set();
+    
+    dbRows.forEach(r => {
+      const propId = (r['property_id'] ?? r['Prop ID'] ?? r['propertyId'] ?? '').toString().trim();
+      const rns = parseFloat(r['rns'] ?? r['count'] ?? r['RNs'] ?? 0) || 0;
+      const rawMonth = (r['month'] ?? r['Month'] ?? '').toString().trim();
+      
+      if (!propId || !rawMonth) return;
+      
+      let monthName = rawMonth;
+      if (plbMonthNames[rawMonth]) {
+        monthName = plbMonthNames[rawMonth];
+      }
+      
+      monthsSet.add(monthName);
+      
+      if (!dbRns[propId]) dbRns[propId] = {};
+      dbRns[propId][monthName] = (dbRns[propId][monthName] || 0) + rns;
+    });
+    
+    // Sort months to identify history vs current month
+    const monthsSorted = [...monthsSet].sort((a, b) => {
+      const order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return order.indexOf(a) - order.indexOf(b);
+    });
+    
+    if (monthsSorted.length === 0) {
+      throw new Error("No month data found in the DB Actuals file.");
+    }
+    
+    plbCurrentMonth = monthsSorted[monthsSorted.length - 1];
+    plbHistMonths = monthsSorted.slice(Math.max(0, monthsSorted.length - 4), monthsSorted.length - 1);
+    
+    // Compile MMT Targets map
+    const targetMap = {};
+    targetRows.forEach(r => {
+      const code = (r['hotel_code'] ?? r['MMT ID'] ?? r['INGO ID'] ?? '').toString().trim();
+      const target = (r['Target'] ?? r['VDI Target'] ?? '').toString().trim();
+      const ratio = (r['PLB Ratio [for example: 10:1 or 15:1]'] ?? r['PLB Ratio'] ?? r['ratio'] ?? '').toString().trim();
+      const asp = parseFloat(r['ASP'] ?? r['adr'] ?? r['average_rate'] ?? 0) || 0;
+      
+      if (code) {
+        targetMap[code] = { target, ratio, asp };
+      }
+    });
+    
+    // Main compilation loop
+    plbData = [];
+    let vdiCount = 0;
+    let plbCount = 0;
+    let achievedCount = 0;
+    let oppCount = 0;
+    
+    Object.keys(liveMap).forEach(propId => {
+      const meta = liveMap[propId];
+      const ingoId = meta.ingoId;
+      
+      // Historical months RNs
+      const histRNs = plbHistMonths.map(m => dbRns[propId]?.[m] || 0);
+      const avg3M = histRNs.length ? parseFloat((histRNs.reduce((sum, v) => sum + v, 0) / histRNs.length).toFixed(1)) : 0;
+      
+      // Current Month Actual
+      const actualRN = dbRns[propId]?.[plbCurrentMonth] || 0;
+      
+      // Target matching
+      const tInfo = targetMap[ingoId];
+      let type = '-';
+      let vdiTarget = '';
+      let plbRatio = '';
+      let gap = '';
+      let freeRNs = 0;
+      let revenue = 0;
+      let isOpportunity = false;
+      let achieved = false;
+      const asp = tInfo ? tInfo.asp : 0;
+      
+      if (tInfo) {
+        const targetVal = tInfo.target;
+        const ratio = tInfo.ratio;
+        
+        if (targetVal && targetVal.toString().toUpperCase() !== 'PLB') {
+          type = 'VDI';
+          vdiTarget = parseFloat(targetVal) || 0;
+          gap = actualRN - vdiTarget;
+          vdiCount++;
+          
+          if (actualRN >= vdiTarget) {
+            achieved = true;
+            achievedCount++;
+            const denom = parseInt(ratio.split(':')[0]) || 10;
+            freeRNs = Math.floor((actualRN - vdiTarget) / denom);
+          } else {
+            if (vdiTarget - actualRN <= 10) {
+              isOpportunity = true;
+              oppCount++;
+            }
+          }
+        } else if (targetVal && targetVal.toString().toUpperCase() === 'PLB') {
+          type = 'PLB';
+          plbRatio = ratio || '1:10';
+          plbCount++;
+          
+          const denom = parseInt(ratio.split(':')[0]) || 10;
+          freeRNs = Math.floor(actualRN / denom);
+          if (freeRNs > 0) {
+            achieved = true;
+            achievedCount++;
+          }
+        }
+      }
+      
+      revenue = freeRNs * asp;
+      
+      const suggestedTarget = histRNs.length ? Math.max(...histRNs, actualRN) : 0;
+      const suggestedTargetFinal = suggestedTarget + 10;
+      
+      plbData.push({
+        propertyId: propId,
+        ingoId: ingoId,
+        name: meta.name,
+        city: meta.city,
+        status: meta.status,
+        histRNs: histRNs,
+        avg3M: avg3M,
+        actualRN: actualRN,
+        type: type,
+        vdiTarget: vdiTarget,
+        plbRatio: plbRatio,
+        gap: gap,
+        freeRNs: freeRNs,
+        asp: asp,
+        revenue: revenue,
+        suggestedTarget: suggestedTarget,
+        suggestedTargetFinal: suggestedTargetFinal,
+        isOpportunity: isOpportunity,
+        achieved: achieved
+      });
+    });
+    
+    plbData.sort((a, b) => a.name.localeCompare(b.name));
+    
+    // Update summary labels
+    document.getElementById('plbstatTotal').textContent = plbData.length.toLocaleString();
+    document.getElementById('plbstatVdi').textContent = vdiCount.toLocaleString();
+    document.getElementById('plbstatPlb').textContent = plbCount.toLocaleString();
+    document.getElementById('plbstatAchieved').textContent = achievedCount.toLocaleString();
+    document.getElementById('plbstatOpp').textContent = oppCount.toLocaleString();
+    
+    renderPlbTableHeaders();
+    renderPlbTableBody(plbData);
+    
+    document.getElementById('plbDashboard').classList.remove('hidden');
+    statusDiv.style.color = '#059669';
+    statusDiv.textContent = `Automation complete! Processed ${plbData.length} properties.`;
+    
+  } catch (err) {
+    console.error(err);
+    statusDiv.style.color = '#dc2626';
+    statusDiv.textContent = `Error: ${err.message}`;
+    alert("Automation failed: " + err.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function renderPlbTableHeaders() {
+  const tr = document.getElementById('plbTableHeaders');
+  tr.innerHTML = '';
+  
+  const headers = ['Hotel Name', 'Prop ID', 'INGO ID', 'City', 'Status'];
+  plbHistMonths.forEach(m => headers.push(m));
+  headers.push('3-Month Avg', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Payout (Free RNs)', 'Est. Revenue', 'Suggested Target', 'Suggested Target (FINAL)');
+  
+  headers.forEach(h => {
+    const th = document.createElement('th');
+    th.style.padding = '12px 10px';
+    th.style.textAlign = (h === 'Hotel Name' || h === 'City' || h === 'Status') ? 'left' : 'center';
+    th.style.background = '#f8fafc';
+    th.textContent = h;
+    tr.appendChild(th);
+  });
+}
+
+function renderPlbTableBody(rows) {
+  const tbody = document.getElementById('plbTableBody');
+  tbody.innerHTML = '';
+  
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="20" style="text-align: center; color: #888; padding: 40px;">No matching records found.</td></tr>`;
+    return;
+  }
+  
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid #e2e8f0';
+    
+    addCell(tr, row.name, 'left');
+    addCell(tr, row.propertyId, 'center');
+    addCell(tr, row.ingoId, 'center');
+    addCell(tr, row.city, 'left');
+    addCell(tr, row.status, 'center');
+    
+    row.histRNs.forEach(val => addCell(tr, val, 'center'));
+    addCell(tr, row.avg3M, 'center');
+    addCell(tr, row.actualRN, 'center');
+    addCell(tr, row.vdiTarget === '' ? '-' : row.vdiTarget, 'center');
+    addCell(tr, row.plbRatio === '' ? '-' : row.plbRatio, 'center');
+    
+    let gapText = '-';
+    let gapColor = '#000';
+    if (row.gap !== '') {
+      gapText = row.gap >= 0 ? `+${row.gap}` : row.gap;
+      gapColor = row.gap >= 0 ? '#15803d' : '#b91c1c';
+    }
+    const tdGap = addCell(tr, gapText, 'center');
+    tdGap.style.color = gapColor;
+    tdGap.style.fontWeight = 'bold';
+    
+    addCell(tr, row.freeRNs > 0 ? `${row.freeRNs} RNs` : '-', 'center');
+    addCell(tr, row.revenue > 0 ? `₹${Math.round(row.revenue).toLocaleString()}` : '-', 'center');
+    addCell(tr, row.suggestedTarget, 'center');
+    addCell(tr, row.suggestedTargetFinal, 'center');
+    
+    tbody.appendChild(tr);
+  });
+}
+
+function clearPlbInputs() {
+  document.getElementById('plbUrlLiveProps').value = '';
+  document.getElementById('plbUrlDbRns').value = '';
+  document.getElementById('plbUrlMmtTargets').value = '';
+  document.getElementById('plbFileLiveProps').value = '';
+  document.getElementById('plbFileDbRns').value = '';
+  document.getElementById('plbFileMmtTargets').value = '';
+  document.getElementById('plbStatus').textContent = '';
+  document.getElementById('plbDashboard').classList.add('hidden');
+  plbData = [];
+}
+
+function filterPlbTable() {
+  const query = document.getElementById('plbSearch').value.toLowerCase().trim();
+  const filter = document.getElementById('plbFilter').value;
+  
+  const filtered = plbData.filter(row => {
+    const matchesQuery = row.name.toLowerCase().includes(query) || row.propertyId.toString().includes(query) || row.ingoId.toString().includes(query);
+    if (!matchesQuery) return false;
+    
+    if (filter === 'all') return true;
+    if (filter === 'vdi') return row.type === 'VDI';
+    if (filter === 'plb') return row.type === 'PLB';
+    if (filter === 'achieved') return row.achieved;
+    if (filter === 'missed') return row.type === 'VDI' && !row.achieved;
+    if (filter === 'opportunity') return row.isOpportunity;
+    
+    return true;
+  });
+  
+  renderPlbTableBody(filtered);
+}
+
+function exportPlbReportExcel() {
+  if (plbData.length === 0) {
+    alert("No data available to export.");
+    return;
+  }
+  
+  const headers = [
+    'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)'
+  ];
+  
+  const sheetData = [headers];
+  plbData.forEach(row => {
+    const r = [
+      row.propertyId,
+      row.ingoId,
+      row.name,
+      row.city,
+      row.status,
+      ...row.histRNs,
+      row.avg3M,
+      row.actualRN,
+      row.vdiTarget,
+      row.plbRatio,
+      row.gap,
+      row.freeRNs,
+      row.revenue,
+      row.suggestedTarget,
+      row.suggestedTargetFinal
+    ];
+    sheetData.push(r);
+  });
+  
+  const ws = XLSX.utils.aoa_to_sheet(sheetData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "PLB_VDI_Report");
+  
+  XLSX.writeFile(wb, `PLB_VDI_Report_${plbCurrentMonth}.xlsx`);
+}
 </script>
 
   <!-- Rebuttal Modal -->
