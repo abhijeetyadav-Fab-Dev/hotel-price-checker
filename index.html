@@ -2090,16 +2090,16 @@ async function runPlbAutomation() {
     const normMonth = m => m === 'Sept' ? 'Sep' : m;
     
     if (hasMonthNameCols) {
-      // Format: columns are month names (Jan, Feb, ..., Dec) with property_id in __EMPTY or __EMPTY_5 or property_id
+      // Format: columns are month names (Jan, Feb, ..., Dec) with property_id in property_id_1 or __EMPTY_5 or __EMPTY or property_id
       // Skip the first row if it's a label row (contains 'property_id' as a value)
       const dataRows = dbRows.filter(r => {
-        const firstVal = (r['__EMPTY'] ?? r['__EMPTY_5'] ?? r['property_id'] ?? '').toString().trim().toLowerCase();
-        return firstVal !== '' && firstVal !== 'property_id';
+        const pId = (r['property_id_1'] || r['__EMPTY_5'] || r['__EMPTY'] || r['property_id'] || '').toString().trim().toLowerCase();
+        return pId !== '' && pId !== 'property_id';
       });
       
       dataRows.forEach(r => {
-        // Try multiple possible property_id column names
-        let propId = (r['__EMPTY_5'] ?? r['__EMPTY'] ?? r['property_id'] ?? r['Prop ID'] ?? '').toString().trim();
+        // Try multiple possible property_id column names (preferring the right-hand side table keys first)
+        let propId = (r['property_id_1'] || r['__EMPTY_5'] || r['__EMPTY'] || r['property_id'] || r['Prop ID'] || '').toString().trim();
         propId = propId.replace(/,/g, '');
         if (!propId || isNaN(parseInt(propId))) return;
         
@@ -2119,7 +2119,7 @@ async function runPlbAutomation() {
     } else if (hasNumericMonthCols) {
       // Wide/pivot format: columns are property_id, 1, 2, 3, ... 12
       dbRows.forEach(r => {
-        let propId = (r['property_id'] ?? r['Prop ID'] ?? r['propertyId'] ?? '').toString().trim();
+        let propId = (r['property_id_1'] || r['property_id'] || r['Prop ID'] || r['propertyId'] || '').toString().trim();
         propId = propId.replace(/,/g, '');
         if (!propId) return;
         
@@ -2137,12 +2137,12 @@ async function runPlbAutomation() {
     } else {
       // Long format: columns are property_id, rns, month (or __EMPTY, __EMPTY_1, __EMPTY_2)
       const dataRows = dbRows.filter(r => {
-        const firstVal = (r['property_id'] ?? r['__EMPTY'] ?? '').toString().trim().toLowerCase();
+        const firstVal = (r['property_id'] || r['__EMPTY'] || '').toString().trim().toLowerCase();
         return firstVal !== '' && firstVal !== 'property_id';
       });
       
       dataRows.forEach(r => {
-        const propId = (r['property_id'] ?? r['__EMPTY'] ?? r['Prop ID'] ?? '').toString().trim().replace(/,/g, '');
+        const propId = (r['property_id'] || r['__EMPTY'] || r['Prop ID'] || '').toString().trim().replace(/,/g, '');
         const rns = parseFloat(r['rns'] ?? r['__EMPTY_1'] ?? r['count'] ?? r['RNs'] ?? 0) || 0;
         const rawMonth = (r['month'] ?? r['__EMPTY_2'] ?? r['Month'] ?? '').toString().trim();
         
