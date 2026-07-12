@@ -1,16 +1,16 @@
 # Graph Report - hotel-price-checker  (2026-07-12)
 
 ## Corpus Check
-- 14 files · ~19,192 words
+- 20 files · ~20,948 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 79 nodes · 66 edges · 15 communities (8 shown, 7 thin omitted)
+- 103 nodes · 84 edges · 20 communities (7 shown, 13 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c33c836e`
+- Built from commit: `90c3a02c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -29,6 +29,11 @@
 - [[_COMMUNITY_Community 12|Community 12]]
 - [[_COMMUNITY_Community 13|Community 13]]
 - [[_COMMUNITY_Community 14|Community 14]]
+- [[_COMMUNITY_Community 15|Community 15]]
+- [[_COMMUNITY_Community 16|Community 16]]
+- [[_COMMUNITY_Community 17|Community 17]]
+- [[_COMMUNITY_Community 18|Community 18]]
+- [[_COMMUNITY_Community 19|Community 19]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 3 edges
@@ -48,19 +53,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (15 total, 7 thin omitted)
+## Communities (20 total, 13 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.14
 Nodes (14): apiClient, app, axios, cors, express, fetchWithRetry(), fs, { google } (+6 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.25
-Nodes (7): description, main, name, scripts, dev, start, version
-
-### Community 2 - "Community 2"
-Cohesion: 0.33
-Nodes (6): dependencies, axios, cors, express, googleapis, xlsx
+Cohesion: 0.14
+Nodes (13): dependencies, axios, cors, express, googleapis, xlsx, description, main (+5 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.50
@@ -79,16 +80,16 @@ Cohesion: 0.40
 Nodes (3): axios, sheets, XLSX
 
 ## Knowledge Gaps
-- **49 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+44 more)
+- **61 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+56 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `Community 2` to `Community 1`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _49 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _61 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
