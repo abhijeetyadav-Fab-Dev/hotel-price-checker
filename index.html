@@ -2075,23 +2075,53 @@ async function runPlbAutomation() {
     const dbRns = {};
     const monthsSet = new Set();
     
-    dbRows.forEach(r => {
-      const propId = (r['property_id'] ?? r['Prop ID'] ?? r['propertyId'] ?? '').toString().trim();
-      const rns = parseFloat(r['rns'] ?? r['count'] ?? r['RNs'] ?? 0) || 0;
-      const rawMonth = (r['month'] ?? r['Month'] ?? '').toString().trim();
-      
-      if (!propId || !rawMonth) return;
-      
-      let monthName = rawMonth;
-      if (plbMonthNames[rawMonth]) {
-        monthName = plbMonthNames[rawMonth];
-      }
-      
-      monthsSet.add(monthName);
-      
-      if (!dbRns[propId]) dbRns[propId] = {};
-      dbRns[propId][monthName] = (dbRns[propId][monthName] || 0) + rns;
-    });
+    // Detect format: check if columns '1','2','3'...'12' exist (wide/pivot format)
+    const sampleRow = dbRows[0] || {};
+    const sampleKeys = Object.keys(sampleRow);
+    const hasWideMonths = ['1','2','3','4','5','6'].some(m => sampleKeys.includes(m));
+    
+    if (hasWideMonths) {
+      // Wide/pivot format: columns are property_id, 1, 2, 3, ... 12
+      dbRows.forEach(r => {
+        // property_id may have commas (e.g. "1,000") — try multiple key names
+        let propId = (r['property_id'] ?? r['Prop ID'] ?? r['propertyId'] ?? '').toString().trim();
+        // Remove commas from numeric property IDs (e.g. "1,000" -> "1000")
+        propId = propId.replace(/,/g, '');
+        if (!propId) return;
+        
+        if (!dbRns[propId]) dbRns[propId] = {};
+        
+        for (let m = 1; m <= 12; m++) {
+          const val = parseFloat(r[m.toString()] ?? r[m] ?? 0) || 0;
+          if (val > 0) {
+            const monthName = plbMonthNames[m.toString().padStart(2, '0')];
+            monthsSet.add(monthName);
+            dbRns[propId][monthName] = (dbRns[propId][monthName] || 0) + val;
+          }
+        }
+      });
+    } else {
+      // Long format: columns are property_id, rns, month
+      dbRows.forEach(r => {
+        const propId = (r['property_id'] ?? r['Prop ID'] ?? r['propertyId'] ?? '').toString().trim().replace(/,/g, '');
+        const rns = parseFloat(r['rns'] ?? r['count'] ?? r['RNs'] ?? 0) || 0;
+        const rawMonth = (r['month'] ?? r['Month'] ?? '').toString().trim();
+        
+        if (!propId || !rawMonth) return;
+        
+        let monthName = rawMonth;
+        if (plbMonthNames[rawMonth]) {
+          monthName = plbMonthNames[rawMonth];
+        } else if (plbMonthNames[rawMonth.padStart(2, '0')]) {
+          monthName = plbMonthNames[rawMonth.padStart(2, '0')];
+        }
+        
+        monthsSet.add(monthName);
+        
+        if (!dbRns[propId]) dbRns[propId] = {};
+        dbRns[propId][monthName] = (dbRns[propId][monthName] || 0) + rns;
+      });
+    }
     
     // Sort months to identify history vs current month
     const monthsSorted = [...monthsSet].sort((a, b) => {
