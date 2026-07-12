@@ -1975,14 +1975,22 @@ function parseGoogleSheetUrl(url) {
 }
 
 async function fetchGoogleSheetCsv(url) {
-  const parsed = parseGoogleSheetUrl(url);
-  if (!parsed) throw new Error("Invalid Google Sheets URL format.");
-  
-  const csvUrl = `https://docs.google.com/spreadsheets/d/${parsed.sheetId}/export?exportFormat=csv&gid=${parsed.gid}`;
-  
+  let csvUrl;
+
+  // If the URL is already a published CSV link (/pub?output=csv), use it directly.
+  // These have proper CORS headers and don't need reconstruction.
+  if (/\/pub\b/.test(url)) {
+    csvUrl = url.includes('output=csv') ? url : url + (url.includes('?') ? '&' : '?') + 'output=csv';
+  } else {
+    // Regular /d/SPREADSHEET_ID/ URL — build an export link
+    const parsed = parseGoogleSheetUrl(url);
+    if (!parsed) throw new Error("Invalid Google Sheets URL format. Please use a published CSV link or a standard Google Sheets URL.");
+    csvUrl = `https://docs.google.com/spreadsheets/d/${parsed.sheetId}/export?exportFormat=csv&gid=${parsed.gid}`;
+  }
+
   const response = await fetch(csvUrl);
   if (!response.ok) {
-    throw new Error(`Failed to fetch sheet. Please verify it is shared as 'Anyone with the link can view'.`);
+    throw new Error(`Failed to fetch sheet (HTTP ${response.status}). Please verify it is published / shared as 'Anyone with the link can view'.`);
   }
   return await response.text();
 }
