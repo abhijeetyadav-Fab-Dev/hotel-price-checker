@@ -536,13 +536,24 @@
           </div>
           
           <!-- Source C: MMT Raw Targets Spreadsheet -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
             <label style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #334155;">C. MMT Targets & PLB Ratios</label>
             <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 8px;">Excel sheet sent by MMT Connect containing VDI targets and PLB ratio rules. Columns needed: <code>hotel_code</code>, <code>Target</code>, <code>PLB Ratio</code></span>
             <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
               <input type="text" id="plbUrlMmtTargets" placeholder="Paste Google Sheet URL..." style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
               <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 500;">OR</span>
               <input type="file" id="plbFileMmtTargets" accept=".xlsx, .xls, .csv" style="font-size: 0.85rem;">
+            </div>
+          </div>
+
+          <!-- Source D: Current Month Bookings & Guest Status -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+            <label style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #334155;">D. Booked RNs & Guest Status (July Booked + Guest Status)</label>
+            <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 8px;">Contains current month booking pipeline with Guest Status (Checkout, Checkin, Pending). Columns needed: <code>property_id</code>, <code>rns</code>, <code>month</code>, <code>guest_status_str</code></span>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="plbUrlBooked" placeholder="Paste Google Sheet URL..." style="flex: 1; min-width: 250px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;">
+              <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 500;">OR</span>
+              <input type="file" id="plbFileBooked" accept=".xlsx, .xls, .csv" style="font-size: 0.85rem;">
             </div>
           </div>
           
@@ -2071,6 +2082,15 @@ async function runPlbAutomation() {
     const dbRows = await loadSource('plbUrlDbRns', 'plbFileDbRns', 'Database Actual Room Nights');
     const targetRows = await loadSource('plbUrlMmtTargets', 'plbFileMmtTargets', 'MMT Targets & PLB Ratios');
     
+    let bookedRows = [];
+    try {
+      if (document.getElementById('plbUrlBooked').value.trim() || document.getElementById('plbFileBooked').files.length > 0) {
+        bookedRows = await loadSource('plbUrlBooked', 'plbFileBooked', 'Booked RNs & Guest Status');
+      }
+    } catch (e) {
+      console.warn("Optional July Booked RNs sheet failed to load:", e.message);
+    }
+    
     statusDiv.textContent = "Data loaded. Starting compilation & merge...";
 
     // Helper to get row value case-insensitively and space-insensitively
@@ -2204,6 +2224,45 @@ async function runPlbAutomation() {
     plbCurrentMonth = monthsSorted[monthsSorted.length - 1];
     plbHistMonths = monthsSorted.slice(Math.max(0, monthsSorted.length - 4), monthsSorted.length - 1);
     
+    const monthNamesArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const targetMonthNumber = monthNamesArr.indexOf(plbCurrentMonth) + 1; // E.g., July = 7
+    
+    const bookedMap = {};
+    if (bookedRows && bookedRows.length > 0) {
+      bookedRows.forEach(r => {
+        let propId = getVal(r, ['propertyId', 'property_id', 'propId', 'prop_id']);
+        if (!propId) return;
+        propId = propId.toString().trim().replace(/,/g, '');
+        
+        let mVal = getVal(r, ['month', 'stay_month', 'Month']);
+        let monthNum = parseInt(mVal) || 0;
+        if (!monthNum && typeof mVal === 'string') {
+          const idx = monthNamesArr.findIndex(name => mVal.toLowerCase().includes(name.toLowerCase()));
+          if (idx !== -1) monthNum = idx + 1;
+        }
+        
+        if (monthNum !== targetMonthNumber) return;
+        
+        const status = (getVal(r, ['guest_status_str', 'guest_status', 'status']) || '').toString().trim().toLowerCase();
+        const rns = parseFloat(getVal(r, ['rns', 'room_nights', 'rn', 'RNs'])) || 0;
+        
+        if (!bookedMap[propId]) {
+          bookedMap[propId] = { checkout: 0, checkin: 0, pending: 0, shifted: 0, total: 0 };
+        }
+        
+        if (status.includes('checkout') || status.includes('out')) {
+          bookedMap[propId].checkout += rns;
+        } else if (status.includes('checkin') || status.includes('in')) {
+          bookedMap[propId].checkin += rns;
+        } else if (status.includes('pending') || status.includes('pen')) {
+          bookedMap[propId].pending += rns;
+        } else if (status.includes('shifted') || status.includes('shift')) {
+          bookedMap[propId].shifted += rns;
+        }
+        bookedMap[propId].total += rns;
+      });
+    }
+    
     const targetMap = {};
     targetRows.forEach(r => {
       const code = getVal(r, ['Hotel Code', 'hotel_code', 'MMT ID', 'INGO ID', 'code']).toString().trim();
@@ -2222,6 +2281,8 @@ async function runPlbAutomation() {
     let achievedCount = 0;
     let oppCount = 0;
     
+    const hasBookedData = bookedRows && bookedRows.length > 0;
+
     Object.keys(liveMap).forEach(propId => {
       const meta = liveMap[propId];
       const ingoId = meta.ingoId;
@@ -2230,6 +2291,13 @@ async function runPlbAutomation() {
       const avg3M = histRNs.length ? parseFloat((histRNs.reduce((sum, v) => sum + v, 0) / histRNs.length).toFixed(1)) : 0;
       const peak = histRNs.length ? Math.max(...histRNs) : 0;
       const actualRN = dbRns[propId]?.[plbCurrentMonth] || 0;
+      
+      // July Booked & Guest Status Details
+      const bInfo = bookedMap[propId] || { checkout: 0, checkin: 0, pending: 0, total: 0 };
+      const checkoutRN = bInfo.checkout;
+      const checkinRN = bInfo.checkin;
+      const pendingRN = bInfo.pending;
+      const projectedRN = hasBookedData ? (checkoutRN + checkinRN + pendingRN) : actualRN;
       
       const tInfo = targetMap[ingoId];
       let type = '-';
@@ -2284,51 +2352,59 @@ async function runPlbAutomation() {
             if (targetVal && targetVal.toString().toUpperCase() !== 'PLB') {
               type = 'VDI';
               vdiTarget = parseFloat(targetVal) || 0;
-              gap = actualRN - vdiTarget;
+              gap = projectedRN - vdiTarget;
               
-              // VDI Eligibility: Miss target by >= 10 RNs AND Hist Avg < Target
-              const missesBy10 = (vdiTarget - actualRN >= 10);
+              // VDI Eligibility: Miss target by >= 10 Projected RNs AND Hist Avg < Target
+              const missesBy10 = (vdiTarget - projectedRN >= 10);
               const avgUnderTarget = (avg3M < vdiTarget);
               
               if (missesBy10 && avgUnderTarget) {
                 finalStatus = 'Good To Go';
-                reason = `VDI Chosen: Misses target by >= 10 RNs (Target: ${vdiTarget}, Actual: ${actualRN}) & Hist Avg (${avg3M}) < Target.`;
+                reason = hasBookedData
+                  ? `VDI Chosen: Projected (${projectedRN} [Out: ${checkoutRN}, In: ${checkinRN}, Pen: ${pendingRN}]) misses target by >= 10 RNs (Target: ${vdiTarget}) & Hist Avg (${avg3M}) < Target.`
+                  : `VDI Chosen: Actual (${actualRN}) misses target by >= 10 RNs (Target: ${vdiTarget}) & Hist Avg (${avg3M}) < Target.`;
               } else if (!missesBy10) {
                 finalStatus = 'Not OK';
-                reason = `VDI Excluded: Target met or missed by < 10 RNs (Target: ${vdiTarget}, Actual: ${actualRN}).`;
+                reason = hasBookedData
+                  ? `VDI Excluded: Target met or missed by < 10 RNs (Target: ${vdiTarget}, Projected: ${projectedRN} [Out: ${checkoutRN}, In: ${checkinRN}, Pen: ${pendingRN}]).`
+                  : `VDI Excluded: Target met or missed by < 10 RNs (Target: ${vdiTarget}, Actual: ${actualRN}).`;
               } else {
                 finalStatus = 'Not OK';
                 reason = `VDI Excluded: Historical 3M Average (${avg3M}) is >= Target (${vdiTarget}).`;
               }
               
-              if (actualRN >= vdiTarget) {
+              if (projectedRN >= vdiTarget) {
                 achieved = true;
                 const denom = parseInt(ratio.split(':')[0]) || 10;
-                freeRNs = Math.floor((actualRN - vdiTarget) / denom);
-              } else if (vdiTarget - actualRN <= 10) {
+                freeRNs = Math.floor((projectedRN - vdiTarget) / denom);
+              } else if (vdiTarget - projectedRN <= 10) {
                 isOpportunity = true;
               }
             } else if (targetVal && targetVal.toString().toUpperCase() === 'PLB') {
               type = 'PLB';
               plbRatio = ratio || '1:10';
               
-              // PLB Eligibility: Current Actual < 8 RNs AND Hist Peak < 8 RNs
-              const actualUnder8 = (actualRN < 8);
+              // PLB Eligibility: Projected Actual < 8 RNs AND Hist Peak < 8 RNs
+              const projectedUnder8 = (projectedRN < 8);
               const peakUnder8 = (peak < 8);
               
-              if (actualUnder8 && peakUnder8) {
+              if (projectedUnder8 && peakUnder8) {
                 finalStatus = 'Good To Go';
-                reason = `PLB Chosen: Current actual (${actualRN}) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`;
-              } else if (!actualUnder8) {
+                reason = hasBookedData
+                  ? `PLB Chosen: Projected (${projectedRN} [Out: ${checkoutRN}, In: ${checkinRN}, Pen: ${pendingRN}]) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`
+                  : `PLB Chosen: Current actual (${actualRN}) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`;
+              } else if (!projectedUnder8) {
                 finalStatus = 'Not OK';
-                reason = `PLB Excluded: Current actual (${actualRN}) is >= 8 RNs.`;
+                reason = hasBookedData
+                  ? `PLB Excluded: Projected (${projectedRN} [Out: ${checkoutRN}, In: ${checkinRN}, Pen: ${pendingRN}]) is >= 8 RNs.`
+                  : `PLB Excluded: Current actual (${actualRN}) is >= 8 RNs.`;
               } else {
                 finalStatus = 'Not OK';
                 reason = `PLB Excluded: Historical Peak (${peak}) is >= 8 RNs.`;
               }
               
               const denom = parseInt(ratio.split(':')[0]) || 10;
-              freeRNs = Math.floor(actualRN / denom);
+              freeRNs = Math.floor(projectedRN / denom);
               if (freeRNs > 0) {
                 achieved = true;
               }
@@ -2338,15 +2414,19 @@ async function runPlbAutomation() {
             type = 'PLB';
             plbRatio = '1:10';
             
-            const actualUnder8 = (actualRN < 8);
+            const projectedUnder8 = (projectedRN < 8);
             const peakUnder8 = (peak < 8);
             
-            if (actualUnder8 && peakUnder8) {
+            if (projectedUnder8 && peakUnder8) {
               finalStatus = 'Good To Go';
-              reason = `PLB Chosen (No MMT Target): Current actual (${actualRN}) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`;
-            } else if (!actualUnder8) {
+              reason = hasBookedData
+                ? `PLB Chosen (No MMT Target): Projected (${projectedRN} [Out: ${checkoutRN}, In: ${checkinRN}, Pen: ${pendingRN}]) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`
+                : `PLB Chosen (No MMT Target): Current actual (${actualRN}) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`;
+            } else if (!projectedUnder8) {
               finalStatus = 'Not OK';
-              reason = `PLB Excluded: Current actual (${actualRN}) is >= 8 RNs.`;
+              reason = hasBookedData
+                ? `PLB Excluded: Projected (${projectedRN} [Out: ${checkoutRN}, In: ${checkinRN}, Pen: ${pendingRN}]) is >= 8 RNs.`
+                : `PLB Excluded: Current actual (${actualRN}) is >= 8 RNs.`;
             } else {
               finalStatus = 'Not OK';
               reason = `PLB Excluded: Historical Peak (${peak}) is >= 8 RNs.`;
@@ -2356,7 +2436,7 @@ async function runPlbAutomation() {
       }
       
       revenue = freeRNs * asp;
-      const suggestedTarget = histRNs.length ? Math.max(...histRNs, actualRN) : 0;
+      const suggestedTarget = histRNs.length ? Math.max(...histRNs, projectedRN) : 0;
       const suggestedTargetFinal = suggestedTarget + 10;
       
       plbData.push({
@@ -2368,6 +2448,10 @@ async function runPlbAutomation() {
         histRNs: histRNs,
         avg3M: avg3M,
         actualRN: actualRN,
+        checkoutRN: checkoutRN,
+        checkinRN: checkinRN,
+        pendingRN: pendingRN,
+        projectedRN: projectedRN,
         type: type,
         vdiTarget: vdiTarget,
         plbRatio: plbRatio,
@@ -2434,6 +2518,10 @@ function renderPlbTableHeaders() {
   headers.push(
     '3-Month Avg', 
     `${plbCurrentMonth} Actual`, 
+    'Checkout RNs', 
+    'Checkin RNs', 
+    'Pending RNs', 
+    'Projected RNs', 
     'MMT VDI Target', 
     'MMT PLB Ratio', 
     'Gap', 
@@ -2486,6 +2574,10 @@ function renderPlbTableBody(rows) {
     row.histRNs.forEach(val => addCell(tr, val, 'center'));
     addCell(tr, row.avg3M, 'center');
     addCell(tr, row.actualRN, 'center');
+    addCell(tr, hasBookedData ? row.checkoutRN : '-', 'center');
+    addCell(tr, hasBookedData ? row.checkinRN : '-', 'center');
+    addCell(tr, hasBookedData ? row.pendingRN : '-', 'center');
+    addCell(tr, hasBookedData ? row.projectedRN : '-', 'center');
     addCell(tr, row.vdiTarget === '' ? '-' : row.vdiTarget, 'center');
     addCell(tr, row.plbRatio === '' ? '-' : row.plbRatio, 'center');
     
@@ -2518,9 +2610,11 @@ function clearPlbInputs() {
   document.getElementById('plbUrlLiveProps').value = '';
   document.getElementById('plbUrlDbRns').value = '';
   document.getElementById('plbUrlMmtTargets').value = '';
+  document.getElementById('plbUrlBooked').value = '';
   document.getElementById('plbFileLiveProps').value = '';
   document.getElementById('plbFileDbRns').value = '';
   document.getElementById('plbFileMmtTargets').value = '';
+  document.getElementById('plbFileBooked').value = '';
   document.getElementById('plbStatus').textContent = '';
   document.getElementById('plbDashboard').classList.add('hidden');
   plbData = [];
@@ -2557,7 +2651,7 @@ function exportPlbReportExcel() {
   
   const headers = [
     'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
-    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'Checkout RNs', 'Checkin RNs', 'Pending RNs', 'Projected RNs', 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
   ];
   
   const sheetData = [headers];
@@ -2571,6 +2665,10 @@ function exportPlbReportExcel() {
       ...row.histRNs,
       row.avg3M,
       row.actualRN,
+      row.checkoutRN,
+      row.checkinRN,
+      row.pendingRN,
+      row.projectedRN,
       row.vdiTarget,
       row.plbRatio,
       row.gap,
@@ -2615,7 +2713,7 @@ async function pushPlbDataToGoogleSheet() {
   // Let's prepare the matrix data matching the exported Excel structure exactly!
   const headers = [
     'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
-    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'Checkout RNs', 'Checkin RNs', 'Pending RNs', 'Projected RNs', 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
   ];
 
   const payloadData = [headers];
@@ -2629,6 +2727,10 @@ async function pushPlbDataToGoogleSheet() {
       ...row.histRNs,
       row.avg3M,
       row.actualRN,
+      row.checkoutRN,
+      row.checkinRN,
+      row.pendingRN,
+      row.projectedRN,
       row.vdiTarget,
       row.plbRatio,
       row.gap,
