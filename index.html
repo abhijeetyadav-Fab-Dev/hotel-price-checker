@@ -2294,9 +2294,9 @@ async function runPlbAutomation() {
       
       // July Booked & Guest Status Details
       const bInfo = bookedMap[propId] || { checkout: 0, checkin: 0, pending: 0, total: 0 };
-      const checkoutRN = bInfo.checkout;
-      const checkinRN = bInfo.checkin;
-      const pendingRN = bInfo.pending;
+      const checkoutRN = hasBookedData ? bInfo.checkout : null;
+      const checkinRN = hasBookedData ? bInfo.checkin : null;
+      const pendingRN = hasBookedData ? bInfo.pending : null;
       const projectedRN = hasBookedData ? (checkoutRN + checkinRN + pendingRN) : actualRN;
       
       const tInfo = targetMap[ingoId];
@@ -2472,14 +2472,14 @@ async function runPlbAutomation() {
     // Calculate summary statistics
     let goodToGoCount = 0;
     let notOkCount = 0;
-    let vdiCount = 0;
-    let plbCount = 0;
+    let goodToGoVdi = 0;
+    let goodToGoPlb = 0;
     
     plbData.forEach(row => {
       if (row.finalStatus === 'Good To Go') {
         goodToGoCount++;
-        if (row.type === 'VDI') vdiCount++;
-        if (row.type === 'PLB') plbCount++;
+        if (row.type === 'VDI') goodToGoVdi++;
+        if (row.type === 'PLB') goodToGoPlb++;
       } else {
         notOkCount++;
       }
@@ -2489,8 +2489,8 @@ async function runPlbAutomation() {
     document.getElementById('plbstatTotal').textContent = plbData.length.toLocaleString();
     document.getElementById('plbstatGoodToGo').textContent = goodToGoCount.toLocaleString();
     document.getElementById('plbstatNotOk').textContent = notOkCount.toLocaleString();
-    document.getElementById('plbstatVdi').textContent = vdiCount.toLocaleString();
-    document.getElementById('plbstatPlb').textContent = plbCount.toLocaleString();
+    document.getElementById('plbstatVdi').textContent = goodToGoVdi.toLocaleString();
+    document.getElementById('plbstatPlb').textContent = goodToGoPlb.toLocaleString();
     
     renderPlbTableHeaders();
     renderPlbTableBody(plbData);
@@ -2574,10 +2574,10 @@ function renderPlbTableBody(rows) {
     row.histRNs.forEach(val => addCell(tr, val, 'center'));
     addCell(tr, row.avg3M, 'center');
     addCell(tr, row.actualRN, 'center');
-    addCell(tr, hasBookedData ? row.checkoutRN : '-', 'center');
-    addCell(tr, hasBookedData ? row.checkinRN : '-', 'center');
-    addCell(tr, hasBookedData ? row.pendingRN : '-', 'center');
-    addCell(tr, hasBookedData ? row.projectedRN : '-', 'center');
+    addCell(tr, row.checkoutRN !== null ? row.checkoutRN : '-', 'center');
+    addCell(tr, row.checkinRN !== null ? row.checkinRN : '-', 'center');
+    addCell(tr, row.pendingRN !== null ? row.pendingRN : '-', 'center');
+    addCell(tr, row.projectedRN !== null ? row.projectedRN : '-', 'center');
     addCell(tr, row.vdiTarget === '' ? '-' : row.vdiTarget, 'center');
     addCell(tr, row.plbRatio === '' ? '-' : row.plbRatio, 'center');
     
