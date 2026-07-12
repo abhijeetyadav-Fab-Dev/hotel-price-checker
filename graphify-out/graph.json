@@ -139,6 +139,105 @@
       "norm_label": "run.ps1"
     },
     {
+      "label": "scratch_check_sheets.js",
+      "file_type": "code",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L1",
+      "id": "scratch_check_sheets",
+      "community": 8,
+      "norm_label": "scratch_check_sheets.js"
+    },
+    {
+      "label": "axios",
+      "file_type": "code",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L1",
+      "id": "scratch_check_sheets_axios",
+      "community": 8,
+      "norm_label": "axios"
+    },
+    {
+      "label": "XLSX",
+      "file_type": "code",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L2",
+      "id": "scratch_check_sheets_xlsx",
+      "community": 8,
+      "norm_label": "xlsx"
+    },
+    {
+      "label": "sheets",
+      "file_type": "code",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L4",
+      "id": "scratch_check_sheets_sheets",
+      "community": 8,
+      "norm_label": "sheets"
+    },
+    {
+      "label": "check()",
+      "file_type": "code",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L10",
+      "id": "scratch_check_sheets_check",
+      "community": 8,
+      "norm_label": "check()"
+    },
+    {
+      "label": "scratch_test_live_props.js",
+      "file_type": "code",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L1",
+      "id": "scratch_test_live_props",
+      "community": 7,
+      "norm_label": "scratch_test_live_props.js"
+    },
+    {
+      "label": "axios",
+      "file_type": "code",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L1",
+      "id": "scratch_test_live_props_axios",
+      "community": 7,
+      "norm_label": "axios"
+    },
+    {
+      "label": "XLSX",
+      "file_type": "code",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L2",
+      "id": "scratch_test_live_props_xlsx",
+      "community": 7,
+      "norm_label": "xlsx"
+    },
+    {
+      "label": "parseExcelDate()",
+      "file_type": "code",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L4",
+      "id": "scratch_test_live_props_parseexceldate",
+      "community": 7,
+      "norm_label": "parseexceldate()"
+    },
+    {
+      "label": "getMonthDifference()",
+      "file_type": "code",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L18",
+      "id": "scratch_test_live_props_getmonthdifference",
+      "community": 7,
+      "norm_label": "getmonthdifference()"
+    },
+    {
+      "label": "check()",
+      "file_type": "code",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L22",
+      "id": "scratch_test_live_props_check",
+      "community": 7,
+      "norm_label": "check()"
+    },
+    {
       "label": "scratch_test_parse.js",
       "file_type": "code",
       "source_file": "scratch_test_parse.js",
@@ -489,12 +588,102 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scratch_check_sheets",
+      "target": "scratch_check_sheets_axios",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "scratch_check_sheets",
+      "target": "scratch_check_sheets_check",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scratch_check_sheets",
+      "target": "scratch_check_sheets_sheets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_check_sheets.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "scratch_check_sheets",
+      "target": "scratch_check_sheets_xlsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scratch_test_live_props",
+      "target": "scratch_test_live_props_axios",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scratch_test_live_props",
+      "target": "scratch_test_live_props_check",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "scratch_test_live_props",
+      "target": "scratch_test_live_props_getmonthdifference",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scratch_test_live_props",
+      "target": "scratch_test_live_props_parseexceldate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_live_props.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "scratch_test_live_props",
+      "target": "scratch_test_live_props_xlsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scratch_test_parse.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_parse",
-      "target": "scratch_test_parse_axios",
-      "confidence_score": 1.0
+      "target": "scratch_test_parse_axios"
     },
     {
       "relation": "contains",
@@ -502,9 +691,9 @@
       "source_file": "scratch_test_parse.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_parse",
-      "target": "scratch_test_parse_plbmonthnames",
-      "confidence_score": 1.0
+      "target": "scratch_test_parse_plbmonthnames"
     },
     {
       "relation": "contains",
@@ -512,9 +701,9 @@
       "source_file": "scratch_test_parse.js",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_parse",
-      "target": "scratch_test_parse_test",
-      "confidence_score": 1.0
+      "target": "scratch_test_parse_test"
     },
     {
       "relation": "contains",
@@ -522,9 +711,9 @@
       "source_file": "scratch_test_parse.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_parse",
-      "target": "scratch_test_parse_xlsx",
-      "confidence_score": 1.0
+      "target": "scratch_test_parse_xlsx"
     },
     {
       "relation": "contains",
@@ -709,5 +898,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "6053644b916d19e106e688f922b48fed083c3008"
+  "built_at_commit": "60f5c919a56ed930d608e817c619dc6566885257"
 }

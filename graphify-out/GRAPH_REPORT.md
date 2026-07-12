@@ -1,16 +1,16 @@
 # Graph Report - hotel-price-checker  (2026-07-12)
 
 ## Corpus Check
-- 5 files · ~16,382 words
+- 7 files · ~16,873 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 39 nodes · 35 edges · 7 communities (6 shown, 1 thin omitted)
+- 50 nodes · 44 edges · 9 communities (7 shown, 2 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6053644b`
+- Built from commit: `60f5c919`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,6 +21,8 @@
 - [[_COMMUNITY_Community 3|Community 3]]
 - [[_COMMUNITY_Community 4|Community 4]]
 - [[_COMMUNITY_Community 6|Community 6]]
+- [[_COMMUNITY_Community 7|Community 7]]
+- [[_COMMUNITY_Community 8|Community 8]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 3 edges
@@ -40,7 +42,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (7 total, 1 thin omitted)
+## Communities (9 total, 2 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.15
@@ -62,15 +64,19 @@ Nodes (3): builds, routes, version
 Cohesion: 0.40
 Nodes (3): axios, plbMonthNames, XLSX
 
+### Community 8 - "Community 8"
+Cohesion: 0.40
+Nodes (3): axios, sheets, XLSX
+
 ## Knowledge Gaps
-- **29 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+24 more)
+- **34 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+29 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `Community 2` to `Community 1`?**
-  _High betweenness centrality (0.071) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _29 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _34 weakly-connected nodes found - possible documentation gaps or missing edges._

@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\index.html": {
-    "mtime": 1783870660.325325,
-    "ast_hash": "a34b1697562a1d0c8f5d34533cb45641",
+    "mtime": 1783871156.896953,
+    "ast_hash": "fa0d4ea7cf6e993d3f29008041c8c6da",
     "semantic_hash": ""
   },
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\public\\index.html": {
@@ -32,6 +32,16 @@
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_test_parse.js": {
     "mtime": 1783870648.6155794,
     "ast_hash": "212b954a2f1d4087be702c3ec8ac57b0",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_check_sheets.js": {
+    "mtime": 1783871100.23764,
+    "ast_hash": "bb8abb595f737a92eee4d0372697d0a4",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_test_live_props.js": {
+    "mtime": 1783871112.7550268,
+    "ast_hash": "f62c58141fb8bb70302679f8f14078cc",
     "semantic_hash": ""
   }
 }
