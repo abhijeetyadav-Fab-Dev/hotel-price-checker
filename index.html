@@ -563,20 +563,20 @@
               <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Total Properties</div>
             </div>
             <div style="background: #ecfdf5; border: 1px solid #d1fae5; padding: 16px; border-radius: 8px; text-align: center;">
-              <div id="plbstatVdi" style="font-size: 1.5rem; font-weight: 700; color: #059669;">0</div>
-              <div style="font-size: 0.8rem; color: #059669; margin-top: 4px;">Active VDI Properties</div>
+              <div id="plbstatGoodToGo" style="font-size: 1.5rem; font-weight: 700; color: #059669;">0</div>
+              <div style="font-size: 0.8rem; color: #059669; margin-top: 4px;">Good To Go (Eligible)</div>
+            </div>
+            <div style="background: #fef2f2; border: 1px solid #fecaca; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatNotOk" style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">0</div>
+              <div style="font-size: 0.8rem; color: #dc2626; margin-top: 4px;">Not OK (Excluded)</div>
+            </div>
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 8px; text-align: center;">
+              <div id="plbstatVdi" style="font-size: 1.5rem; font-weight: 700; color: #1d4ed8;">0</div>
+              <div style="font-size: 0.8rem; color: #1d4ed8; margin-top: 4px;">VDI Good To Go</div>
             </div>
             <div style="background: #f5f3ff; border: 1px solid #ddd6fe; padding: 16px; border-radius: 8px; text-align: center;">
               <div id="plbstatPlb" style="font-size: 1.5rem; font-weight: 700; color: #6d28d9;">0</div>
-              <div style="font-size: 0.8rem; color: #6d28d9; margin-top: 4px;">Active PLB Properties</div>
-            </div>
-            <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 8px; text-align: center;">
-              <div id="plbstatAchieved" style="font-size: 1.5rem; font-weight: 700; color: #1d4ed8;">0</div>
-              <div style="font-size: 0.8rem; color: #1d4ed8; margin-top: 4px;">Achieved Targets</div>
-            </div>
-            <div style="background: #fffbeb; border: 1px solid #fef3c7; padding: 16px; border-radius: 8px; text-align: center;">
-              <div id="plbstatOpp" style="font-size: 1.5rem; font-weight: 700; color: #d97706;">0</div>
-              <div style="font-size: 0.8rem; color: #d97706; margin-top: 4px;">Opportunity Hotels</div>
+              <div style="font-size: 0.8rem; color: #6d28d9; margin-top: 4px;">PLB Good To Go</div>
             </div>
           </div>
 
@@ -584,9 +584,11 @@
             <input type="text" id="plbSearch" placeholder="Search by Hotel Name or ID..." style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;" oninput="filterPlbTable()">
             <select id="plbFilter" style="padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff;" onchange="filterPlbTable()">
               <option value="all">Show All Properties</option>
-              <option value="vdi">VDI Only</option>
-              <option value="plb">PLB Only</option>
-              <option value="achieved">Target Achieved Only</option>
+              <option value="goodtogo">Good To Go Only</option>
+              <option value="notok">Not OK Only</option>
+              <option value="vdi">VDI Good To Go Only</option>
+              <option value="plb">PLB Good To Go Only</option>
+              <option value="achieved">Target Achieved Only (For VDI/PLB)</option>
               <option value="missed">Target Missed Only</option>
               <option value="opportunity">Opportunity Only (Within 10 RNs)</option>
             </select>
@@ -2222,28 +2224,11 @@ async function runPlbAutomation() {
     
     Object.keys(liveMap).forEach(propId => {
       const meta = liveMap[propId];
-      
-      const statusLower = (meta.status || '').toString().trim().toLowerCase().replace(/\s/g, '');
-      const isLiveOrSoldOut = (statusLower === 'live' || statusLower === 'soldout');
-      if (!isLiveOrSoldOut) return;
-      
-      if (meta.liveDate) {
-        const liveDate = parseExcelDate(meta.liveDate);
-        if (liveDate) {
-          const currentYear = new Date().getFullYear();
-          const monthNamesArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          const targetMonthIdx = monthNamesArr.indexOf(plbCurrentMonth);
-          if (targetMonthIdx !== -1) {
-            const targetDate = new Date(currentYear, targetMonthIdx, 1);
-            const diffMonths = (targetDate.getFullYear() - liveDate.getFullYear()) * 12 + (targetDate.getMonth() - liveDate.getMonth());
-            if (diffMonths < 4) return;
-          }
-        }
-      }
-
       const ingoId = meta.ingoId;
+      
       const histRNs = plbHistMonths.map(m => dbRns[propId]?.[m] || 0);
       const avg3M = histRNs.length ? parseFloat((histRNs.reduce((sum, v) => sum + v, 0) / histRNs.length).toFixed(1)) : 0;
+      const peak = histRNs.length ? Math.max(...histRNs) : 0;
       const actualRN = dbRns[propId]?.[plbCurrentMonth] || 0;
       
       const tInfo = targetMap[ingoId];
@@ -2257,43 +2242,120 @@ async function runPlbAutomation() {
       let achieved = false;
       const asp = tInfo ? tInfo.asp : 0;
       
-      if (tInfo) {
-        const targetVal = tInfo.target;
-        const ratio = tInfo.ratio;
-        
-        if (targetVal && targetVal.toString().toUpperCase() !== 'PLB') {
-          type = 'VDI';
-          vdiTarget = parseFloat(targetVal) || 0;
-          gap = actualRN - vdiTarget;
-          vdiCount++;
-          
-          if (actualRN >= vdiTarget) {
-            achieved = true;
-            achievedCount++;
-            const denom = parseInt(ratio.split(':')[0]) || 10;
-            freeRNs = Math.floor((actualRN - vdiTarget) / denom);
-          } else {
-            if (vdiTarget - actualRN <= 10) {
-              isOpportunity = true;
-              oppCount++;
+      let finalStatus = 'Not OK';
+      let reason = '';
+      
+      // 1. Status Filter: Take Only Live and Sold Out Properties
+      const statusLower = (meta.status || '').toString().trim().toLowerCase().replace(/\s/g, '');
+      const isLiveOrSoldOut = (statusLower === 'live' || statusLower === 'soldout');
+      
+      if (!isLiveOrSoldOut) {
+        finalStatus = 'Not OK';
+        reason = `Excluded: Status is "${meta.status}" (must be Live or SoldOut).`;
+      } else {
+        // 2. Age Filter: Keep only properties which are 4 months and older
+        let isOldEnough = true;
+        let ageMonths = null;
+        if (meta.liveDate) {
+          const liveDate = parseExcelDate(meta.liveDate);
+          if (liveDate) {
+            const currentYear = new Date().getFullYear();
+            const monthNamesArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const targetMonthIdx = monthNamesArr.indexOf(plbCurrentMonth);
+            if (targetMonthIdx !== -1) {
+              const targetDate = new Date(currentYear, targetMonthIdx, 1);
+              ageMonths = (targetDate.getFullYear() - liveDate.getFullYear()) * 12 + (targetDate.getMonth() - liveDate.getMonth());
+              if (ageMonths < 4) {
+                isOldEnough = false;
+              }
             }
           }
-        } else if (targetVal && targetVal.toString().toUpperCase() === 'PLB') {
-          type = 'PLB';
-          plbRatio = ratio || '1:10';
-          plbCount++;
-          
-          const denom = parseInt(ratio.split(':')[0]) || 10;
-          freeRNs = Math.floor(actualRN / denom);
-          if (freeRNs > 0) {
-            achieved = true;
-            achievedCount++;
+        }
+        
+        if (!isOldEnough) {
+          finalStatus = 'Not OK';
+          reason = `Excluded: New property (${ageMonths !== null ? ageMonths : '?'} months old, must be >= 4).`;
+        } else {
+          // Evaluate target
+          if (tInfo) {
+            const targetVal = tInfo.target;
+            const ratio = tInfo.ratio;
+            
+            if (targetVal && targetVal.toString().toUpperCase() !== 'PLB') {
+              type = 'VDI';
+              vdiTarget = parseFloat(targetVal) || 0;
+              gap = actualRN - vdiTarget;
+              
+              // VDI Eligibility: Miss target by >= 10 RNs AND Hist Avg < Target
+              const missesBy10 = (vdiTarget - actualRN >= 10);
+              const avgUnderTarget = (avg3M < vdiTarget);
+              
+              if (missesBy10 && avgUnderTarget) {
+                finalStatus = 'Good To Go';
+                reason = `VDI Chosen: Misses target by >= 10 RNs (Target: ${vdiTarget}, Actual: ${actualRN}) & Hist Avg (${avg3M}) < Target.`;
+              } else if (!missesBy10) {
+                finalStatus = 'Not OK';
+                reason = `VDI Excluded: Target met or missed by < 10 RNs (Target: ${vdiTarget}, Actual: ${actualRN}).`;
+              } else {
+                finalStatus = 'Not OK';
+                reason = `VDI Excluded: Historical 3M Average (${avg3M}) is >= Target (${vdiTarget}).`;
+              }
+              
+              if (actualRN >= vdiTarget) {
+                achieved = true;
+                const denom = parseInt(ratio.split(':')[0]) || 10;
+                freeRNs = Math.floor((actualRN - vdiTarget) / denom);
+              } else if (vdiTarget - actualRN <= 10) {
+                isOpportunity = true;
+              }
+            } else if (targetVal && targetVal.toString().toUpperCase() === 'PLB') {
+              type = 'PLB';
+              plbRatio = ratio || '1:10';
+              
+              // PLB Eligibility: Current Actual < 8 RNs AND Hist Peak < 8 RNs
+              const actualUnder8 = (actualRN < 8);
+              const peakUnder8 = (peak < 8);
+              
+              if (actualUnder8 && peakUnder8) {
+                finalStatus = 'Good To Go';
+                reason = `PLB Chosen: Current actual (${actualRN}) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`;
+              } else if (!actualUnder8) {
+                finalStatus = 'Not OK';
+                reason = `PLB Excluded: Current actual (${actualRN}) is >= 8 RNs.`;
+              } else {
+                finalStatus = 'Not OK';
+                reason = `PLB Excluded: Historical Peak (${peak}) is >= 8 RNs.`;
+              }
+              
+              const denom = parseInt(ratio.split(':')[0]) || 10;
+              freeRNs = Math.floor(actualRN / denom);
+              if (freeRNs > 0) {
+                achieved = true;
+              }
+            }
+          } else {
+            // Not in target list -> Treat as PLB type
+            type = 'PLB';
+            plbRatio = '1:10';
+            
+            const actualUnder8 = (actualRN < 8);
+            const peakUnder8 = (peak < 8);
+            
+            if (actualUnder8 && peakUnder8) {
+              finalStatus = 'Good To Go';
+              reason = `PLB Chosen (No MMT Target): Current actual (${actualRN}) < 8 RNs & Hist Peak (${peak}) < 8 RNs.`;
+            } else if (!actualUnder8) {
+              finalStatus = 'Not OK';
+              reason = `PLB Excluded: Current actual (${actualRN}) is >= 8 RNs.`;
+            } else {
+              finalStatus = 'Not OK';
+              reason = `PLB Excluded: Historical Peak (${peak}) is >= 8 RNs.`;
+            }
           }
         }
       }
       
       revenue = freeRNs * asp;
-      
       const suggestedTarget = histRNs.length ? Math.max(...histRNs, actualRN) : 0;
       const suggestedTargetFinal = suggestedTarget + 10;
       
@@ -2316,18 +2378,35 @@ async function runPlbAutomation() {
         suggestedTarget: suggestedTarget,
         suggestedTargetFinal: suggestedTargetFinal,
         isOpportunity: isOpportunity,
-        achieved: achieved
+        achieved: achieved,
+        finalStatus: finalStatus,
+        selectionReason: reason
       });
     });
-    
     plbData.sort((a, b) => a.name.localeCompare(b.name));
     
-    // Update summary labels
+    // Calculate summary statistics
+    let goodToGoCount = 0;
+    let notOkCount = 0;
+    let vdiCount = 0;
+    let plbCount = 0;
+    
+    plbData.forEach(row => {
+      if (row.finalStatus === 'Good To Go') {
+        goodToGoCount++;
+        if (row.type === 'VDI') vdiCount++;
+        if (row.type === 'PLB') plbCount++;
+      } else {
+        notOkCount++;
+      }
+    });
+    
+    // Update summary labels in UI
     document.getElementById('plbstatTotal').textContent = plbData.length.toLocaleString();
+    document.getElementById('plbstatGoodToGo').textContent = goodToGoCount.toLocaleString();
+    document.getElementById('plbstatNotOk').textContent = notOkCount.toLocaleString();
     document.getElementById('plbstatVdi').textContent = vdiCount.toLocaleString();
     document.getElementById('plbstatPlb').textContent = plbCount.toLocaleString();
-    document.getElementById('plbstatAchieved').textContent = achievedCount.toLocaleString();
-    document.getElementById('plbstatOpp').textContent = oppCount.toLocaleString();
     
     renderPlbTableHeaders();
     renderPlbTableBody(plbData);
@@ -2352,12 +2431,24 @@ function renderPlbTableHeaders() {
   
   const headers = ['Hotel Name', 'Prop ID', 'INGO ID', 'City', 'Status'];
   plbHistMonths.forEach(m => headers.push(m));
-  headers.push('3-Month Avg', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Payout (Free RNs)', 'Est. Revenue', 'Suggested Target', 'Suggested Target (FINAL)');
+  headers.push(
+    '3-Month Avg', 
+    `${plbCurrentMonth} Actual`, 
+    'MMT VDI Target', 
+    'MMT PLB Ratio', 
+    'Gap', 
+    'Payout (Free RNs)', 
+    'Est. Revenue', 
+    'Suggested Target', 
+    'Suggested Target (FINAL)', 
+    'Final Status', 
+    'Selection Reason'
+  );
   
   headers.forEach(h => {
     const th = document.createElement('th');
     th.style.padding = '12px 10px';
-    th.style.textAlign = (h === 'Hotel Name' || h === 'City' || h === 'Status') ? 'left' : 'center';
+    th.style.textAlign = (h === 'Hotel Name' || h === 'City' || h === 'Status' || h === 'Selection Reason') ? 'left' : 'center';
     th.style.background = '#f8fafc';
     th.textContent = h;
     tr.appendChild(th);
@@ -2413,6 +2504,12 @@ function renderPlbTableBody(rows) {
     addCell(tr, row.suggestedTarget, 'center');
     addCell(tr, row.suggestedTargetFinal, 'center');
     
+    const tdFinal = addCell(tr, row.finalStatus, 'center');
+    tdFinal.style.fontWeight = 'bold';
+    tdFinal.style.color = row.finalStatus === 'Good To Go' ? '#16a34a' : '#dc2626';
+    
+    addCell(tr, row.selectionReason, 'left');
+    
     tbody.appendChild(tr);
   });
 }
@@ -2438,11 +2535,13 @@ function filterPlbTable() {
     if (!matchesQuery) return false;
     
     if (filter === 'all') return true;
-    if (filter === 'vdi') return row.type === 'VDI';
-    if (filter === 'plb') return row.type === 'PLB';
-    if (filter === 'achieved') return row.achieved;
-    if (filter === 'missed') return row.type === 'VDI' && !row.achieved;
-    if (filter === 'opportunity') return row.isOpportunity;
+    if (filter === 'goodtogo') return row.finalStatus === 'Good To Go';
+    if (filter === 'notok') return row.finalStatus === 'Not OK';
+    if (filter === 'vdi') return row.type === 'VDI' && row.finalStatus === 'Good To Go';
+    if (filter === 'plb') return row.type === 'PLB' && row.finalStatus === 'Good To Go';
+    if (filter === 'achieved') return row.achieved && row.finalStatus === 'Good To Go';
+    if (filter === 'missed') return row.type === 'VDI' && !row.achieved && row.finalStatus === 'Good To Go';
+    if (filter === 'opportunity') return row.isOpportunity && row.finalStatus === 'Good To Go';
     
     return true;
   });
@@ -2458,7 +2557,7 @@ function exportPlbReportExcel() {
   
   const headers = [
     'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
-    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)'
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
   ];
   
   const sheetData = [headers];
@@ -2478,7 +2577,9 @@ function exportPlbReportExcel() {
       row.freeRNs,
       row.revenue,
       row.suggestedTarget,
-      row.suggestedTargetFinal
+      row.suggestedTargetFinal,
+      row.finalStatus,
+      row.selectionReason
     ];
     sheetData.push(r);
   });
@@ -2514,7 +2615,7 @@ async function pushPlbDataToGoogleSheet() {
   // Let's prepare the matrix data matching the exported Excel structure exactly!
   const headers = [
     'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
-    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)'
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
   ];
 
   const payloadData = [headers];
@@ -2534,7 +2635,9 @@ async function pushPlbDataToGoogleSheet() {
       row.freeRNs,
       row.revenue,
       row.suggestedTarget,
-      row.suggestedTargetFinal
+      row.suggestedTargetFinal,
+      row.finalStatus,
+      row.selectionReason
     ]);
   });
 
