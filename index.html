@@ -1974,6 +1974,20 @@ function parseGoogleSheetUrl(url) {
   return { sheetId, gid };
 }
 
+function parseExcelDate(serial) {
+  if (!serial) return null;
+  const num = parseFloat(serial);
+  if (!isNaN(num)) {
+    // Excel epoch starts Dec 30, 1899
+    return new Date(Math.round((num - 25569) * 86400 * 1000));
+  }
+  const parsed = Date.parse(serial);
+  if (!isNaN(parsed)) {
+    return new Date(parsed);
+  }
+  return null;
+}
+
 async function fetchGoogleSheetCsv(url) {
   let csvUrl;
 
@@ -2055,19 +2069,41 @@ async function runPlbAutomation() {
     const dbRows = await loadSource('plbUrlDbRns', 'plbFileDbRns', 'Database Actual Room Nights');
     const targetRows = await loadSource('plbUrlMmtTargets', 'plbFileMmtTargets', 'MMT Targets & PLB Ratios');
     
-    statusDiv.textContent = "Data loaded successfully. Starting compilation & merge...";
-    
+    statusDiv.textContent = "Data loaded. Starting compilation & merge...";
+
+    // Helper to get row value case-insensitively and space-insensitively
+    const getVal = (row, possibleKeys) => {
+      const keys = Object.keys(row || {});
+      for (const pk of possibleKeys) {
+        const exact = row[pk];
+        if (exact !== undefined && exact !== '') return exact;
+        
+        const normalizedPk = pk.toLowerCase().replace(/[\s_-]/g, '');
+        const found = keys.find(k => k.toLowerCase().replace(/[\s_-]/g, '') === normalizedPk);
+        if (found && row[found] !== undefined && row[found] !== '') return row[found];
+      }
+      // Special check: target could be a column containing "vdi target" or ending in "target"
+      if (possibleKeys.includes('target')) {
+        const foundTarget = keys.find(k => k.toLowerCase().includes('target'));
+        if (foundTarget && row[foundTarget] !== undefined && row[foundTarget] !== '') {
+          return row[foundTarget];
+        }
+      }
+      return '';
+    };
+
     // Normalize live properties mapping
     const liveMap = {};
     livePropsRows.forEach(r => {
-      const propId = (r['Prop ID'] ?? r['property_id'] ?? r['propertyId'] ?? '').toString().trim();
-      const ingoId = (r['INGO ID'] ?? r['MMT ID'] ?? r['hotel_code'] ?? '').toString().trim();
-      const name = (r['Prop Name'] ?? r['property_name'] ?? r['Live Properties'] ?? r['hotelname'] ?? '-').toString().trim();
-      const city = (r['Prop City'] ?? r['property_city'] ?? r['city'] ?? '-').toString().trim();
-      const status = (r['Inv Status'] ?? r['STATUS'] ?? r['status'] ?? 'Live').toString().trim();
+      const propId = getVal(r, ['Prop ID', 'property_id', 'propertyId', 'prop_id']).toString().trim();
+      const ingoId = getVal(r, ['INGO ID', 'MMT ID', 'Hotel Code', 'hotel_code', 'ingo_id']).toString().trim();
+      const name = getVal(r, ['Prop Name', 'property_name', 'Live Properties', 'hotelname']).toString().trim() || '-';
+      const city = getVal(r, ['Prop City', 'property_city', 'city']).toString().trim() || '-';
+      const status = getVal(r, ['Inv Status', 'STATUS', 'status', 'inventory_status']).toString().trim() || 'Live';
+      const liveDate = getVal(r, ['Live Date', 'live_date', 'livedate', 'date_live']).toString().trim();
       
       if (propId && ingoId) {
-        liveMap[propId] = { ingoId, name, city, status };
+        liveMap[propId] = { ingoId, name, city, status, liveDate };
       }
     });
     
@@ -2076,9 +2112,6 @@ async function runPlbAutomation() {
     const monthsSet = new Set();
     
     // Detect the actual column structure from the XLSX parse.
-    // The Google Sheet has a two-table layout; XLSX picks up the top-right header row
-    // which gives month columns as 'Jan','Feb','Mar'...'Dec',
-    // and the left-side columns become '__EMPTY', '__EMPTY_1', etc.
     const sampleRow = dbRows[0] || {};
     const sampleKeys = Object.keys(sampleRow);
     
@@ -2090,15 +2123,12 @@ async function runPlbAutomation() {
     const normMonth = m => m === 'Sept' ? 'Sep' : m;
     
     if (hasMonthNameCols) {
-      // Format: columns are month names (Jan, Feb, ..., Dec) with property_id in property_id_1 or __EMPTY_5 or __EMPTY or property_id
-      // Skip the first row if it's a label row (contains 'property_id' as a value)
       const dataRows = dbRows.filter(r => {
         const pId = (r['property_id_1'] || r['__EMPTY_5'] || r['__EMPTY'] || r['property_id'] || '').toString().trim().toLowerCase();
         return pId !== '' && pId !== 'property_id';
       });
       
       dataRows.forEach(r => {
-        // Try multiple possible property_id column names (preferring the right-hand side table keys first)
         let propId = (r['property_id_1'] || r['__EMPTY_5'] || r['__EMPTY'] || r['property_id'] || r['Prop ID'] || '').toString().trim();
         propId = propId.replace(/,/g, '');
         if (!propId || isNaN(parseInt(propId))) return;
@@ -2117,7 +2147,6 @@ async function runPlbAutomation() {
         });
       });
     } else if (hasNumericMonthCols) {
-      // Wide/pivot format: columns are property_id, 1, 2, 3, ... 12
       dbRows.forEach(r => {
         let propId = (r['property_id_1'] || r['property_id'] || r['Prop ID'] || r['propertyId'] || '').toString().trim();
         propId = propId.replace(/,/g, '');
@@ -2135,7 +2164,6 @@ async function runPlbAutomation() {
         }
       });
     } else {
-      // Long format: columns are property_id, rns, month (or __EMPTY, __EMPTY_1, __EMPTY_2)
       const dataRows = dbRows.filter(r => {
         const firstVal = (r['property_id'] || r['__EMPTY'] || '').toString().trim().toLowerCase();
         return firstVal !== '' && firstVal !== 'property_id';
@@ -2162,7 +2190,6 @@ async function runPlbAutomation() {
       });
     }
     
-    // Sort months to identify history vs current month
     const monthsSorted = [...monthsSet].sort((a, b) => {
       const order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return order.indexOf(a) - order.indexOf(b);
@@ -2175,20 +2202,18 @@ async function runPlbAutomation() {
     plbCurrentMonth = monthsSorted[monthsSorted.length - 1];
     plbHistMonths = monthsSorted.slice(Math.max(0, monthsSorted.length - 4), monthsSorted.length - 1);
     
-    // Compile MMT Targets map
     const targetMap = {};
     targetRows.forEach(r => {
-      const code = (r['hotel_code'] ?? r['MMT ID'] ?? r['INGO ID'] ?? '').toString().trim();
-      const target = (r['Target'] ?? r['VDI Target'] ?? '').toString().trim();
-      const ratio = (r['PLB Ratio [for example: 10:1 or 15:1]'] ?? r['PLB Ratio'] ?? r['ratio'] ?? '').toString().trim();
-      const asp = parseFloat(r['ASP'] ?? r['adr'] ?? r['average_rate'] ?? 0) || 0;
+      const code = getVal(r, ['Hotel Code', 'hotel_code', 'MMT ID', 'INGO ID', 'code']).toString().trim();
+      const target = getVal(r, ['Target', 'VDI Target', 'target']).toString().trim();
+      const ratio = getVal(r, ['Ratio', 'PLB Ratio', 'PLB Ratio [for example: 10:1 or 15:1]', 'ratio']).toString().trim();
+      const asp = parseFloat(getVal(r, ['ASP', 'adr', 'average_rate', 'average_selling_price'])) || 0;
       
       if (code) {
         targetMap[code] = { target, ratio, asp };
       }
     });
     
-    // Main compilation loop
     plbData = [];
     let vdiCount = 0;
     let plbCount = 0;
@@ -2197,16 +2222,30 @@ async function runPlbAutomation() {
     
     Object.keys(liveMap).forEach(propId => {
       const meta = liveMap[propId];
-      const ingoId = meta.ingoId;
       
-      // Historical months RNs
+      const statusLower = (meta.status || '').toString().trim().toLowerCase().replace(/\s/g, '');
+      const isLiveOrSoldOut = (statusLower === 'live' || statusLower === 'soldout');
+      if (!isLiveOrSoldOut) return;
+      
+      if (meta.liveDate) {
+        const liveDate = parseExcelDate(meta.liveDate);
+        if (liveDate) {
+          const currentYear = new Date().getFullYear();
+          const monthNamesArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const targetMonthIdx = monthNamesArr.indexOf(plbCurrentMonth);
+          if (targetMonthIdx !== -1) {
+            const targetDate = new Date(currentYear, targetMonthIdx, 1);
+            const diffMonths = (targetDate.getFullYear() - liveDate.getFullYear()) * 12 + (targetDate.getMonth() - liveDate.getMonth());
+            if (diffMonths < 4) return;
+          }
+        }
+      }
+
+      const ingoId = meta.ingoId;
       const histRNs = plbHistMonths.map(m => dbRns[propId]?.[m] || 0);
       const avg3M = histRNs.length ? parseFloat((histRNs.reduce((sum, v) => sum + v, 0) / histRNs.length).toFixed(1)) : 0;
-      
-      // Current Month Actual
       const actualRN = dbRns[propId]?.[plbCurrentMonth] || 0;
       
-      // Target matching
       const tInfo = targetMap[ingoId];
       let type = '-';
       let vdiTarget = '';
