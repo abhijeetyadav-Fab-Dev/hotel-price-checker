@@ -2325,6 +2325,15 @@ function renderPlbTableHeaders() {
   });
 }
 
+function addCell(tr, text, align = 'center') {
+  const td = document.createElement('td');
+  td.style.padding = '10px';
+  td.style.textAlign = align;
+  td.textContent = text;
+  tr.appendChild(td);
+  return td;
+}
+
 function renderPlbTableBody(rows) {
   const tbody = document.getElementById('plbTableBody');
   tbody.innerHTML = '';
