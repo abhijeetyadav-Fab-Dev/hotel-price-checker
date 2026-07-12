@@ -109,6 +109,27 @@ app.post('/api/prices/bulk', async (req, res) => {
   res.json({ date, results });
 });
 
+// Proxy endpoint: fetch a Google Sheet CSV server-side to bypass CORS
+app.get('/api/fetch-csv', async (req, res) => {
+  const { url } = req.query;
+  if (!url) return res.status(400).json({ error: 'Missing url query parameter' });
+
+  try {
+    const response = await axios.get(url, {
+      timeout: 30000,
+      responseType: 'text',
+      maxRedirects: 5,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    res.type('text/csv').send(response.data);
+  } catch (error) {
+    console.error('CSV proxy error:', error.message);
+    res.status(502).json({ error: `Failed to fetch CSV: ${error.message}` });
+  }
+});
+
 // Google Sheets writing endpoint using service account key
 app.post('/api/google-sheets/write', async (req, res) => {
   const { spreadsheetId, sheetName, data } = req.body;

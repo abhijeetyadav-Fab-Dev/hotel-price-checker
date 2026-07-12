@@ -1978,19 +1978,25 @@ async function fetchGoogleSheetCsv(url) {
   let csvUrl;
 
   // If the URL is already a published CSV link (/pub?output=csv), use it directly.
-  // These have proper CORS headers and don't need reconstruction.
   if (/\/pub\b/.test(url)) {
     csvUrl = url.includes('output=csv') ? url : url + (url.includes('?') ? '&' : '?') + 'output=csv';
   } else {
-    // Regular /d/SPREADSHEET_ID/ URL — build an export link
+    // Regular /d/SPREADSHEET_ID/edit URL — build an export link
     const parsed = parseGoogleSheetUrl(url);
     if (!parsed) throw new Error("Invalid Google Sheets URL format. Please use a published CSV link or a standard Google Sheets URL.");
     csvUrl = `https://docs.google.com/spreadsheets/d/${parsed.sheetId}/export?exportFormat=csv&gid=${parsed.gid}`;
   }
 
-  const response = await fetch(csvUrl);
+  // Route through the local server proxy to bypass browser CORS restrictions
+  const proxyBase = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+    ? window.location.origin
+    : 'http://localhost:3000';
+  const proxyUrl = `${proxyBase}/api/fetch-csv?url=${encodeURIComponent(csvUrl)}`;
+
+  const response = await fetch(proxyUrl);
   if (!response.ok) {
-    throw new Error(`Failed to fetch sheet (HTTP ${response.status}). Please verify it is published / shared as 'Anyone with the link can view'.`);
+    const errBody = await response.text();
+    throw new Error(`Failed to fetch sheet (HTTP ${response.status}). ${errBody}`);
   }
   return await response.text();
 }
