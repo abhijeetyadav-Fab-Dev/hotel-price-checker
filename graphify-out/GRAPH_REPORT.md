@@ -1,16 +1,16 @@
 # Graph Report - hotel-price-checker  (2026-07-12)
 
 ## Corpus Check
-- 20 files · ~20,948 words
+- 21 files · ~21,121 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 103 nodes · 84 edges · 20 communities (7 shown, 13 thin omitted)
+- 107 nodes · 87 edges · 21 communities (7 shown, 14 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `90c3a02c`
+- Built from commit: `e278c96d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -34,6 +34,7 @@
 - [[_COMMUNITY_Community 17|Community 17]]
 - [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 19|Community 19]]
+- [[_COMMUNITY_Community 20|Community 20]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 3 edges
@@ -53,7 +54,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (20 total, 13 thin omitted)
+## Communities (21 total, 14 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.14
@@ -80,15 +81,15 @@ Cohesion: 0.40
 Nodes (3): axios, sheets, XLSX
 
 ## Knowledge Gaps
-- **61 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+56 more)
+- **63 isolated node(s):** `name`, `version`, `description`, `main`, `start` (+58 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _61 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _63 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
