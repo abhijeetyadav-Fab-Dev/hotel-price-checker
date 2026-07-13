@@ -491,6 +491,9 @@
                   <th style="padding: 12px 10px; text-align: left; width: 100px; background: #f8fafc;">Check-In</th>
                   <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">MMT SP</th>
                   <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">Agoda SP</th>
+                  <th style="padding: 12px 10px; text-align: center; width: 150px; background: #f8fafc;">Cheapest_Agoda_Status_at_sp</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 100px; background: #f8fafc;">Difference in Number</th>
+                  <th style="padding: 12px 10px; text-align: right; width: 100px; background: #f8fafc;">Difference in %</th>
                   <th style="padding: 12px 10px; text-align: right; width: 70px; background: #f8fafc;">MMT Fee</th>
                   <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">MMT FP</th>
                   <th style="padding: 12px 10px; text-align: right; width: 85px; background: #f8fafc;">Agoda FP</th>
@@ -500,7 +503,7 @@
               </thead>
               <tbody id="parityTableBody">
                 <tr>
-                  <td colspan="9" style="text-align: center; color: #888; padding: 40px;">Upload a CPI Report to begin.</td>
+                  <td colspan="12" style="text-align: center; color: #888; padding: 40px;">Upload a CPI Report to begin.</td>
                 </tr>
               </tbody>
             </table>
@@ -1666,6 +1669,22 @@ function processParityData(rows) {
       }
     }
     
+    const diffNum = mmtSp > 0 && agdSp > 0 ? (mmtSp - agdSp) : 0;
+    const diffPct = mmtSp > 0 && agdSp > 0 ? (diffNum / mmtSp) * 100 : 0;
+    
+    let cheapestAgodaStatusAtSp = 'Data Unavailable';
+    if (mmtSp > 0 && agdSp > 0) {
+      if (mmtSp === agdSp) {
+        cheapestAgodaStatusAtSp = 'Meet';
+      } else if (Math.abs(diffPct) <= 1.0) {
+        cheapestAgodaStatusAtSp = 'Disparity By ~1%';
+      } else if (mmtSp < agdSp) {
+        cheapestAgodaStatusAtSp = 'Beat';
+      } else {
+        cheapestAgodaStatusAtSp = 'Disparity';
+      }
+    }
+
     parityData.push({
       caseId,
       hotelId,
@@ -1679,7 +1698,10 @@ function processParityData(rows) {
       mmtFp,
       agdFp,
       cause,
-      badgeClass
+      badgeClass,
+      cheapestAgodaStatusAtSp,
+      diffNum,
+      diffPct
     });
   });
   
@@ -1711,11 +1733,29 @@ function renderParityTable(data) {
     
     const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
     
+    let badgeClass = 'badge-unavailable';
+    if (row.cheapestAgodaStatusAtSp === 'Beat') badgeClass = 'badge-beat';
+    else if (row.cheapestAgodaStatusAtSp === 'Meet') badgeClass = 'badge-meet';
+    else if (row.cheapestAgodaStatusAtSp === 'Disparity By ~1%') badgeClass = 'badge-fee';
+    else if (row.cheapestAgodaStatusAtSp === 'Disparity') badgeClass = 'badge-true';
+
+    const diffNumColor = row.diffNum > 0 ? '#b91c1c' : row.diffNum < 0 ? '#15803d' : '#000';
+    const diffPctColor = row.diffPct > 0 ? '#b91c1c' : row.diffPct < 0 ? '#15803d' : '#000';
+
     tr.innerHTML = `
       <td style="padding: 10px; font-weight: 500;" title="${row.hotelName}">${displayName}<br><span style="font-size:0.75rem; color:#888;">ID: ${row.hotelId}</span></td>
       <td style="padding: 10px;">${row.checkin}</td>
       <td style="padding: 10px; text-align: right;">₹${Math.round(row.mmtSp).toLocaleString()}</td>
       <td style="padding: 10px; text-align: right;">₹${Math.round(row.agdSp).toLocaleString()}</td>
+      <td style="padding: 10px; text-align: center;">
+        <span class="badge ${badgeClass}">${row.cheapestAgodaStatusAtSp}</span>
+      </td>
+      <td style="padding: 10px; text-align: right; color: ${diffNumColor}; font-weight: 500;">
+        ${row.diffNum !== 0 ? (row.diffNum > 0 ? '+' : '') + Math.round(row.diffNum).toLocaleString() : '0'}
+      </td>
+      <td style="padding: 10px; text-align: right; color: ${diffPctColor}; font-weight: 500;">
+        ${row.diffPct !== 0 ? (row.diffPct > 0 ? '+' : '') + row.diffPct.toFixed(2) + '%' : '0.00%'}
+      </td>
       <td style="padding: 10px; text-align: right; color:#d97706;">₹${Math.round(row.mmtFee).toLocaleString()}</td>
       <td style="padding: 10px; text-align: right; font-weight: 600;">₹${Math.round(row.mmtFp).toLocaleString()}</td>
       <td style="padding: 10px; text-align: right; font-weight: 600; color:#059669;">₹${Math.round(row.agdFp).toLocaleString()}</td>
@@ -1910,6 +1950,9 @@ function exportFilteredParityCSV() {
     'MMT FP',
     'Agoda SP',
     'Agoda FP',
+    'Cheapest_Agoda_Status_at_sp',
+    'Difference in Number',
+    'Difference in %',
     'Coupon Applied',
     'Service Fee',
     'Burn %',
@@ -1927,6 +1970,8 @@ function exportFilteredParityCSV() {
     const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
     const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
     const text = getRebuttalTextContent(row);
+    const diffPctStr = row.diffPct !== 0 ? (row.diffPct > 0 ? '+' : '') + row.diffPct.toFixed(2) + '%' : '0.00%';
+    const diffNumStr = row.diffNum !== 0 ? (row.diffNum > 0 ? '+' : '') + Math.round(row.diffNum) : '0';
     
     return [
       `"${row.hotelName.replace(/"/g, '""')}"`,
@@ -1936,6 +1981,9 @@ function exportFilteredParityCSV() {
       mmtFp,
       agdSp,
       agdFp,
+      `"${row.cheapestAgodaStatusAtSp}"`,
+      `"${diffNumStr}"`,
+      `"${diffPctStr}"`,
       `"${couponApplied}"`,
       fee,
       `"${burn}"`,
