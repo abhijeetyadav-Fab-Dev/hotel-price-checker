@@ -2487,6 +2487,8 @@ async function runPlbAutomation() {
       const suggestedTarget = histRNs.length ? Math.max(...histRNs, projectedRN) : 0;
       const suggestedTargetFinal = suggestedTarget + 10;
       
+      const plbAndVdi = finalStatus === 'Good To Go' ? type : '';
+      
       plbData.push({
         propertyId: propId,
         ingoId: ingoId,
@@ -2512,7 +2514,8 @@ async function runPlbAutomation() {
         isOpportunity: isOpportunity,
         achieved: achieved,
         finalStatus: finalStatus,
-        selectionReason: reason
+        selectionReason: reason,
+        plbAndVdi: plbAndVdi
       });
     });
     plbData.sort((a, b) => a.name.localeCompare(b.name));
@@ -2577,6 +2580,7 @@ function renderPlbTableHeaders() {
     'Est. Revenue', 
     'Suggested Target', 
     'Suggested Target (FINAL)', 
+    'PLB and VDI',
     'Final Status', 
     'Selection Reason'
   );
@@ -2644,6 +2648,11 @@ function renderPlbTableBody(rows) {
     addCell(tr, row.suggestedTarget, 'center');
     addCell(tr, row.suggestedTargetFinal, 'center');
     
+    const tdPlbAndVdi = addCell(tr, row.plbAndVdi || '-', 'center');
+    if (row.plbAndVdi) {
+      tdPlbAndVdi.innerHTML = `<span class="badge ${row.plbAndVdi === 'PLB' ? 'badge-plb' : 'badge-meet'}">${row.plbAndVdi}</span>`;
+    }
+    
     const tdFinal = addCell(tr, row.finalStatus, 'center');
     tdFinal.style.fontWeight = 'bold';
     tdFinal.style.color = row.finalStatus === 'Good To Go' ? '#16a34a' : '#dc2626';
@@ -2699,7 +2708,7 @@ function exportPlbReportExcel() {
   
   const headers = [
     'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
-    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'Checkout RNs', 'Checkin RNs', 'Pending RNs', 'Projected RNs', 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'Checkout RNs', 'Checkin RNs', 'Pending RNs', 'Projected RNs', 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'PLB and VDI', 'VDI & PLB Final', 'Selection Reason'
   ];
   
   const sheetData = [headers];
@@ -2724,6 +2733,7 @@ function exportPlbReportExcel() {
       row.revenue,
       row.suggestedTarget,
       row.suggestedTargetFinal,
+      row.plbAndVdi,
       row.finalStatus,
       row.selectionReason
     ];
@@ -2761,7 +2771,7 @@ async function pushPlbDataToGoogleSheet() {
   // Let's prepare the matrix data matching the exported Excel structure exactly!
   const headers = [
     'Property ID', 'INGO ID', 'Property Name', 'City', 'FH Status',
-    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'Checkout RNs', 'Checkin RNs', 'Pending RNs', 'Projected RNs', 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'VDI & PLB Final', 'Selection Reason'
+    ...plbHistMonths, 'Avg 3 Mnth', `${plbCurrentMonth} Actual`, 'Checkout RNs', 'Checkin RNs', 'Pending RNs', 'Projected RNs', 'MMT VDI Target', 'MMT PLB Ratio', 'Gap', 'Free RNs Payout', 'Est Payout Revenue', 'Suggested Target', 'Suggested Target (FINAL)', 'PLB and VDI', 'VDI & PLB Final', 'Selection Reason'
   ];
 
   const payloadData = [headers];
@@ -2786,6 +2796,7 @@ async function pushPlbDataToGoogleSheet() {
       row.revenue,
       row.suggestedTarget,
       row.suggestedTargetFinal,
+      row.plbAndVdi,
       row.finalStatus,
       row.selectionReason
     ]);
