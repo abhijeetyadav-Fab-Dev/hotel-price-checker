@@ -445,6 +445,42 @@
       "norm_label": "inspectheaders()"
     },
     {
+      "label": "scratch_find_status_headers.js",
+      "file_type": "code",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L1",
+      "id": "scratch_find_status_headers",
+      "community": 26,
+      "norm_label": "scratch_find_status_headers.js"
+    },
+    {
+      "label": "XLSX",
+      "file_type": "code",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L1",
+      "id": "scratch_find_status_headers_xlsx",
+      "community": 26,
+      "norm_label": "xlsx"
+    },
+    {
+      "label": "fs",
+      "file_type": "code",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L2",
+      "id": "scratch_find_status_headers_fs",
+      "community": 26,
+      "norm_label": "fs"
+    },
+    {
+      "label": "findStatusHeaders()",
+      "file_type": "code",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L4",
+      "id": "scratch_find_status_headers_findstatusheaders",
+      "community": 26,
+      "norm_label": "findstatusheaders()"
+    },
+    {
       "label": "scratch_inspect_booked.js",
       "file_type": "code",
       "source_file": "scratch_inspect_booked.js",
@@ -1505,6 +1541,36 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scratch_find_status_headers",
+      "target": "scratch_find_status_headers_findstatusheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "scratch_find_status_headers",
+      "target": "scratch_find_status_headers_fs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_find_status_headers.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scratch_find_status_headers",
+      "target": "scratch_find_status_headers_xlsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scratch_inspect_booked.js",
       "source_location": "L1",
       "weight": 1.0,
@@ -1688,9 +1754,9 @@
       "source_file": "scratch_test_cpi_flexible.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_cpi_flexible",
-      "target": "scratch_test_cpi_flexible_testflexibleparser",
-      "confidence_score": 1.0
+      "target": "scratch_test_cpi_flexible_testflexibleparser"
     },
     {
       "relation": "contains",
@@ -1698,9 +1764,9 @@
       "source_file": "scratch_test_cpi_flexible.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_cpi_flexible",
-      "target": "scratch_test_cpi_flexible_xlsx",
-      "confidence_score": 1.0
+      "target": "scratch_test_cpi_flexible_xlsx"
     },
     {
       "relation": "contains",
@@ -2095,5 +2161,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "38fd73224206803acb024a754abdca81d5124a6c"
+  "built_at_commit": "f90a95dada98dbd8244b0f1f51a08a061c9ce1bb"
 }
