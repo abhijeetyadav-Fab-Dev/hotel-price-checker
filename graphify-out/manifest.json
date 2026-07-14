@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\index.html": {
-    "mtime": 1783872704.9980931,
-    "ast_hash": "d6330a8f30aac2114c6741e5181d68ae",
+    "mtime": 1784013577.2201836,
+    "ast_hash": "9cc3e1911d705eac1e1fb5090875a849",
     "semantic_hash": ""
   },
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\public\\index.html": {
@@ -112,6 +112,26 @@
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_check_js_syntax.js": {
     "mtime": 1783872678.8201008,
     "ast_hash": "fcbce04a438f72905fbda6a524f005eb",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_compare_headers.js": {
+    "mtime": 1784013510.211575,
+    "ast_hash": "1d89d7dd5ad03800ee50d24193a43cbf",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_inspect_cpi_raw.js": {
+    "mtime": 1784013474.1673987,
+    "ast_hash": "e1247a591f2e9db148a0ecfd45136571",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_inspect_headers.js": {
+    "mtime": 1784013487.0382984,
+    "ast_hash": "4f4267be3d62b82d1e1e89729ad698ce",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_test_cpi_fallback.js": {
+    "mtime": 1784013555.7105546,
+    "ast_hash": "7da4207eb71967c1bc354413da451316",
     "semantic_hash": ""
   }
 }
