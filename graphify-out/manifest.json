@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\index.html": {
-    "mtime": 1784013577.2201836,
-    "ast_hash": "9cc3e1911d705eac1e1fb5090875a849",
+    "mtime": 1784016414.100156,
+    "ast_hash": "ed7809fea0658b3d2816034ac3a073bc",
     "semantic_hash": ""
   },
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\public\\index.html": {
@@ -132,6 +132,11 @@
   "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_test_cpi_fallback.js": {
     "mtime": 1784013555.7105546,
     "ast_hash": "7da4207eb71967c1bc354413da451316",
+    "semantic_hash": ""
+  },
+  "C:\\Users\\CS05180\\Documents\\hotel-price-checker\\scratch_test_cpi_flexible.js": {
+    "mtime": 1784016424.0149744,
+    "ast_hash": "daf14ee84ffd846e21ea9d0f325e9774",
     "semantic_hash": ""
   }
 }

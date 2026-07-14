@@ -670,6 +670,33 @@
       "norm_label": "testfallback()"
     },
     {
+      "label": "scratch_test_cpi_flexible.js",
+      "file_type": "code",
+      "source_file": "scratch_test_cpi_flexible.js",
+      "source_location": "L1",
+      "id": "scratch_test_cpi_flexible",
+      "community": 25,
+      "norm_label": "scratch_test_cpi_flexible.js"
+    },
+    {
+      "label": "XLSX",
+      "file_type": "code",
+      "source_file": "scratch_test_cpi_flexible.js",
+      "source_location": "L1",
+      "id": "scratch_test_cpi_flexible_xlsx",
+      "community": 25,
+      "norm_label": "xlsx"
+    },
+    {
+      "label": "testFlexibleParser()",
+      "file_type": "code",
+      "source_file": "scratch_test_cpi_flexible.js",
+      "source_location": "L3",
+      "id": "scratch_test_cpi_flexible_testflexibleparser",
+      "community": 25,
+      "norm_label": "testflexibleparser()"
+    },
+    {
       "label": "scratch_test_hist.js",
       "file_type": "code",
       "source_file": "scratch_test_hist.js",
@@ -1451,9 +1478,9 @@
       "source_file": "scratch_compare_headers.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_compare_headers",
-      "target": "scratch_compare_headers_fs",
-      "confidence_score": 1.0
+      "target": "scratch_compare_headers_fs"
     },
     {
       "relation": "contains",
@@ -1461,9 +1488,9 @@
       "source_file": "scratch_compare_headers.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_compare_headers",
-      "target": "scratch_compare_headers_inspectheaders",
-      "confidence_score": 1.0
+      "target": "scratch_compare_headers_inspectheaders"
     },
     {
       "relation": "contains",
@@ -1471,9 +1498,9 @@
       "source_file": "scratch_compare_headers.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_compare_headers",
-      "target": "scratch_compare_headers_xlsx",
-      "confidence_score": 1.0
+      "target": "scratch_compare_headers_xlsx"
     },
     {
       "relation": "contains",
@@ -1511,9 +1538,9 @@
       "source_file": "scratch_inspect_cpi_raw.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_inspect_cpi_raw",
-      "target": "scratch_inspect_cpi_raw_inspectcpiraw",
-      "confidence_score": 1.0
+      "target": "scratch_inspect_cpi_raw_inspectcpiraw"
     },
     {
       "relation": "contains",
@@ -1521,9 +1548,9 @@
       "source_file": "scratch_inspect_cpi_raw.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_inspect_cpi_raw",
-      "target": "scratch_inspect_cpi_raw_xlsx",
-      "confidence_score": 1.0
+      "target": "scratch_inspect_cpi_raw_xlsx"
     },
     {
       "relation": "contains",
@@ -1531,9 +1558,9 @@
       "source_file": "scratch_inspect_headers.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_inspect_headers",
-      "target": "scratch_inspect_headers_findpricecols",
-      "confidence_score": 1.0
+      "target": "scratch_inspect_headers_findpricecols"
     },
     {
       "relation": "contains",
@@ -1541,9 +1568,9 @@
       "source_file": "scratch_inspect_headers.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_inspect_headers",
-      "target": "scratch_inspect_headers_xlsx",
-      "confidence_score": 1.0
+      "target": "scratch_inspect_headers_xlsx"
     },
     {
       "relation": "contains",
@@ -1641,9 +1668,9 @@
       "source_file": "scratch_test_cpi_fallback.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_cpi_fallback",
-      "target": "scratch_test_cpi_fallback_testfallback",
-      "confidence_score": 1.0
+      "target": "scratch_test_cpi_fallback_testfallback"
     },
     {
       "relation": "contains",
@@ -1651,8 +1678,28 @@
       "source_file": "scratch_test_cpi_fallback.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scratch_test_cpi_fallback",
-      "target": "scratch_test_cpi_fallback_xlsx",
+      "target": "scratch_test_cpi_fallback_xlsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_cpi_flexible.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "scratch_test_cpi_flexible",
+      "target": "scratch_test_cpi_flexible_testflexibleparser",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scratch_test_cpi_flexible.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scratch_test_cpi_flexible",
+      "target": "scratch_test_cpi_flexible_xlsx",
       "confidence_score": 1.0
     },
     {
@@ -2048,5 +2095,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "df9fb608e9f6390e78e81b1dbc7a0c24ea6c5664"
+  "built_at_commit": "38fd73224206803acb024a754abdca81d5124a6c"
 }
