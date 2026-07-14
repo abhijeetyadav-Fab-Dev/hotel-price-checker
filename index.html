@@ -1602,13 +1602,13 @@ function processParityData(rows) {
     seen.add(dedupKey);
     
     // Map numerical price fields
-    let mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? 0);
-    const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? 0);
+    let mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? row['mmt_cheapest_final_price'] ?? row['Go_MMT_Price'] ?? 0);
+    const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? row['agd_cheapest_final_price'] ?? 0);
     // NOTE: Source Excel has swapped columns — service_fee actually holds GST,
     // coupon_discount actually holds the service fee. coupan_price_cheapest is the real coupon.
     const mmtFee = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
     const mmtCoupon = parseFloat(row['coupan_price_cheapest'] ?? 0);
-    let mmtFp = parseFloat(row['mmt_cheapest_posttax'] ?? row['mmt_posttax'] ?? 0) - mmtCoupon;
+    let mmtFp = parseFloat(row['mmt_cheapest_posttax'] ?? row['mmt_posttax'] ?? row['mmt_cheapest_final_price'] ?? row['Go_MMT_Price'] ?? 0) - mmtCoupon;
     const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? 0);
 
     // GST Adjustment for MMT SP & FP
