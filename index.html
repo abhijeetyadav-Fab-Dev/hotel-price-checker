@@ -1475,7 +1475,12 @@ function exportData(format) {
 }
 
 function downloadFile(content, filename, mime) {
-  const blob = new Blob([content], { type: mime });
+  let blobContent = content;
+  if (mime === 'text/csv') {
+    // Prefix with UTF-8 BOM so Excel opens it with correct encoding (no mojibake)
+    blobContent = '\uFEFF' + content;
+  }
+  const blob = new Blob([blobContent], { type: mime + ';charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
