@@ -1580,16 +1580,39 @@ function processParityData(rows) {
   let feeCount = 0;
   let trueCount = 0;
   
+  const getRowValue = (row, possibleKeys) => {
+    if (!row) return '';
+    const keys = Object.keys(row);
+    // 1. Try exact matches first
+    for (const pk of possibleKeys) {
+      if (row[pk] !== undefined && row[pk] !== null && row[pk] !== '') return row[pk];
+    }
+    // 2. Try normalized comparison (case and symbol insensitive)
+    for (const pk of possibleKeys) {
+      const normalizedPk = pk.toLowerCase().replace(/[\s_-]/g, '');
+      const found = keys.find(k => k.toLowerCase().replace(/[\s_-]/g, '') === normalizedPk);
+      if (found && row[found] !== undefined && row[found] !== null && row[found] !== '') return row[found];
+    }
+    // 3. Try substring/includes matching
+    for (const pk of possibleKeys) {
+      const normalizedPk = pk.toLowerCase().replace(/[\s_-]/g, '');
+      const found = keys.find(k => k.toLowerCase().replace(/[\s_-]/g, '').includes(normalizedPk));
+      if (found && row[found] !== undefined && row[found] !== null && row[found] !== '') return row[found];
+    }
+    return '';
+  };
+
   rows.forEach(row => {
-    const hotelId = (row['mmt_hotel_code'] || '').toString().replace('#', '').trim();
-    const hotelName = row['hotelname'] || '-';
+    const rawHotelId = getRowValue(row, ['mmt_hotel_code', 'hotel_code', 'hotelid', 'mmthotelcode', 'property_id', 'propertyid']);
+    const hotelId = rawHotelId.toString().replace('#', '').trim();
+    const hotelName = getRowValue(row, ['hotelname', 'hotel_name', 'hotelName', 'propertyname', 'property_name']) || '-';
     
     // Parse Dates cleanly
-    const checkin = parseExcelDate(row['checkin']);
-    const checkout = parseExcelDate(row['checkout']);
+    const checkin = parseExcelDate(getRowValue(row, ['checkin', 'check_in', 'checkIn', 'date', 'stay_date']));
+    const checkout = parseExcelDate(getRowValue(row, ['checkout', 'check_out', 'checkOut']));
     
     // Case ID / UUID
-    const uuid = (row['uuid'] || '').toString().trim();
+    const uuid = getRowValue(row, ['uuid', 'caseId', 'case_id', 'caseid', 'id']).toString().trim();
     const caseId = uuid || `${hotelId}_${checkin}`;
     
     if (!hotelId && hotelName === '-') return; // Skip empty rows
@@ -1602,14 +1625,14 @@ function processParityData(rows) {
     seen.add(dedupKey);
     
     // Map numerical price fields
-    let mmtSp = parseFloat(row['mmt_cheapest_pre_tax_price'] ?? row['mmt_pre_tax_price'] ?? row['mmt_cheapest_final_price'] ?? row['Go_MMT_Price'] ?? 0);
-    const agdSp = parseFloat(row['agd_cheapest_pre_tax_price'] ?? row['agd_pre_tax_price'] ?? row['agd_cheapest_final_price'] ?? 0);
+    let mmtSp = parseFloat(getRowValue(row, ['mmt_cheapest_pre_tax_price', 'mmt_pre_tax_price', 'mmt_pretax', 'mmt_cheapest_final_price', 'Go_MMT_Price', 'mmt_sp', 'mmt sp']) || 0);
+    const agdSp = parseFloat(getRowValue(row, ['agd_cheapest_pre_tax_price', 'agd_pre_tax_price', 'agd_pretax', 'agd_cheapest_final_price', 'agd_sp', 'agd sp']) || 0);
     // NOTE: Source Excel has swapped columns — service_fee actually holds GST,
     // coupon_discount actually holds the service fee. coupan_price_cheapest is the real coupon.
-    const mmtFee = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
-    const mmtCoupon = parseFloat(row['coupan_price_cheapest'] ?? 0);
-    let mmtFp = parseFloat(row['mmt_cheapest_posttax'] ?? row['mmt_posttax'] ?? row['mmt_cheapest_final_price'] ?? row['Go_MMT_Price'] ?? 0) - mmtCoupon;
-    const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? 0);
+    const mmtFee = parseFloat(getRowValue(row, ['mmt_cheapest_coupon_discount', 'service_fee', 'service fee', 'fee']) || 0);
+    const mmtCoupon = parseFloat(getRowValue(row, ['coupan_price_cheapest', 'coupon', 'coupon_discount', 'discount']) || 0);
+    let mmtFp = parseFloat(getRowValue(row, ['mmt_cheapest_posttax', 'mmt_posttax', 'mmt_cheapest_final_price', 'Go_MMT_Price', 'mmt_fp', 'mmt fp']) || 0) - mmtCoupon;
+    const agdFp = parseFloat(getRowValue(row, ['agd_cheapest_final_price', 'agd_final_price', 'agd_fp', 'agd fp']) || 0);
 
     // GST Adjustment for MMT SP & FP
     // MakeMyTrip often provides pre-tax prices with GST included (e.g., 2641 instead of 2515).
