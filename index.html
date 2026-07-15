@@ -3171,6 +3171,26 @@ function processMyBizJsonData(jsonData) {
     return null;
   }
 
+  function formatDateString(val) {
+    if (!val) return '';
+    const d = new Date(val);
+    if (isNaN(d.getTime())) {
+      // Check if string contains a serial number or is DD-MM-YYYY
+      const str = String(val).trim();
+      const parts = str.split(/[-/]/);
+      if (parts.length === 3) {
+        if (parts[2].length === 4) { // DD-MM-YYYY
+          return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+        }
+      }
+      return str;
+    }
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
   jsonData.forEach((row, index) => {
     const rawHotelName = findVal(row, ['Hotel_Name', 'Hotel Name']) || '';
     const hotelGst = findVal(row, ['Hotel GSTN', 'Hotel_GSTN']) || '';
@@ -3178,11 +3198,17 @@ function processMyBizJsonData(jsonData) {
     const pnr = findVal(row, ['PNR', 'pnr']) || '';
     const guestName = findVal(row, ['Guest Name', 'Guest_Name', 'GuestName']) || 'Guest';
     const orgName = findVal(row, ['Org_Name', 'Org Name']) || 'MakeMyTrip (India) Private Limited';
-    const bookingDate = findVal(row, ['Booking_date', 'Booking Date']) || '';
-    const checkin = findVal(row, ['checkin/depdt', 'checkin', 'Check-In']) || '';
-    const checkout = findVal(row, ['checkoutdt/arrvdt', 'checkout', 'Check-Out']) || '';
-    const sellRate = parseFloat(findVal(row, ['Updated GMV', 'GMV', 'Sell Rate']) || 0);
-    const gstAmount = parseFloat(findVal(row, ['Updated GST Amount', 'GST Amount']) || 0);
+    const bookingDate = formatDateString(findVal(row, ['Booking_date', 'Booking Date']) || '');
+    const checkin = formatDateString(findVal(row, ['checkin/depdt', 'checkin', 'Check-In']) || '');
+    const checkout = formatDateString(findVal(row, ['checkoutdt/arrvdt', 'checkout', 'Check-Out']) || '');
+    const rawGmv = parseFloat(findVal(row, ['Updated GMV', 'GMV', 'Sell Rate']) || 0);
+    const rawGst = parseFloat(findVal(row, ['Updated GST Amount', 'GST Amount']) || 0);
+    
+    // Invoice Total (including GST) = Updated GMV - Updated GST
+    const sellRate = rawGmv - rawGst;
+    // GST = sellRate - (sellRate / 1.05)
+    const gstAmount = sellRate - (sellRate / 1.05);
+
     const travellerGst = findVal(row, ['Traveller_gst', 'Traveller Gst', 'Customer GSTIN']) || '';
     const billNo = findVal(row, ['Bill No', 'Bill_No', 'Invoice Number']) || '';
 
@@ -3222,6 +3248,20 @@ function processMyBizJsonData(jsonData) {
       payeeProfile = { ...mybizProfileDb.payees[stateCode] };
     }
 
+    // Dynamic Default Particulars based on stay rate
+    const checkinDate = new Date(checkin);
+    const checkoutDate = new Date(checkout);
+    const diffTime = checkoutDate - checkinDate;
+    const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24))) || 1;
+    const dailyRate = sellRate / nights;
+    
+    let defaultParticulars = 'Deluxe Room (1 guest)\nRoom only';
+    if (dailyRate > 3500) {
+      defaultParticulars = 'Deluxe Room (1 guest)\nRoom with Breakfast and Lunch/Dinner';
+    } else if (dailyRate > 2200) {
+      defaultParticulars = 'Deluxe Room (1 guest)\nRoom with Breakfast';
+    }
+
     mybizBookings.push({
       hotelName: rawHotelName,
       hotelLegalName: hotelProfile.hotel_legal_name || rawHotelName.toUpperCase(),
@@ -3242,7 +3282,7 @@ function processMyBizJsonData(jsonData) {
       checkin,
       checkout,
       roomsCount: 1,
-      particulars: 'Deluxe Room',
+      particulars: defaultParticulars,
 
       billNo,
       invoiceDate: checkout || bookingDate || new Date().toISOString().split('T')[0],
@@ -3405,147 +3445,300 @@ function closeMyBizModal() {
 
 // Generate the beautiful HTML print template dynamically from inputs
 function generateInvoiceHtml(fields) {
+  function parseDate(str) {
+    if (!str) return new Date();
+    if (str.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      return new Date(str);
+    }
+    const parts = str.split('-');
+    if (parts.length === 3) {
+      if (parts[2].length === 4) { // DD-MM-YYYY
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+      } else if (parts[0].length === 4) { // YYYY-MM-DD
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+      }
+    }
+    return new Date(str);
+  }
+
   const sellRate = parseFloat(fields.sellRate || 0);
   const gstAmount = parseFloat(fields.gstAmount || 0);
   const subtotal = sellRate - gstAmount;
+  
+  // Detect if hotel itself is the seller (i.e. hotel GSTIN does not start with AAFCC)
+  const isHotelDirect = fields.hotelGst && !fields.hotelGst.includes('AAFCC6416Q');
   
   // Tax distribution logic
   const hotelGstState = (fields.hotelGst || '').substring(0, 2);
   const travellerGstState = (fields.travellerGst || '').substring(0, 2);
   
   let cgst = 0, sgst = 0, igst = 0;
-  
-  if (travellerGstState && hotelGstState && travellerGstState !== hotelGstState) {
+  let isInterstate = travellerGstState && hotelGstState && travellerGstState !== hotelGstState;
+
+  if (isInterstate) {
     igst = gstAmount;
   } else {
     cgst = gstAmount / 2;
     sgst = gstAmount / 2;
   }
 
+  // Detect UTGST for Union Territories (e.g. Chandigarh 04, Ladakh 38, Andaman 35, etc.)
+  const isUt = (hotelGstState === '04' || hotelGstState === '35' || hotelGstState === '31' || hotelGstState === '38');
+  const localTaxName = isUt ? 'UTGST' : 'SGST';
+
   const totalInWords = numberToWords(sellRate);
 
+  // Determine Seller Information
+  const sellerLegalName = isHotelDirect ? fields.hotelLegalName : fields.payeeName;
+  const sellerGst = isHotelDirect ? fields.hotelGst : fields.payeeGst;
+  const sellerPan = isHotelDirect ? fields.hotelPan : (fields.payeeGst ? fields.payeeGst.substring(2, 12) : 'AAFCC6416Q');
+  const sellerAddress = isHotelDirect ? fields.hotelAddress : fields.payeeAddress;
+
+  // Render the top disclaimer/disclosure
+  let topDisclaimerHtml = '';
+  if (isHotelDirect) {
+    topDisclaimerHtml = `
+      <div style="font-size: 0.62rem; line-height: 1.3; color: #334155; margin-bottom: 12px; border: 1px solid #cbd5e1; padding: 6px; border-radius: 4px; background: #f8fafc;">
+        <strong>Disclaimer:</strong> FabHotels (Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd)) does not own or directly operate the functioning of the ${fields.hotelName} (${fields.hotelLegalName}) and is only collaborating with ${fields.hotelLegalName} for marketing and sales support services along with providing expertise in maintaining the service standards. All applicable above mentioned taxes are charged by the ${fields.hotelLegalName} and FabHotels denies any liability that may arise in this regard.
+      </div>
+    `;
+  }
+
+  // Render the bottom disclosures
+  let bottomDisclosuresHtml = '';
+  if (!isHotelDirect) {
+    bottomDisclosuresHtml = `
+      <div style="margin-top: 12px; font-size: 0.62rem; color: #475569; line-height: 1.35; border-top: 1px dashed #000; padding-top: 6px;">
+        <strong>Disclosures & Terms:</strong> Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) does not own or directly operate the functioning of the hotel and is only collaborating with the Hotel for marketing and sales support services. All applicable above-mentioned taxes are charged by the Hotel, and FabHotels / Travelstack Tech Limited denies any liability that may arise in this regard.
+      </div>
+    `;
+  }
+
   return `
-    <div style="font-family: Arial, sans-serif; font-size: 0.72rem; color: #000; line-height: 1.35; padding: 15px; background: #fff;">
+    <div style="font-family: Arial, sans-serif; font-size: 0.72rem; color: #000; line-height: 1.4; padding: 24px; background: #fff; max-width: 800px; margin: 0 auto; border: 1px solid #e2e8f0;">
       
-      <!-- Top Header -->
-      <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px;">
-        <div>
-          <div style="font-size: 1.25rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">TAX INVOICE</div>
-          <div style="margin-top: 4px; font-weight: bold;">Payee Name: <span style="font-weight: normal;">${fields.payeeName}</span></div>
-          <div style="max-width: 380px; margin-top: 2px;"><strong>Address:</strong> ${fields.payeeAddress}</div>
-          <div style="margin-top: 2px;"><strong>GSTIN:</strong> ${fields.payeeGst}</div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 1.2rem; font-weight: bold; color: #3b82f6; margin-bottom: 4px;">FabHotels</div>
-          <div style="margin-top: 2px;"><strong>Invoice No:</strong> ${fields.billNo || 'PENDING'}</div>
-          <div style="margin-top: 2px;"><strong>Invoice Date:</strong> ${fields.invoiceDate}</div>
-          <div style="margin-top: 2px;"><strong>Booking ID:</strong> ${fields.bookingId}</div>
-          <div style="margin-top: 2px;"><strong>PNR:</strong> ${fields.pnr || '-'}</div>
+      <!-- Top header line -->
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+        <div style="font-size: 1.25rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Tax Invoice</div>
+        <div style="font-size: 0.65rem; font-style: italic; color: #475569; text-align: right;">
+          * This is computer generated invoice signature and stamp not required
         </div>
       </div>
 
-      <!-- Hotel and Customer Details -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; align-items: start;">
-        <div>
-          <div style="border-bottom: 1px solid #000; font-weight: bold; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">Hotel details:</div>
-          <div style="margin-top: 2px;"><strong>Legal Name:</strong> ${fields.hotelLegalName}</div>
-          <div style="margin-top: 2px;"><strong>Trade Name:</strong> ${fields.hotelName}</div>
-          <div style="max-width: 320px; margin-top: 2px;"><strong>Address:</strong> ${fields.hotelAddress}</div>
-          <div style="margin-top: 2px;"><strong>GSTIN:</strong> ${fields.hotelGst}</div>
-          <div style="margin-top: 2px;"><strong>PAN:</strong> ${fields.hotelPan}</div>
-          <div style="margin-top: 2px;"><strong>Email:</strong> ${fields.hotelEmail}</div>
-          <div style="margin-top: 2px;"><strong>Tel:</strong> ${fields.hotelPhone}</div>
-        </div>
-        <div>
-          <div style="border-bottom: 1px solid #000; font-weight: bold; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">Customer details:</div>
-          <div style="margin-top: 2px;"><strong>Guest Name:</strong> ${fields.guestName}</div>
-          <div style="margin-top: 2px;"><strong>Booking Date:</strong> ${fields.bookingDate || '-'}</div>
-          <div style="margin-top: 2px;"><strong>Stay Period:</strong> ${fields.checkin} to ${fields.checkout}</div>
-          <div style="margin-top: 2px;"><strong>Rooms Count:</strong> ${fields.roomsCount}</div>
-          <div style="margin-top: 2px;"><strong>Company Name:</strong> ${fields.orgName}</div>
-          <div style="margin-top: 2px;"><strong>Traveler GSTIN:</strong> ${fields.travellerGst || '-'}</div>
+      <!-- Top Disclaimer for Hotel Direct -->
+      ${topDisclaimerHtml}
+
+      <!-- Word Amount Total (At top, matching original layout) -->
+      <div style="font-size: 0.72rem; font-weight: bold; margin-bottom: 10px;">
+        TOTAL: <span style="font-weight: normal; font-style: italic; text-transform: capitalize;">${totalInWords}</span>
+        <span style="float: right; font-weight: bold;">E&O.E</span>
+      </div>
+
+      <!-- Seller Identity Box -->
+      <div style="border: 1px solid #000; padding: 8px; margin-bottom: 12px; background: #fafafa;">
+        <div style="display: grid; grid-template-columns: 100px 1fr; gap: 4px;">
+          <div><strong>Pan No. :</strong></div>
+          <div>${sellerPan}</div>
+          <div><strong>GSTIN:</strong></div>
+          <div>${sellerGst}</div>
+          <div><strong>GST Legal Name:</strong></div>
+          <div>${sellerLegalName}</div>
         </div>
       </div>
 
-      <!-- Item Table -->
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
+      <!-- Itemized Table -->
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 0.7rem;">
         <thead>
-          <tr style="background: #f8fafc; font-weight: bold;">
-            <th style="border: 1px solid #000; padding: 5px; text-align: left; width: 40px;">S.No.</th>
-            <th style="border: 1px solid #000; padding: 5px; text-align: left;">Particulars</th>
-            <th style="border: 1px solid #000; padding: 5px; text-align: center; width: 150px;">Stay Date</th>
-            <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 80px;">Sell Rate</th>
-            <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 70px;">Discount</th>
-            <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 80px;">Sub Total</th>
-            ${cgst > 0 ? `<th style="border: 1px solid #000; padding: 5px; text-align: right; width: 70px;">CGST</th>` : ''}
-            ${sgst > 0 ? `<th style="border: 1px solid #000; padding: 5px; text-align: right; width: 70px;">SGST</th>` : ''}
-            ${igst > 0 ? `<th style="border: 1px solid #000; padding: 5px; text-align: right; width: 70px;">IGST</th>` : ''}
-            <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 90px;">Total</th>
+          <tr style="background: #f1f5f9; font-weight: bold; text-align: left;">
+            <th style="border: 1px solid #000; padding: 4px; width: 35px; text-align: center;">SNo.</th>
+            <th style="border: 1px solid #000; padding: 4px;">Particulars</th>
+            <th style="border: 1px solid #000; padding: 4px; text-align: center; width: 130px;">Stay Date</th>
+            <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 70px;">Sell Rate</th>
+            <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 65px;">Inclusion</th>
+            <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 65px;">Discount</th>
+            <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 75px;">Sub Total</th>
+            ${!isInterstate ? `<th style="border: 1px solid #000; padding: 4px; text-align: right; width: 65px;">CGST</th>` : ''}
+            ${!isInterstate ? `<th style="border: 1px solid #000; padding: 4px; text-align: right; width: 65px;">${localTaxName}</th>` : ''}
+            ${isInterstate ? `<th style="border: 1px solid #000; padding: 4px; text-align: right; width: 70px;">IGST</th>` : ''}
+            <th style="border: 1px solid #000; padding: 4px; text-align: right; width: 85px;">Total</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style="border: 1px solid #000; padding: 6px; text-align: left; vertical-align: top;">1.</td>
-            <td style="border: 1px solid #000; padding: 6px; vertical-align: top;">
-              <strong>${fields.particulars}</strong><br/>
-              <span style="font-size: 0.65rem; color: #475569;">Accommodation charges for stay</span>
-            </td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: center; vertical-align: top;">
-              ${fields.checkin} to ${fields.checkout}
-            </td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top;">
-              ${subtotal.toFixed(2)}
-            </td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top;">
-              0.00
-            </td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top;">
-              ${subtotal.toFixed(2)}
-            </td>
-            ${cgst > 0 ? `<td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top;">${cgst.toFixed(2)}</td>` : ''}
-            ${sgst > 0 ? `<td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top;">${sgst.toFixed(2)}</td>` : ''}
-            ${igst > 0 ? `<td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top;">${igst.toFixed(2)}</td>` : ''}
-            <td style="border: 1px solid #000; padding: 6px; text-align: right; vertical-align: top; font-weight: bold;">
-              ${sellRate.toFixed(2)}
-            </td>
-          </tr>
-          <tr style="font-weight: bold; background: #f8fafc;">
-            <td colspan="3" style="border: 1px solid #000; padding: 6px; text-align: right;">Total</td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: right;">${subtotal.toFixed(2)}</td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: right;">0.00</td>
-            <td style="border: 1px solid #000; padding: 6px; text-align: right;">${subtotal.toFixed(2)}</td>
-            ${cgst > 0 ? `<td style="border: 1px solid #000; padding: 6px; text-align: right;">${cgst.toFixed(2)}</td>` : ''}
-            ${sgst > 0 ? `<td style="border: 1px solid #000; padding: 6px; text-align: right;">${sgst.toFixed(2)}</td>` : ''}
-            ${igst > 0 ? `<td style="border: 1px solid #000; padding: 6px; text-align: right;">${igst.toFixed(2)}</td>` : ''}
-            <td style="border: 1px solid #000; padding: 6px; text-align: right;">${sellRate.toFixed(2)}</td>
-          </tr>
+          ${(() => {
+            const checkinDate = parseDate(fields.checkin);
+            const checkoutDate = parseDate(fields.checkout);
+            const diffTime = checkoutDate - checkinDate;
+            const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24))) || 1;
+
+            const dailyTotal = sellRate / nights;
+            const dailyGst = gstAmount / nights;
+            const dailySubtotal = dailyTotal - dailyGst;
+
+            let rowsHtml = '';
+            let cumulativeSubtotal = 0;
+            let cumulativeCgst = 0;
+            let cumulativeSgst = 0;
+            let cumulativeIgst = 0;
+            let cumulativeTotal = 0;
+
+            for (let i = 0; i < nights; i++) {
+              const currentDate = new Date(checkinDate);
+              currentDate.setDate(checkinDate.getDate() + i);
+              const yyyy = currentDate.getFullYear();
+              const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+              const dd = String(currentDate.getDate()).padStart(2, '0');
+              const dateStr = `${yyyy}-${mm}-${dd}`;
+
+              let rowSubtotal = dailySubtotal;
+              let rowCgst = 0, rowSgst = 0, rowIgst = 0;
+              
+              if (isInterstate) {
+                rowIgst = dailyGst;
+              } else {
+                rowCgst = dailyGst / 2;
+                rowSgst = dailyGst / 2;
+              }
+              
+              let rowTotal = dailyTotal;
+
+              cumulativeSubtotal += rowSubtotal;
+              cumulativeCgst += rowCgst;
+              cumulativeSgst += rowSgst;
+              cumulativeIgst += rowIgst;
+              cumulativeTotal += rowTotal;
+
+              const formattedParticulars = (fields.particulars || 'Deluxe Room').replace(/\n/g, '<br/>');
+
+              rowsHtml += `
+                <tr>
+                  <td style="border: 1px solid #000; padding: 4px; text-align: center; vertical-align: top;">${i + 1}.</td>
+                  <td style="border: 1px solid #000; padding: 4px; vertical-align: top;">
+                    <strong>${formattedParticulars}</strong>
+                  </td>
+                  <td style="border: 1px solid #000; padding: 4px; text-align: center; vertical-align: top;">
+                    ${dateStr}
+                  </td>
+                  <td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">
+                    ${rowSubtotal.toFixed(2)}
+                  </td>
+                  <td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">
+                    0.00
+                  </td>
+                  <td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">
+                    0.00
+                  </td>
+                  <td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">
+                    ${rowSubtotal.toFixed(2)}
+                  </td>
+                  ${!isInterstate ? `<td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">${rowCgst.toFixed(2)}</td>` : ''}
+                  ${!isInterstate ? `<td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">${rowSgst.toFixed(2)}</td>` : ''}
+                  ${isInterstate ? `<td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top;">${rowIgst.toFixed(2)}</td>` : ''}
+                  <td style="border: 1px solid #000; padding: 4px; text-align: right; vertical-align: top; font-weight: bold;">
+                    ${rowTotal.toFixed(2)}
+                  </td>
+                </tr>
+              `;
+            }
+
+            rowsHtml += `
+              <tr style="font-weight: bold; background: #fafafa;">
+                <td colspan="3" style="border: 1px solid #000; padding: 4px; text-align: right;">Total</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: right;">${cumulativeSubtotal.toFixed(2)}</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: right;">0.00</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: right;">0.00</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: right;">${cumulativeSubtotal.toFixed(2)}</td>
+                ${!isInterstate ? `<td style="border: 1px solid #000; padding: 4px; text-align: right;">${cumulativeCgst.toFixed(2)}</td>` : ''}
+                ${!isInterstate ? `<td style="border: 1px solid #000; padding: 4px; text-align: right;">${cumulativeSgst.toFixed(2)}</td>` : ''}
+                ${isInterstate ? `<td style="border: 1px solid #000; padding: 4px; text-align: right;">${cumulativeIgst.toFixed(2)}</td>` : ''}
+                <td style="border: 1px solid #000; padding: 4px; text-align: right;">${cumulativeTotal.toFixed(2)}</td>
+              </tr>
+            `;
+
+            return rowsHtml;
+          })()}
         </tbody>
       </table>
 
-      <!-- Word Amount Total -->
-      <div style="margin-bottom: 16px; border: 1px solid #000; padding: 6px; font-weight: 500; text-transform: capitalize; background: #f8fafc;">
-        Amount in Words: <span style="font-weight: normal; font-style: italic;">${totalInWords}</span>
+      <!-- Side-by-Side Middle Section -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border: 1px solid #000; padding: 10px; margin-bottom: 12px; background: #fff;">
+        
+        <!-- Left: Customer Details -->
+        <div style="border-right: 1px solid #cbd5e1; padding-right: 10px;">
+          <div style="font-weight: bold; text-transform: uppercase; margin-bottom: 6px; font-size: 0.75rem; border-bottom: 1px solid #000; padding-bottom: 2px;">To:</div>
+          <div style="font-weight: bold; font-size: 0.8rem; margin-bottom: 4px;">${fields.orgName}</div>
+          <div style="max-width: 320px; color: #374151; margin-bottom: 6px; font-size: 0.7rem; line-height: 1.3;">
+            ${fields.travellerGst ? 'Corporate Booking Client Address' : 'MakeMyTrip Corporate Address'}
+          </div>
+          <div><strong>GSTIN:</strong> ${fields.travellerGst || '-'}</div>
+        </div>
+
+        <!-- Right: Invoice Info -->
+        <div>
+          <div style="font-weight: bold; text-transform: uppercase; margin-bottom: 6px; font-size: 0.75rem; border-bottom: 1px solid #000; padding-bottom: 2px;">Payee / Invoice Details:</div>
+          <div style="display: grid; grid-template-columns: 100px 1fr; gap: 2px; font-size: 0.7rem;">
+            <div><strong>Invoice number:</strong></div>
+            <div style="font-weight: bold;">${fields.billNo || 'PENDING'}</div>
+            <div><strong>Invoice date:</strong></div>
+            <div>${fields.invoiceDate}</div>
+            <div><strong>Booking ID:</strong></div>
+            <div style="font-weight: bold;">${fields.bookingId}</div>
+            <div><strong>Booking date:</strong></div>
+            <div>${fields.bookingDate || '-'}</div>
+            <div><strong>GSTIN:</strong></div>
+            <div>${sellerGst}</div>
+            <div><strong>Arrive:</strong></div>
+            <div>${fields.checkin}</div>
+            <div><strong>Depart:</strong></div>
+            <div>${fields.checkout}</div>
+            <div><strong>No. of rooms:</strong></div>
+            <div>${fields.roomsCount}</div>
+            <div><strong>Hotel Name:</strong></div>
+            <div style="font-weight: bold; color: #1e3a8a;">${fields.hotelName}</div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Signatures & Declarations -->
-      <div style="margin-top: 20px; font-size: 0.62rem; color: #334155; line-height: 1.4; border-top: 1px dashed #000; padding-top: 8px;">
-        <div style="font-weight: bold; margin-bottom: 2px;">Disclosures & Terms:</div>
-        <div>
-          Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) does not own or directly operate the functioning of the hotel and is only collaborating with the Hotel for marketing and sales support services. All applicable above-mentioned taxes are charged by the Hotel, and FabHotels / Travelstack Tech Limited denies any liability that may arise in this regard.
-        </div>
-        <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: end;">
+      <!-- Bottom Supplier Corporate Details -->
+      <div style="border: 1px solid #000; padding: 10px; background: #fafafa;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
           <div>
-            <strong>Pan No.:</strong> ${fields.hotelPan || 'Not Available'}
+            <strong>Guest Name:</strong> <span style="font-weight: bold; font-size: 0.75rem;">${fields.guestName}</span>
+            <div style="margin-top: 8px;">
+              <strong>Supplier Office Details:</strong><br/>
+              <span style="font-weight: bold;">${sellerLegalName}</span><br/>
+              <span style="font-size: 0.68rem; color: #374151;">${sellerAddress}</span>
+            </div>
+          </div>
+          <div style="font-size: 0.68rem;">
+            <div><strong>State:</strong> ${fields.hotelAddress ? fields.hotelAddress.split(',').slice(-2, -1)[0]?.trim() || 'Uttar Pradesh' : 'Uttar Pradesh'}</div>
+            <div><strong>Email:</strong> ${fields.hotelEmail || 'bookings@fabhotels.com'}</div>
+            <div><strong>Tel:</strong> ${fields.hotelPhone || '+917042424242'}</div>
+            <div style="margin-top: 6px; font-weight: bold; color: #475569;">
+              Accounting Code Of Services: [996311] - Service of providing accommodation of hotels
+            </div>
+          </div>
+        </div>
+
+        <!-- Disclosures under Travelstack Billed -->
+        ${bottomDisclosuresHtml}
+
+        <!-- Signature Exemption Row -->
+        <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: end; font-size: 0.65rem;">
+          <div>
+            <strong>PAN:</strong> ${sellerPan}
           </div>
           <div style="text-align: right;">
-            <div style="font-weight: bold; margin-bottom: 30px;">For Travelstack Tech Limited</div>
-            <div style="font-style: italic; color: #64748b;">(Computer-generated Invoice - no signature required)</div>
+            <div style="font-weight: bold; margin-bottom: 2px;">For ${sellerLegalName}</div>
+            <div style="font-style: italic; color: #6b7280;">(Computer-generated Invoice - no signature required)</div>
           </div>
         </div>
+
       </div>
 
     </div>
   `;
+}
 }
 
 // Live update preview matching form panel edits
