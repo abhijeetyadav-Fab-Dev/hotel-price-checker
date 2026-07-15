@@ -1,0 +1,3404 @@
+{
+  "hotels": {
+    "FabHotel Prime Nestlay Rooms": {
+      "hotel_legal_name": "NESTLAY ROOMS RAMNAD",
+      "address": "Ramnad, NESTLAY ROOMS RAMNAD, 4, Golden Shopping Mall, Mandapam Road, Ramanathapuram, Ramanathapuram, Tamil Nadu, 623501",
+      "pan": "AAWFN4487A",
+      "gstin": "33AAWFN4487A1Z1",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Karthikeya Residency": {
+      "hotel_legal_name": "HOTEL KARTHIKEYA RESIDENCY",
+      "address": "19-4-121/H7, STV NAGAR, TIRUPATI, Chittoor, Andhra Pradesh, 517501",
+      "pan": "AMEPK4722B",
+      "gstin": "37AMEPK4722B1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Bharat Continental": {
+      "hotel_legal_name": "Bharat Co-Works",
+      "address": "R-549, Basement, Kadhai Tadka Restaurant, Shankar Road, New Rajinder Nagar, Central Delhi, Delhi, 110060",
+      "pan": "AAKPU8721A",
+      "gstin": "07AAKPU8721A2ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel 4 Pillar’s": {
+      "hotel_legal_name": "HOTEL 4 PILLARS",
+      "address": "House No. 28, Rua de Ourem, Penha De Franca, North Goa, Goa, 403001",
+      "pan": "AGWPB9105H",
+      "gstin": "30AGWPB9105H2ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Krishna Regency": {
+      "hotel_legal_name": "SAMOTEL",
+      "address": "184/1, JESSORE ROAD, Kolkata, North Twenty Four Parganas, West Bengal, 700081",
+      "pan": "AEMFS9462A",
+      "gstin": "19AEMFS9462A1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Guru Heritage": {
+      "hotel_legal_name": "",
+      "address": "GETNER HOTELS PRIVATE LTD, PLOT NO 117-A, KWC KALAMBOLI, NEAR WAREHOUSE COMPLEX, PANVEL, Raigad, Maharashtra, 410218",
+      "pan": "",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Rivlet MG Road": {
+      "hotel_legal_name": "RIVLET HOSPITALITY PRIVATE LIMITED",
+      "address": "J-10/7, DLF PHASE-2, Gurugram, Gurugram, Haryana, 122002",
+      "pan": "AANCR0058B",
+      "gstin": "06AANCR0058B1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Villa The Suites": {
+      "hotel_legal_name": "MAK HOSPITALITY",
+      "address": "HOUSE NO.337-C/1A,, NEVADA, ASHOK NAGAR, ALLAHABAD, Prayagraj, Uttar Pradesh, 211001",
+      "pan": "BFGPB4869E",
+      "gstin": "09BFGPB4869E1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Cinco Primera": {
+      "hotel_legal_name": "THE CINCO PRIMERA",
+      "address": "8-2-287/11/A/K/4,K/4A,K/1, Salapurpuria Sattva, ROAD NO-14, Hyderabad, Hyderabad, Telangana, 500034",
+      "pan": "AAVFT9798H",
+      "gstin": "36AAVFT9798H1ZW",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sion Residency": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "20th Floor, CTS No 95 4B 3&4 590, We Work Oberoi Commerz II, Padmavati Road Off W.E. Highway, Oberoi Realty Ltd, Corporate Office, Oberoi Garden City, Mumbai, Mumbai Suburban, Maharashtra, 400063",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Viva House": {
+      "hotel_legal_name": "Sahil Rajendra Jambhulkar",
+      "address": "Shop No 25, Survey no 2330, Niwara Hieghts Sharma Complex, Talegaon Chakan Road, Talegaon Dabhade, Pune,, Maharashtra, 410507",
+      "pan": "BMDPJ6566L",
+      "gstin": "27BMDPJ6566L1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rotano Grand": {
+      "hotel_legal_name": "ROTANO GRAND",
+      "address": "19, JAMLA ZAHARA, MUNNEKOLALU ROAD, Marathahalli, Bengaluru, Bengaluru Urban, Karnataka, 560037",
+      "pan": "AMMPA5687M",
+      "gstin": "29AMMPA5687M2Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golf Inn": {
+      "hotel_legal_name": "MOVING STONE INDIA PRIVATE LIMITED",
+      "address": "637, ANIL GUPTA, NEAR SECTOR 43, Gurugram, Gurugram, Haryana, 122001",
+      "pan": "AAPCM7616J",
+      "gstin": "06AAPCM7616J1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pitampura": {
+      "hotel_legal_name": "MAJESTA HOSPITALITY",
+      "address": "Lok Vihar, B - 157, LOK VIHAR, New Delhi, North West Delhi, Delhi, 110034",
+      "pan": "ACEFM1099H",
+      "gstin": "07ACEFM1099H1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Airport Palace": {
+      "hotel_legal_name": "HOTEL AIRPORT PALACE",
+      "address": "1 TO 4 FLOOR, HORMAZD COTTAGE, NEAR VAKOLA BRIDGE CHHATRAPATI SHIVAJI MAHARAG RD, Mumbai, Mumbai, Suburban, Maharashtra, 400055",
+      "pan": "BEZPT3968L",
+      "gstin": "27BEZPT3968L1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Casa Grand": {
+      "hotel_legal_name": "M/S KUBERAA ENTERPRISES",
+      "address": "Himayathnagar, M/S KUBERAA ENTERPRISES, Plot No.14 Sy no 65, Ameerpet, Hyderabad, Hyderabad, Telangana, 500038",
+      "pan": "AAYFK7756M",
+      "gstin": "36AAYFK7756M1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Leela Inn": {
+      "hotel_legal_name": "LEELA INN",
+      "address": "1, Circus Avenue, Circus Avenue, Kolkata, Kolkata, West Bengal, 700017",
+      "pan": "AALFL6573E",
+      "gstin": "19AALFL6573E1ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Bliss": {
+      "hotel_legal_name": "HOTEL BLISS",
+      "address": "A - 301 to A - 312, 3, Suryam Trade Centre,, Odhav to Nikol S.P. Ring Road,, Ahmedabad, Ahmedabad, Gujarat, 382350",
+      "pan": "AAPFH9715E",
+      "gstin": "24AAPFH9715E1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel KK Continental": {
+      "hotel_legal_name": "HOTEL K.K. CONTINENTAL",
+      "address": "23, ALBERT ROAD, AMRITSAR, Amritsar, Punjab, 143001",
+      "pan": "BHDPA6486R",
+      "gstin": "03BHDPA6486R2ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Jaipur Villa": {
+      "hotel_legal_name": "DEEPENDRA SINGH RATHORE",
+      "address": "9A, Lalarpura Road, Jaipur, Jaipur, Rajasthan, 302034",
+      "pan": "EEAPR3018P",
+      "gstin": "08EEAPR3018P1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel B Zone": {
+      "hotel_legal_name": "BALAKRISHNAN PRADEEP",
+      "address": "New No 4, Old No 56,, Veerabadran street, Nungambakkam,, Chennai, Tamil Nadu, 600034",
+      "pan": "AACPB0738N",
+      "gstin": "33AACPB0738N1ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Eminent Suites Banjara": {
+      "hotel_legal_name": "Charvitha Enterprises",
+      "address": "Hills, Charvitha Enterprises, Flot No 402, Sai signature Apts, Swarnadhama Ngar, Old Bowenpally, Hyderabad, Telangana, 500011",
+      "pan": "AKHPG0034B",
+      "gstin": "36AKHPG0034B1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Manoshanti": {
+      "hotel_legal_name": "DHOND HOTEL",
+      "address": "0, DR. DADA VAIDYA ROAD, PANAJI, North Goa, Goa, 403001",
+      "pan": "AAAFD5619A",
+      "gstin": "30AAAFD5619A1ZB",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Siddarth Grand": {
+      "hotel_legal_name": "SRI SAI RAM ENTERPRISES",
+      "address": "40-5-19/27C, Ground, Mogal Raj Puram, Jammichettu Centre, Vijayawada, NTR, Andhra Pradesh, 520010",
+      "pan": "AQHPK6458R",
+      "gstin": "37AQHPK6458R1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Siris 18": {
+      "hotel_legal_name": "SERIS 18 HOSPITALITY PVT LTD",
+      "address": "18, siris road, dlf phase 3, Gurugram, Haryana, 122002",
+      "pan": "AAQCS9955D",
+      "gstin": "06AAQCS9955D1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Heritage Ruby": {
+      "hotel_legal_name": "HOTEL HERITAGE",
+      "address": "903 RAJDANGA, BLOK-EC, PLOT-08,P.O.-E.K.T.P, Kolkata, Kolkata, West Bengal, 700107",
+      "pan": "AAQFH2407J",
+      "gstin": "19AAQFH2407J1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel SV Grand": {
+      "hotel_legal_name": "M/s. SAKALA SUPER MARKET",
+      "address": "1-38/1, UTNOOR MAIN ROAD, IB CHOWK, Utnur, Adilabad, Telangana, 504311",
+      "pan": "CFWPJ5404E",
+      "gstin": "36CFWPJ5404E1ZB",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel RK Residency": {
+      "hotel_legal_name": "HOTEL RELAX INN",
+      "address": "D. No. 8-3-167/D/136, AMEERPET, Hyderabad, Hyderabad, Telangana, 500038",
+      "pan": "AAQFH6683N",
+      "gstin": "36AAQFH6683N1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Metro": {
+      "hotel_legal_name": "METRO INN",
+      "address": "H No 9-3-120/A, Regemental Bazar, Main Road, Secunderabad, Hyderabad, Telangana, 500071",
+      "pan": "ACAFM2527J",
+      "gstin": "36ACAFM2527J1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Imperial Regency": {
+      "hotel_legal_name": "Payal Zala",
+      "address": "Shop No. 202, Shambhu Parisar, 2/2 Chhoti Gwaltoli, Indore, Indore, Madhya Pradesh, 452001",
+      "pan": "ACPPZ2974H",
+      "gstin": "23ACPPZ2974H1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golden Gate": {
+      "hotel_legal_name": "VEERA PRASAD JAGARLAMUDI",
+      "address": "PLOT NO-6, GOLDEN GATE TOWERS, JAI HIND COLONY, MADHAPUR, Hyderabad, Telangana, 500081",
+      "pan": "AHLPJ3935D",
+      "gstin": "36AHLPJ3935D1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Arastu Plaza": {
+      "hotel_legal_name": "Hotel Arastu",
+      "address": "11-2-9, HOTEL ARASTU, Dargah Yousufain X Road, Nampally, Hyderabad, Hyderabad, Telangana, 500001",
+      "pan": "AAIFH6011L",
+      "gstin": "36AAIFH6011L2ZB",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Weekend": {
+      "hotel_legal_name": "Kitchen 09",
+      "address": "39, Sch no. 113, Indore, Indore, Madhya Pradesh, 452001",
+      "pan": "BCDPJ2326N",
+      "gstin": "23BCDPJ2326N1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel ESS Paradise": {
+      "hotel_legal_name": "HOTEL ESS PARADISE",
+      "address": "20, HOTEL ESS PARADISE, NEHRU STREET, RAMNAGAR, Coimbatore, Tamil Nadu, 641009",
+      "pan": "DHZPS5816P",
+      "gstin": "33DHZPS5816P1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Nanda": {
+      "hotel_legal_name": "HOTEL NANDA",
+      "address": "HOTEL NANDA, BHADAUR HOUSE, BHADAUR HOUSE, Ludhiana, Punjab, 141008",
+      "pan": "AADFH9026Q",
+      "gstin": "03AADFH9026Q1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Kamala Inn": {
+      "hotel_legal_name": "Anup Kumar Ray",
+      "address": "I2-260/18/NEW, Shibrampur Road, Kolkata, South Twenty Four Parganas, West Bengal, 700143",
+      "pan": "BAVPR5674R",
+      "gstin": "19BAVPR5674R1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel RR Grand": {
+      "hotel_legal_name": "HOTEL RR GRAND",
+      "address": "40-9-28, SBI OFFICERS COLONY, ACHARYARANGA NAGAR, MG ROAD , PATAMATA, VIJAYAWADA, Krishna, Andhra, Pradesh, 520010",
+      "pan": "AAMFH1391P",
+      "gstin": "37AAMFH1391P1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Simhadri Grand": {
+      "hotel_legal_name": "HOTEL SIMHADRI GRAND",
+      "address": "15-18-8/3/A/1, N T R CIRCLE, Khammam, Khammam, Telangana, 507002",
+      "pan": "DMGPP8656C",
+      "gstin": "36DMGPP8656C1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Thejas Paaradise": {
+      "hotel_legal_name": "HOTEL THEJAS PARADISE",
+      "address": "473, Hotel Thejas Paradise, Kamaraja, Road, Ramanuja Nagar, Coimbatore, Tamil, Nadu, 641015",
+      "pan": "AAIFH7703H",
+      "gstin": "33AAIFH7703H1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rallkmas": {
+      "hotel_legal_name": "",
+      "address": "Rallkmas (RAJ KUMAR MALHOTRA), K-3/96, DLF PHASE-2, GURGAON, Gurugram, Haryana, 122001",
+      "pan": "AARPM1144N",
+      "gstin": "06AAFCC6416Q1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Star 17": {
+      "hotel_legal_name": "GREEN LOTUS STAR 17",
+      "address": "G/F, COMPLETE BUILDING, PLOT NO - 170, BLOCK A, POCKET 2, Sector 17 Dwarka, New Delhi, South West Delhi, Delhi,, 110078",
+      "pan": "ASEPK4875H",
+      "gstin": "07ASEPK4875H3ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Srishoin": {
+      "hotel_legal_name": "",
+      "address": "SRISHOIN LLP, 1-90/7/B/83 Plot No 35,36, Patrika Nagar, Hyderabad, Rangareddy, Telangana, 500081",
+      "pan": "AFGFS9094D",
+      "gstin": "36AAFCC6416Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Mapple": {
+      "hotel_legal_name": "ROYAL MAPPLE BANQUET HALL",
+      "address": "382, ROYAL MAPLE BANQUET HALL, Pakhowal Road, CENTRA GREENS, Phullanwal, Ludhiana, Ludhiana, Punjab, 141013",
+      "pan": "AAXFR3790B",
+      "gstin": "03AAXFR3790B3ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Nexus Inn": {
+      "hotel_legal_name": "HOTEL SPRING INN",
+      "address": "4, 4th floor, AKANKSHA ARCADE, TRIKAMDAS ROAD, KANDIVALI, Mumbai, Maharashtra, 400067",
+      "pan": "AAKFH5743F",
+      "gstin": "27AAKFH5743F1Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shrinath Casa Inn": {
+      "hotel_legal_name": "RAAG HOSPITALITY",
+      "address": "PLOT NO.206 B, INDRA NAGAR, Mandideep, Raisen, Madhya Pradesh, 462046",
+      "pan": "AUCPA1939N",
+      "gstin": "23AUCPA1939N3ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ramayana": {
+      "hotel_legal_name": "SONI ENTERPRISES",
+      "address": "656/6/P052, Mohamdpur Khatri, Lucknow, Lucknow, Lucknow, Uttar Pradesh, 226022",
+      "pan": "EEXPK0724J",
+      "gstin": "09EEXPK0724J1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Palm Grove": {
+      "hotel_legal_name": "HOTEL PALM OLIVE",
+      "address": "Building No 2, 501-522, 5th Floor, Seven, Square SRA, BKC Road, Mumbai, Mumbai, Suburban, Maharashtra, 400051",
+      "pan": "AAQFH7302G",
+      "gstin": "27AAQFH7302G1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Lagoon": {
+      "hotel_legal_name": "HOTEL AATITHYA",
+      "address": "HOTEL AATITHYA PLOT NO 26, GROUND FLOOR, HOTEL AATITHYA, SANKAR ROAD, Bhubaneswar, Khordha, Odisha,, 751009",
+      "pan": "BDSPB8586N",
+      "gstin": "21BDSPB8586N1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Royal Castle": {
+      "hotel_legal_name": "HOTEL ROYAL CASTLE INN",
+      "address": "145, 7 th Street Extension, Gandhipuram, Coimbatore, Tamil Nadu, 641012",
+      "pan": "AAGFH1001A",
+      "gstin": "33AAGFH1001A1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Shourya Residency": {
+      "hotel_legal_name": "UDAY HONNAYA SHETTY",
+      "address": "SN 12 Part, A Wing Second Floor, Flat No 205, Wadgaon Khurd, Wadgaon Khurd, Pune, Maharashtra, 411041",
+      "pan": "AUEPS4165J",
+      "gstin": "27AUEPS4165J2Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel L Grand": {
+      "hotel_legal_name": "LOTUS HOSPITALITIES",
+      "address": "9-4-151/22, Flat No 208, Prathibha Apartments, Sebastian Road, Secunderabad, Hyderabad, Telangana, 500003",
+      "pan": "AAKFL5603Q",
+      "gstin": "36AAKFL5603Q1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Avenue": {
+      "hotel_legal_name": "HOTEL PRIME AVENUE",
+      "address": "81 - EC, SCHEME NO. 94, SECTOR C RING ROAD, INDORE, Indore, Madhya Pradesh, 452001",
+      "pan": "AHCPS6752L",
+      "gstin": "23AHCPS6752L1ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Samotel": {
+      "hotel_legal_name": "SAMOTEL",
+      "address": "184/1, JESSORE ROAD, Kolkata, North Twenty Four Parganas, West Bengal, 700081",
+      "pan": "AEMFS9462A",
+      "gstin": "19AEMFS9462A1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shahi Palace": {
+      "hotel_legal_name": "HOTEL SHAHI PALACE",
+      "address": "GALA NO 3, ANIS COMPOUND, A G LINK ROAD, Mumbai, Mumbai Suburban, Maharashtra, 400072",
+      "pan": "AAQFH5001E",
+      "gstin": "27AAQFH5001E1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Swastik Villa": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Bougainvillea Suites": {
+      "hotel_legal_name": "INSIGHT MARKATON PRIVATE LIMITED",
+      "address": "152, 10TH MAIN, 7TH CROSS, INDIRANAGAR 2ND STAGE, BENGALURU, Bengaluru Urban, Karnataka, 560038",
+      "pan": "AAGCI2041G",
+      "gstin": "29AAGCI2041G1ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Arya": {
+      "hotel_legal_name": "KASISAA HOSPITALITY PRIVATE LIMITED",
+      "address": "Ward No 25 , Plot No 454, Khagaul Lakh, Patna, Patna, Bihar, 801105",
+      "pan": "AAJCK1226E",
+      "gstin": "10AAJCK1226E1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rameshwaram Guest": {
+      "hotel_legal_name": "Rameshwaram Guest House",
+      "address": "House, Rameshwaram Guest House, 0, Bsnl Exechang Road, Near BSNL Exchange Aharfi Bhawan Chourha, Mugalpura Nirmochan Ghat Ward Abhiram Das,, Ayodhya, Ayodhya, Uttar Pradesh, 224123",
+      "pan": "DINPD6529M",
+      "gstin": "09DINPD6529M1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Airport View": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), A-610, World Trade Tower, Vill. Makarba Taluka, Behind Skoda Showroom, Ahmedabad, Ahmedabad, Gujarat, 380051",
+      "pan": "AAFCC6416Q",
+      "gstin": "24AAFCC6416Q1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Blue Moon": {
+      "hotel_legal_name": "HOTEL BLUE MOON",
+      "address": "H.NO.11-29-49/7, SHANTHI NAGAR, 2ND BANK COLONY, WARANGAL, Warangal, Telangana, 506002",
+      "pan": "AAOFH5487J",
+      "gstin": "36AAOFH5487J1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Ville": {
+      "hotel_legal_name": "M/S ROYAL VILLE PATNA",
+      "address": "-, GROUND FLOOR, YASHODANAND APPARTMENT, KIDWAIPURI, PATNA, Patna, Bihar, 800001",
+      "pan": "AAPFR0081D",
+      "gstin": "10AAPFR0081D2ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Springwood": {
+      "hotel_legal_name": "",
+      "address": "SPRINGWOODS ACCOMMODATIONS PRIVATE LIMITED, AC - 131, SECTOR - I,, SALT LAKE CITY, BIDHAN NAGAR,, KOLKATA, Kolkata, West Bengal, 700064",
+      "pan": "",
+      "gstin": "19AAFCC6416Q1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shri Ram Kashi": {
+      "hotel_legal_name": "SHOBHIT KESARWANI",
+      "address": "68/62/39, SARAI MIR KHAN, ALLAHABAD, Prayagraj, Uttar Pradesh, 211005",
+      "pan": "ALHPK4749C",
+      "gstin": "09ALHPK4749C2Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Atithi Residency": {
+      "hotel_legal_name": "SHRI DURGA ENTERPRISES",
+      "address": "No. 8, Atithi Residency, Serenity Layout, Kaikondranahalli, Near Fire Station, Sarjapur Road, Bengaluru Urban, Karnataka,, 560035",
+      "pan": "ADZFS0118F",
+      "gstin": "29ADZFS0118F1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel RR Residency": {
+      "hotel_legal_name": "Rahul singh rawat",
+      "address": "7-B, jacaranda marg, Manoj gupta resident, sector-25, Gurugram, Gurugram, Haryana, 122002",
+      "pan": "AXBPR2554E",
+      "gstin": "06AXBPR2554E1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Joy Stayz": {
+      "hotel_legal_name": "JOY STAYZ",
+      "address": "PLOT NO 91, SURVEY NO 11/31, Khanamet, Unnamed Road, Hyderabad, Rangareddy, Telangana, 500081",
+      "pan": "AAXFT1572F",
+      "gstin": "36AAXFT1572F1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Chhappan": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Level 5, Technopolis Knowledge Park, Mahakali Caves Road, Mumbai, Mumbai Suburban, Maharashtra, 400093",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Surya International": {
+      "hotel_legal_name": "SURYA INTERNATIONAL LODGE",
+      "address": "23-936, SVS Complex, Achari Street, Near Nehru Bomma, Nellore, Sri Potti Sriramulu Nellore, Andhra Pradesh, 524003",
+      "pan": "AIJPG9782E",
+      "gstin": "37AIJPG9782E2ZU",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Sumanglam": {
+      "hotel_legal_name": "Amit Kumar Gupta",
+      "address": "0, MAJRA NEAR ISBT BUS STAND, Dehradun, Dehradun, Uttarakhand, 248001",
+      "pan": "ARSPG1513H",
+      "gstin": "05ARSPG1513H1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Regal": {
+      "hotel_legal_name": "HOTEL REGAL",
+      "address": "930, Mouli Road, Mohali, SAS Nagar, Punjab, 140308",
+      "pan": "DVOPK8055D",
+      "gstin": "03DVOPK8055D1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Raghav Raj Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Radha Rani Residency": {
+      "hotel_legal_name": "HOTEL RADHA RANI RESIDENCY BANQUET",
+      "address": "HALL&ROOMS, H NO 15-8-885, Srinagar Colony,Mamatha Hospital Road, Khammam, Khammam, Telangana, 507002",
+      "pan": "BTZPV8348H",
+      "gstin": "36BTZPV8348H1ZH",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Jesant Valley Resort": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), N-66, Phase IV, WISDOMLAB, Verna, Industrial Estate Verna, Chicalim, South, Goa, Goa, 403722",
+      "pan": "AAFCC6416Q",
+      "gstin": "30AAFCC6416Q1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Olive Suite": {
+      "hotel_legal_name": "Canara Enterprises",
+      "address": "3 RD FLOOR, NO 306, Eden Park, SL NO 199, 204 TO 209 , PLOT NO 4 12, VIMAN NAGAR, Shree Krishna Veg Court,, Viman Nagar, Pune, Pune, Maharashtra, 411014",
+      "pan": "AAUFC3523E",
+      "gstin": "27AAUFC3523E1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Trijal Inn": {
+      "hotel_legal_name": "SRK ENTERPRISES",
+      "address": "504 SHIVA GREEN, FIFTH FLOOR, 14/GH-12, SECTOR -14, Lucknow, Lucknow, Uttar Pradesh, 226029",
+      "pan": "FCLPS8974M",
+      "gstin": "09FCLPS8974M1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Arjun Residency": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 5th floor, 2-91/12/4/NR, Plot No 4, Doc Bhavan, Kondapur, Hyderabad, Hyderabad, Telangana, 500081",
+      "pan": "AAFCC6416Q",
+      "gstin": "36AAFCC6416Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel BKC Annex": {
+      "hotel_legal_name": "HOTEL BKC NX",
+      "address": "GALA NO 101, 1st Floor, GOLD PRINTS,, Kapadia Nagar CST Road, Mumbai,, Mumbai Suburban, Maharashtra, 400070",
+      "pan": "AAQFH1179R",
+      "gstin": "27AAQFH1179R1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime President": {
+      "hotel_legal_name": "SATPAL SINGH CHAWLA",
+      "address": "1, NEAR CANARA BANK, BERASIA ROAD, BHOPAL, Bhopal, Madhya Pradesh, 462001",
+      "pan": "ACXPC4219J",
+      "gstin": "23ACXPC4219J1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel White Ridge Shivam": {
+      "hotel_legal_name": "WHITE RIDGE SHIVAM",
+      "address": "2-2-1108/1/B, TIRUMALA ENCLAVE, TILAK NAGAR ROAD, Hyderabad, Hyderabad, Telangana, 500044",
+      "pan": "AAEFW3406G",
+      "gstin": "36AAEFW3406G1ZB",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Palace Peera Garhi": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "First Floor Kehar Singh Estate, H-294, Plot 2A, Saidulajab,Lane no. 2, Saket, New Delhi, South Delhi, Delhi, 110030",
+      "pan": "AAFCC6416Q",
+      "gstin": "07AAFCC6416Q1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Palazzo I": {
+      "hotel_legal_name": "HOTEL GRAND PALAZZO",
+      "address": "GN-4, 2ND FLOOR, Raja Garden, New Delhi, West Delhi, Delhi, 110027",
+      "pan": "EYQPS1686J",
+      "gstin": "07EYQPS1686J1ZH",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel AB Residency": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 547, Industrial Area, Modern Tower, Phase 8A, Sector- 75, Mohali, SAS Nagar, Punjab, 160055",
+      "pan": "AAFCC6416Q",
+      "gstin": "03AAFCC6416Q1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Nilsa": {
+      "hotel_legal_name": "HOTEL NILSA LODGING & BOARDING",
+      "address": "H.NO. 11769/2, NEW DANDIPADA, NEAR RAILWAY STATION, Boisar, Palghar, Maharashtra, 401501",
+      "pan": "AORPP9375A",
+      "gstin": "27AORPP9375A2ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shivkashi Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Partha Residency": {
+      "hotel_legal_name": "HOTEL PARTHA RESIDENCY",
+      "address": "1st Floor, No.14, Above KFC, Devasandra Main Road, Ayyappanagar, Krishnarajapuram, Opp. Vishal Mart, KR Puram,, Bengaluru, Bengaluru Urban, Karnataka, 560036",
+      "pan": "AARFH4038E",
+      "gstin": "29AARFH4038E1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Guest O Polis": {
+      "hotel_legal_name": "Rainbow Guest House",
+      "address": "1931, RAJDANGA MAIN ROAD,BLOCK -ED,PLOT-102,KASBA, KOLKATA, Kolkata, West Bengal, 700107",
+      "pan": "AXGPS5795P",
+      "gstin": "19AXGPS5795P3Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Twamev": {
+      "hotel_legal_name": "Hotel Twamev",
+      "address": "G-69, Ground Floor, Block-G, laxmi Nagar, New Delhi, East Delhi, Delhi, 110092",
+      "pan": "AARFH2092Q",
+      "gstin": "07AARFH2092Q1ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Hill Fort": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 4th Floor, Desk No.CS4-19, 83 S P Mukherjee Road, Devi Market, Kolkata, Kolkata, West Bengal, 700026",
+      "pan": "AAFCC6416Q",
+      "gstin": "19AAFCC6416Q1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Raghunandan Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), Ground Floor, D-9, Sector-3, Noida,, Gautambuddha Nagar, Uttar Pradesh,, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Emoji Stays": {
+      "hotel_legal_name": "PREMIUM NEST",
+      "address": "C1-2761, SUSHANT LOK-1, GURUGRAM, Gurugram, Haryana, 122002",
+      "pan": "AAWFP3719R",
+      "gstin": "06AAWFP3719R1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel K9 Royal": {
+      "hotel_legal_name": "HOTEL K 9 ROYAL",
+      "address": "5354/1/B/A, CHANDIGARH ROAD, NEAR AVON ISPAT IN BACK SIDE WINE SHOP, CHANDIGARH ROAD, Sahnewal,, Ludhiana, Punjab, 141123",
+      "pan": "AARFH1937Q",
+      "gstin": "03AARFH1937Q1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Silver Inn I": {
+      "hotel_legal_name": "SUNNY JAISWAL",
+      "address": "PLOT NO.3, Hotel Silver Inn, Raisen Road, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "ALVPJ8787D",
+      "gstin": "23ALVPJ8787D1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Royal Suites": {
+      "hotel_legal_name": "THE ROYAL SUITES",
+      "address": "Old No 28/New No 143, 8th Main Road, 1st A cross, Bengaluru, Bengaluru Urban, Karnataka, 560029",
+      "pan": "BENPA8311J",
+      "gstin": "29BENPA8311J1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime V Hazratganj": {
+      "hotel_legal_name": "RAM MOHAN VENTURES",
+      "address": "15, SHIVAJI MARG, HEWETT ROAD, LUCKNOW, Lucknow, Uttar Pradesh, 226001",
+      "pan": "AAUFR9675A",
+      "gstin": "09AAUFR9675A1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Bliss Residency": {
+      "hotel_legal_name": "BALAJI ASSOCIATES",
+      "address": "F-124, HOTEL BLISS RESIDENCY, GAUTAM NAGAR ADHARSH SOCIETY, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "BEWPP4981C",
+      "gstin": "23BEWPP4981C1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Deccan Heritage": {
+      "hotel_legal_name": "DECCAN MARVEL HOTELS PRIVATE LIMITED",
+      "address": "D. NO. 4-1-342 TO 348 AND 354, ABIDS ROAD, ABIDS, Hyderabad, Telangana, 500001",
+      "pan": "AACCD5099H",
+      "gstin": "36AACCD5099H1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Elvis International": {
+      "hotel_legal_name": "VJR HOSPITALITY PRIVATE LIMITED",
+      "address": "Gala no B-6, Narayanplaza Pre Co Op Soc Ltd, Chandivali, Mumbai, Mumbai Suburban, Maharashtra, 400072",
+      "pan": "AAHCV2860M",
+      "gstin": "27AAHCV2860M1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Raj Palace": {
+      "hotel_legal_name": "HOTEL RAJ PALACE",
+      "address": "51/43, JAI HIND CHABUTRA UDAIGANJ, Lucknow, Lucknow, Uttar Pradesh, 226001",
+      "pan": "ADJPJ4637L",
+      "gstin": "09ADJPJ4637L1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Exotica Avenue": {
+      "hotel_legal_name": "MOVING STONE INDIA PRIVATE LIMITED",
+      "address": "637, ANIL GUPTA, NEAR SECTOR 43, SRCTOR 43, Gurugram, Gurugram, Haryana, 122001",
+      "pan": "AAPCM7616J",
+      "gstin": "06AAPCM7616J1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Yashraj Inn": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "20th Floor, CTS No 95 4B 3&4 590, We Work Oberoi Commerz II, Padmavati Road Off W.E. Highway, Oberoi Realty Ltd, Corporate Office, Oberoi Garden City, Mumbai, Mumbai Suburban, Maharashtra, 400063",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Jalandhar Corporate Suites": {
+      "hotel_legal_name": "MAHARAJA RESIDENCY HOTELS PRIVATE LIMITED",
+      "address": "333/334/335, New Rly Road,Fentonganj, Jalandhar, Jalandhar, Punjab, 144001",
+      "pan": "AAECM6743P",
+      "gstin": "03AAECM6743P1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Moody Inn Nawada": {
+      "hotel_legal_name": "THE ARROW",
+      "address": "Plot no.6, UTTAM NAGAR, Mohan Garden, New Delhi, West Delhi, Delhi, 110059",
+      "pan": "AATFT1173G",
+      "gstin": "07AATFT1173G1ZW",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Alfa": {
+      "hotel_legal_name": "HOTEL ALFA",
+      "address": "16-10-8, Pingala swamy street, Purnanandapeta, Vijayawada, Krishna, Andhra Pradesh, 520003",
+      "pan": "AHTPV2284P",
+      "gstin": "37AHTPV2284P1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Suncitel": {
+      "hotel_legal_name": "B.S.ENTERPRISES",
+      "address": "232, ground floor, HOLDING NO.317, goraksha basi road, Kolkata, North Twenty Four Parganas, West Bengal, 700028",
+      "pan": "AVHPS3694L",
+      "gstin": "19AVHPS3694L1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rivlet Central Delhi": {
+      "hotel_legal_name": "RIVLET FACILITIES",
+      "address": "5050 PLOT NO 12, BLOCK-K, Netaji Subhash Marg, New Delhi, Central Delhi, Delhi, 110002",
+      "pan": "DSGPK2120C",
+      "gstin": "07DSGPK2120C1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Nestlay Rooms High Court": {
+      "hotel_legal_name": "NESTLAY ROOMS HIGH COURT",
+      "address": "3, 1, 2, 3, 4, Kondi Chetty Street, Chennai, Chennai, Tamil Nadu, 600001",
+      "pan": "AAWFN4897J",
+      "gstin": "33AAWFN4897J1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel AMR Grand": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Oakwey Inn": {
+      "hotel_legal_name": "OAKWEY INN",
+      "address": "2153, 2nd CROSS, 17th MAIN, HAL 2nd, STAGE, INDIRANAGAR, Bengaluru Urban,, Karnataka, 560008",
+      "pan": "AAHFO7816K",
+      "gstin": "29AAHFO7816K1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Atharv": {
+      "hotel_legal_name": "LALIT JAWANJI RABARI",
+      "address": "15,HALL MUKAM ANAND SHRI HOTEL, BABU MURAI COLONY, AERODRUM, Indore, Indore, Madhya Pradesh, 452005",
+      "pan": "AKFPR8249B",
+      "gstin": "23AKFPR8249B2Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Legacy": {
+      "hotel_legal_name": "LEGACY HOTEL",
+      "address": "PLOT NO MIG 124, RUBY VISITA, KPHB Colony Road NO 1, Hyderabad, Medchal Malkajgiri, Telangana, 500072",
+      "pan": "AAMFL0982A",
+      "gstin": "36AAMFL0982A1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Well Back": {
+      "hotel_legal_name": "HOTEL LANCASTER",
+      "address": "SH/124, 1st Floor, 268 Ruby Cottage,, Netaji Nagar, Mumbai, Mumbai,, Maharashtra, 400070",
+      "pan": "AAPFH9164H",
+      "gstin": "27AAPFH9164H1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Palash Residency": {
+      "hotel_legal_name": "OMRAN INFRASTRUCTURE AND HOSPITALITIES",
+      "address": "PRIVATE LIMITED, 5, TIRATH MENSION, MAIN ROAD, RANCHI, Ranchi, Jharkhand, 834001",
+      "pan": "AABCO0918M",
+      "gstin": "20AABCO0918M1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Golf Inn": {
+      "hotel_legal_name": "MOVING STONE INDIA PRIVATE LIMITED",
+      "address": "637, ANIL GUPTA, NEAR SECTOR 43, Gurugram, Gurugram, Haryana, 122001",
+      "pan": "AAPCM7616J",
+      "gstin": "06AAPCM7616J1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel WR Grand I": {
+      "hotel_legal_name": "WHITE RIDGE SANGEETH",
+      "address": "OLD NO 23 AND NEW NO 87, DR NO 9-1-119/3,9-1-119/3/1,9-1-119/3/2,9-1-119/3/3 ETC, DR NO 9-1-87 & 119/1,, Secunderabad, Secunderabad, Hyderabad, Telangana, 500003",
+      "pan": "AAEFW8823B",
+      "gstin": "36AAEFW8823B1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Three Waves": {
+      "hotel_legal_name": "HOTEL THREE WAVES",
+      "address": "10-3-99/32, Brundavan Colony, Kothapet Saroor Nagar Road, Saroor Nagar Post Office Bus Stop, Lingoji Guda, Hyderabad,, Rangareddy, Telangana, 500035",
+      "pan": "EQCPD2757K",
+      "gstin": "36EQCPD2757K2ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Guru Residency": {
+      "hotel_legal_name": "GURU RESIDENCY",
+      "address": "No 693, 12/3, Chudanapura, Kodipalya Main Road, Kengeri Hobli, Bengaluru, Ramanagara, Karnataka, 560060",
+      "pan": "BJYPC3391N",
+      "gstin": "29BJYPC3391N1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Pavilion": {
+      "hotel_legal_name": "SAI PROPERTIES",
+      "address": "D-145, DAKSHINEE CO OPPERATIVE HOSING SOCIETY LTD, CANAL SOUTH ROAD, Kolkata, Kolkata, West Bengal,, 700105",
+      "pan": "AEJFS1683L",
+      "gstin": "19AEJFS1683L1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Raka Inn": {
+      "hotel_legal_name": "POONAM BULLAGAN",
+      "address": "HOUSE NO.337-C/1A,, NEVADA, ASHOK NAGAR, ALLAHABAD, Prayagraj, Uttar Pradesh, 211001",
+      "pan": "BFGPB4869E",
+      "gstin": "09BFGPB4869E1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Elixir Inn": {
+      "hotel_legal_name": "",
+      "address": "TRAVELSTACK TECH LIMITED, A-610, World Trade Tower, Vill. Makarba Taluka, Behind Skoda Showroom, Ahmedabad, Ahmedabad, Gujarat, 380051",
+      "pan": "",
+      "gstin": "24AAFCC6416Q1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Kavya Inn": {
+      "hotel_legal_name": "HOTEL KAVYA",
+      "address": "2A-12, NEAR 1-2 CHOWK, NIT, FARIDABAD, Faridabad, Haryana, 121001",
+      "pan": "BNQPM6321L",
+      "gstin": "06BNQPM6321L1ZK",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sivalika Inn": {
+      "hotel_legal_name": "SIVALIKA INN",
+      "address": "GROUND FLOOR, NILIGIRI APARTMENT, 2, Watkins Lane, Howrah, Howrah, West Bengal, 711101",
+      "pan": "AEMFS5876C",
+      "gstin": "19AEMFS5876C1ZH",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Vairagi Inn": {
+      "hotel_legal_name": "VAIRAGI VILA",
+      "address": "S-1/121-1, Sindhaura Road, Navin Upvan, Narayanpur, Varanasi, Varanasi, Uttar Pradesh, 221002",
+      "pan": "APYPS7629N",
+      "gstin": "09APYPS7629N1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Jansi Deluxe": {
+      "hotel_legal_name": "ABDULHAKKEEM SHAMEEM BASHA",
+      "address": "1096, CROSS CUT ROAD, GANDHIPURAM COIMBATORE, Coimbatore, Tamil Nadu, 641011",
+      "pan": "AEDPB6558F",
+      "gstin": "33AEDPB6558F1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Manjeet": {
+      "hotel_legal_name": "HOTEL MANJEET PROP. MANJEET CHUG",
+      "address": "3, HAMIDIA ROAD, BHOPAL, Bhopal, Madhya Pradesh, 462001",
+      "pan": "ACPPC3733M",
+      "gstin": "23ACPPC3733M1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Lake View Castle": {
+      "hotel_legal_name": "LAKEVIEW CASTLE",
+      "address": "H.NO.23-6-131/2/1, SAYAMPET, Hanumakonda, Hanumakonda, Telangana, 506001",
+      "pan": "AAKFL7435N",
+      "gstin": "36AAKFL7435N1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel JP": {
+      "hotel_legal_name": "JP GUEST HOUSE",
+      "address": "5/2, UMESH CHATTERJEE LANE, Howrah, Howrah, West Bengal, 711104",
+      "pan": "AAUFJ8310Q",
+      "gstin": "19AAUFJ8310Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Thane Club": {
+      "hotel_legal_name": "SWIKRITI PRADEEP SHARMA",
+      "address": "73/601, BHAGWAN BHAVAN, J.B. NAGAR, ANDHERI EAST, Mumbai Suburban, Maharashtra, 400059",
+      "pan": "AIJPS5928C",
+      "gstin": "27AIJPS5928C2ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Nestlay Rooms": {
+      "hotel_legal_name": "Nest Lay Rooms Mogappair",
+      "address": "NIG 14, 3 RD MAIN ROAD NOLAMBUR, MOGAPPAIR WEST, NOLAMBUR, Chennai, Tamil Nadu, 600037",
+      "pan": "AANFN4964B",
+      "gstin": "33AANFN4964B1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel VJR HSR": {
+      "hotel_legal_name": "Astra suites- VJR Hotels",
+      "address": "No.2795, 27th Main Road, Bengaluru, Bengaluru Urban, Karnataka, 560102",
+      "pan": "AJSPR6988H",
+      "gstin": "29AJSPR6988H1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Kuber": {
+      "hotel_legal_name": "KUBER HOSPITALITY PVT LTD",
+      "address": "PLOT NO.35, SECTOR-19C, APMC VASHI NAVI MUMBAI, Thane, Maharashtra, 400703",
+      "pan": "AACCK5988L",
+      "gstin": "27AACCK5988L1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Raahi Retreat": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), GROUND FLOOR, 183 Nimitaya, Udyog, Vihar Phase 1 Road, Udyog Vihar Phase 1,, Gurugram, Gurugram, Haryana, 122016",
+      "pan": "AAFCC6416Q",
+      "gstin": "06AAFCC6416Q1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime K9 Crown": {
+      "hotel_legal_name": "HOTEL K9 CROWN",
+      "address": "241-A CORPRATION NO B-20-3633, HOTEL K 9 CROWN, Pakhowal Road, Ludhiana, Ludhiana, Punjab, 141001",
+      "pan": "AAQFH3141P",
+      "gstin": "03AAQFH3141P1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pink City": {
+      "hotel_legal_name": "Parakasha Hospitality",
+      "address": "14/71, Hotel Pinkcity Prime, Link Road, Girdhar Marg, Jaipur, Jaipur, Rajasthan, 302017",
+      "pan": "MSUPS3002G",
+      "gstin": "08MSUPS3002G1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golden Star": {
+      "hotel_legal_name": "",
+      "address": "HOTEL GOLDEN STAR, Gala No 2/B, Gomes Compound, Opp, Peninsula Hotel, 90 Feet Road, Sakinaka,, Mumbai, Mumbai Suburban, Maharashtra,, 400072",
+      "pan": "",
+      "gstin": "27AAGCB1323G1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Golf Inn": {
+      "hotel_legal_name": "",
+      "address": "RBS HOSPITALITY, C-1/1, DEFENCE ENCLAVE, SOM BAZAR ROAD, Noida, Gautambuddha Nagar, Uttar Pradesh, 201303",
+      "pan": "ABEFR5287P",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Heritage Palace": {
+      "hotel_legal_name": "ABHIPRAY HOSPITALITY SERVICES LLP",
+      "address": "FLAT NO 7 PLOT NO 27, NEAR DASHMESH NAGAR, BIJLEE NAGAR, Chhatrapati Sambhaji Nagar, Maharashtra, 431001",
+      "pan": "ABNFA5036C",
+      "gstin": "27ABNFA5036C1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Red Vibe": {
+      "hotel_legal_name": "RVS",
+      "address": "25, Hotel Oasis Blue Deluxe, B SECTOR KASTURBA NAGAR, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "AEEPY6965Q",
+      "gstin": "23AEEPY6965Q1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Neethu Residency": {
+      "hotel_legal_name": "PC-IN-WORLD",
+      "address": "F-3, AMUDHAM COLONY, NORTH BOAG ROAD, T NAGAR, Chennai, Tamil Nadu, 600017",
+      "pan": "AYJPS1326G",
+      "gstin": "33AYJPS1326G1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Executive Pearl Inn": {
+      "hotel_legal_name": "AKASH SANJAY BAHIRAT",
+      "address": "SR NO 12/B/5, ADARSH NAGAR, WADGAON SHERI, WADGAON SHERI, PUNE, Pune, Maharashtra, 411014",
+      "pan": "AUXPB2486L",
+      "gstin": "27AUXPB2486L1ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Limestone Suites": {
+      "hotel_legal_name": "JB HOSPITALITY SERVICES",
+      "address": "SY NO 20/4 & 23 F B, Sri Aditya Home, SOMAJIGUDA, Hyderabad, Hyderabad, Telangana, 500082",
+      "pan": "CALPA4925R",
+      "gstin": "36CALPA4925R1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Phoenix Resorts": {
+      "hotel_legal_name": "CITIZEN LODGE",
+      "address": "No 3/4, Zubeda Mansion, Lady Curzon Road, Sivaji Nagar, Bengaluru Urban, Karnataka, 560001",
+      "pan": "AAEFC5532B",
+      "gstin": "29AAEFC5532B1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel DDHYANA The Wellness": {
+      "hotel_legal_name": "DDHYANA",
+      "address": "Centre and Resort, DDHYANA, VIVA GOA, VIVA GOA, NEAR BAL BHAVAN, CAMPAL, NORTH GOA, North Goa, Goa, 403001",
+      "pan": "AFMPP0944B",
+      "gstin": "30AFMPP0944B1ZW",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Astoria House": {
+      "hotel_legal_name": "66 IN GUEST HOUSE",
+      "address": "66, FE BLOCK, Bidhan Nagar, North, Twenty Four Parganas, West Bengal,, 700106",
+      "pan": "APAPG8731K",
+      "gstin": "19APAPG8731K1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rivlet": {
+      "hotel_legal_name": "AVINASH BHAGAT",
+      "address": "17 MOULSARI AVENUE, DLF Cyber City Road, Gurugram, Gurugram, Haryana, 122002",
+      "pan": "AQBPB9851F",
+      "gstin": "06AQBPB9851F1Z1",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Anxx": {
+      "hotel_legal_name": "HOTEL AATITHYA",
+      "address": "HOTEL AATITHYA PLOT NO 26, GROUND FLOOR, HOTEL AATITHYA, SANKAR ROAD, Bhubaneswar, Khordha, Odisha,, 751009",
+      "pan": "BDSPB8586N",
+      "gstin": "21BDSPB8586N1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Greenwood Xpress Inn": {
+      "hotel_legal_name": "GREENWOOD PREMIER SUITES",
+      "address": "NO 49, GREENWOOD PREMIER SUITES, OLD AIRPORT ROAD OPPOSITE TO MANIPAL HOSPITAL, KODIHALLI,, Bengaluru Urban, Karnataka, 560008",
+      "pan": "AAQFG0093B",
+      "gstin": "29AAQFG0093B1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Corporate Apartments": {
+      "hotel_legal_name": "CORPORATE APARTMENTS PRIVATE LIMITED",
+      "address": "Bandra, CORPORATE APARTMENTS PRIVATE LIMITED, 301, 3rd Floor, Sai Prasad Building, Next to PF Office, Service Lane, Western Express Highway, Near Bandra Court,, Bandra, East, Mumbai, Maharashtra, 400051",
+      "pan": "AAICC5421C",
+      "gstin": "27AAICC5421C1Z1",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sri Karthikeya Grand": {
+      "hotel_legal_name": "SRI KARTHIKEYA GRAND",
+      "address": "PLOT NO 680 & 681, Lakshmi Arcade, VENKATARAMANA COLONY,GOKUL PLOTS, Hyderabad, Medchal Malkajgiri,, Telangana, 500085",
+      "pan": "AFAFS5968Q",
+      "gstin": "36AFAFS5968Q1Z1",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel HM Inn": {
+      "hotel_legal_name": "H M HOTEL INN",
+      "address": "D-132 VIBHUTI KHAND, GOMTI NAGAR, Gomti Nagar, Lucknow, Lucknow, Uttar Pradesh, 226010",
+      "pan": "EBCPM0623L",
+      "gstin": "09EBCPM0623L2ZK",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Athiti Delight Stay": {
+      "hotel_legal_name": "ATITHI CORPORATE STAY/ATITHI REGENCY",
+      "address": "FLAT NO. 301, S. NO. 113/15, VEERBHADRA NAGAR, BANER, Pune, Maharashtra, 411045",
+      "pan": "ABXFA4399N",
+      "gstin": "27ABXFA4399N1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel GS Residency": {
+      "hotel_legal_name": "Ankit Khatri",
+      "address": "D 17/134, Dashaswamedh,, VARANASI, Varanasi, Uttar Pradesh, 221001",
+      "pan": "BKLPK5213K",
+      "gstin": "09BKLPK5213K2ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sparkling": {
+      "hotel_legal_name": "SPARKLING 4 INDIA PRIVATE LIMITED",
+      "address": "Plot no 138, Khasra No 7/3, Pochanpur, New Delhi, South West Delhi, Delhi, 110075",
+      "pan": "AAVCS8904M",
+      "gstin": "07AAVCS8904M1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ishtara Auberge": {
+      "hotel_legal_name": "ISHTARA AUBERGE",
+      "address": "RZG-2, GF, LAXMAN NIWAS, RAJ NAGAR II, NEW DELHI, South West Delhi, Delhi, 110045",
+      "pan": "AAHFI2403E",
+      "gstin": "07AAHFI2403E1ZW",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Black Pepper": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 6th Floor, 183 Nimitaya, Udyog Vihar Phase 1 Road, Udyog Vihar Phase 1, Gurugram, Gurugram, Haryana, 122016",
+      "pan": "AAFCC6416Q",
+      "gstin": "06AAFCC6416Q1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shakti Palace": {
+      "hotel_legal_name": "RAMCHANDRA KRISHNASWAMY NARAYANSWAMY",
+      "address": "NAIDU, GG FF and II FLOOR, GG FF and II FLOOR, Hotel Shakti Palace, SUPER MARKET, PONDA, North Goa, Goa, 403401",
+      "pan": "ADAPN4702F",
+      "gstin": "30ADAPN4702F2Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Gold Residency": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "Center Point 3, No. 2/4, Mount Poonamallee High Road, Manapakkam, Chennai, Chennai, Tamil Nadu, 600089",
+      "pan": "AAFCC6416Q",
+      "gstin": "33AAFCC6416Q1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Vista Suites": {
+      "hotel_legal_name": "Vista Suites (Moinuddin)",
+      "address": "NO 5/4, 2ND FLOOR, MOSQUE ROAD,, FRASER TOWN, Bengaluru Urban,, Karnataka, 560005",
+      "pan": "EZWPM8675J",
+      "gstin": "29EZWPM8675J1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Manomay Homes": {
+      "hotel_legal_name": "Kiran Raut",
+      "address": "MANOMAY APT 2 , 3 PN 79,80 HO SOCI, SOMALWADA, MOUZA SOMALWADA, Nagpur, Maharashtra, 440025",
+      "pan": "ANTPR2515H",
+      "gstin": "27ANTPR2515H1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Orange Oasis": {
+      "hotel_legal_name": "RVS",
+      "address": "25, Hotel Oasis Blue Deluxe, B SECTOR KASTURBA NAGAR, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "AEEPY6965Q",
+      "gstin": "23AEEPY6965Q1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Frolic": {
+      "hotel_legal_name": "HOTEL FROLIC",
+      "address": "PLOT NO. 57, KRISHNA VIHAR COLONY, HARI CHOWK , Bahadrabad to Sidcul Road, HARIDWAR, Haridwar, Uttarakhand,, 249402",
+      "pan": "AAMFH2267C",
+      "gstin": "05AAMFH2267C1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shree Moti Palace": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 401, Vishal Astra, Nexus spaces, 12-A/A, AB Road, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "AAFCC6416Q",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Grand": {
+      "hotel_legal_name": "ROYAL GRAND",
+      "address": "NO - 33, 2ND FLOOR, 3RD STAGE 4TH BLOCK, Bengaluru, Bengaluru Urban, Karnataka, 560079",
+      "pan": "CKHPA9991D",
+      "gstin": "29CKHPA9991D1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Lorven Grand": {
+      "hotel_legal_name": "HOTEL LORVEN",
+      "address": "H. No 36-44-8, Hotel Lorven, Innsepeta Revvenue Ward No 21, Rajamahendravaram, East Godavari, Andhra Pradesh, 533105",
+      "pan": "AARFH6157N",
+      "gstin": "37AARFH6157N1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel RMS Comforts": {
+      "hotel_legal_name": "RMS Comforts (USHA NARASIMHA RAJU)",
+      "address": "No 1, Old no. 69, Mouna Dream Arcade, 5th main Road, Mathikere Extn",
+      "pan": "ADBPR1049Q",
+      "gstin": "29ADBPR1049Q1ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Status Residency": {
+      "hotel_legal_name": "HOTEL STATUS RESIDENCY",
+      "address": "PAP A-595,596, TTC Industrial Area, Mahape MIDC Road, Navi Mumbai, Thane, Maharashtra, 400710",
+      "pan": "ATAPP6184D",
+      "gstin": "27ATAPP6184D2ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Kanha Palace": {
+      "hotel_legal_name": "GOLDEN SKY HOTEL AND HOSPITALITY",
+      "address": "121A, INDORE, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "FMNPS4414Q",
+      "gstin": "23FMNPS4414Q1ZB",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Signature Inn": {
+      "hotel_legal_name": "OM HARI OM HOTELS",
+      "address": "GIRIDHAR MARG, E-58, MALVIYA NAGAR, JAIPUR, Jaipur, Rajasthan, 302017",
+      "pan": "AAEFO4396H",
+      "gstin": "08AAEFO4396H1ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Oriva Sarala Crown": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Dandos vaddo, House No. 288, Bootstart Cowork, Greenland view, Mandrem, North Goa, Goa, 403527",
+      "pan": "AAFCC6416Q",
+      "gstin": "30AAFCC6416Q1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pleasure Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 401, Vishal Astra, Nexus spaces, 12-A/A, AB Road, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "AAFCC6416Q",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Maple Stays": {
+      "hotel_legal_name": "THE MAPLE STAYS",
+      "address": "A-751, Sushant Lok Phase 1, Unnamed Road, Block C Gate, Sector 28, Gurugram, Gurugram, Haryana, 122009",
+      "pan": "AAYFT8132A",
+      "gstin": "06AAYFT8132A1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Palace II": {
+      "hotel_legal_name": "HOTEL ROYAL PALACE",
+      "address": "07-08, HOTEL ROYAL PALACE, HAMIDIA ROAD, NEAR SANGAM TALKIS, Bhopal, Madhya Pradesh, 462001",
+      "pan": "AAEFH9107K",
+      "gstin": "23AAEFH9107K1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Diamond Sector 45": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), SCO 351 352, Sector 35B, Chandigarh, Chandigarh, Chandigarh, 160035",
+      "pan": "AAFCC6416Q",
+      "gstin": "04AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Crown Heights": {
+      "hotel_legal_name": "GOHER SHARIFF",
+      "address": "No.81/4, 5th Block, K H B Colony Koramangala, Bengaluru South, Koramangala VI BK, Bengaluru Urban, Karnataka, 560095",
+      "pan": "AGSPS8893F",
+      "gstin": "29AGSPS8893F1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Suruchi Homes": {
+      "hotel_legal_name": "HOTEL SAFKO GRAND",
+      "address": "3rd and 4th Floor, Site No. 02, No. 987/262, Sathya Sai Layout, Whitefield Main Road, Whitefield, Bengaluru, Bengaluru, Urban, Karnataka, 560066",
+      "pan": "AATFH0060N",
+      "gstin": "29AATFH0060N1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prem Bihari": {
+      "hotel_legal_name": "HOTEL PREM BIHARI",
+      "address": "HOTEL PREM BIHARI, NEAR SHIV MURTI, MAYAPUR, Haridwar, Haridwar, Uttarakhand, 249401",
+      "pan": "AAVPM8269N",
+      "gstin": "05AAVPM8269N3ZK",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sahara Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Level 5, Technopolis Knowledge Park, Mahakali Caves Road, Mumbai, Mumbai Suburban, Maharashtra, 400093",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Naman Palace": {
+      "hotel_legal_name": "RAJEDNRAPAL SOOD",
+      "address": "NO.07, SAWAN NAGAR, HALALPURA, Bhopal, Madhya Pradesh, 462030",
+      "pan": "ADMPS6062R",
+      "gstin": "23ADMPS6062R1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Kohinoor Residency I": {
+      "hotel_legal_name": "KOHINOOR RESIDENCY",
+      "address": "SR NO 110/11,, FLAT NO 1/2/3, BEHIEND TEACHLEAD, kohinoor residency, Baner Road, Pune, Pune, Maharashtra, 411007",
+      "pan": "BNOPP3269G",
+      "gstin": "27BNOPP3269G2ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via White Star": {
+      "hotel_legal_name": "SUTRA AYURVEDA & WELLNESS CLINIC",
+      "address": "4th Floor, Flat No. 42, West View, Plot No. 322, Linking Road, Axis Bank, Khar West, Mumbai, Mumbai Suburban,, Maharashtra, 400052",
+      "pan": "CMFPS9406M",
+      "gstin": "27CMFPS9406M2ZB",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Vedanta Inn": {
+      "hotel_legal_name": "GANESH RAJESH HASSORIYA",
+      "address": "318/A, MOHAN NAGAR, PK SALVE ROAD, NAGPUR, Nagpur, Maharashtra, 440001",
+      "pan": "AAWPH0182Q",
+      "gstin": "27AAWPH0182Q2ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Freedom Star": {
+      "hotel_legal_name": "HOTEL FREEDOM STAR",
+      "address": "501, 5TH 6TH FLOOR, EVEREST SQUARE CHS LTD, SHARDHNAND ROAD NAVAPADA, Mumbai, Mumbai Suburban,, Maharashtra, 400057",
+      "pan": "AAPFH2782K",
+      "gstin": "27AAPFH2782K1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Uma Yugul": {
+      "hotel_legal_name": "UMA YUGAL",
+      "address": "48/3/258, Pragana Haveli Avadh, MEERAPUR, Ayodhya, Ayodhya, Uttar Pradesh, 224123",
+      "pan": "DWAPS4561M",
+      "gstin": "09DWAPS4561M2ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Jashan Paradise": {
+      "hotel_legal_name": "",
+      "address": "SHIV SHAKTI ASSOCIATES, PLOT NO. 33, PHASE 1, HOTEL NIRMAL RESIDENCY, AIRPORT ROAD, Bhopal, Bhopal, Madhya Pradesh, 462030",
+      "pan": "",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Amaltas": {
+      "hotel_legal_name": "OMRAN INFRASTRUCTURE AND HOSPITALITIES",
+      "address": "PRIVATE LIMITED, 5, TIRATH MENSION, MAIN ROAD, RANCHI, Ranchi, Jharkhand, 834001",
+      "pan": "AABCO0918M",
+      "gstin": "20AABCO0918M1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Omkar & Lodging": {
+      "hotel_legal_name": "KISHOR HAMBIRRAO SHINDE",
+      "address": "Office No 509-C, Fifth Floor, Eden Park, Viman Nagar, Pune, Pune, Maharashtra, 411014",
+      "pan": "BTEPS9945Q",
+      "gstin": "27BTEPS9945Q2ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Heritage": {
+      "hotel_legal_name": "S.H. REALTY",
+      "address": "15/16, EKTA CO-OP HOSUING SOC LTD,M.I.G COLONY, VINOBA BHAVE NAGAR,KURLA-WEST, MUMBAI, Mumbai,, Maharashtra, 400070",
+      "pan": "ADFFS2889F",
+      "gstin": "27ADFFS2889F1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Nirmal Residency": {
+      "hotel_legal_name": "SHIV SHAKTI ASSOCIATES",
+      "address": "PLOT NO. 33, PHASE 1, HOTEL NIRMAL RESIDENCY, AIRPORT ROAD, Bhopal, Bhopal, Madhya Pradesh, 462030",
+      "pan": "AVDPM0608A",
+      "gstin": "23AVDPM0608A1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Kences Inn": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "Center Point 3, No. 2/4, Mount Poonamallee High Road, Manapakkam, Chennai, Chennai, Tamil Nadu, 600089",
+      "pan": "AAFCC6416Q",
+      "gstin": "33AAFCC6416Q1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel KV": {
+      "hotel_legal_name": "SUBHASH VIMALCHAND JAIN",
+      "address": "H NO 5 / 78, BAZARPETH ROAD, PEN, Raigad, Maharashtra, 402107",
+      "pan": "AAPPJ5770K",
+      "gstin": "27AAPPJ5770K2Z2",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Taj": {
+      "hotel_legal_name": "TAJ HOTEL & RESTAURANT",
+      "address": "TALAB KHATIKAN, JAMMU, NEAR JAMIA MASJID, Jammu, Jammu and Kashmir, 180001",
+      "pan": "AAAFT5219L",
+      "gstin": "01AAAFT5219L1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Rithun Residency": {
+      "hotel_legal_name": "HANASA SHANKARAPPA GOWDA PURNESHA GOWDA",
+      "address": "NO 124,, RAJA GALAXY, 3RD MAIN, 3RD PHASE, J P NAGAR, BANGALORE, Bengaluru Urban, Karnataka, 560078",
+      "pan": "BUJPP1553P",
+      "gstin": "29BUJPP1553P1ZU",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Runner": {
+      "hotel_legal_name": "Viraj Enterprises",
+      "address": "H. No. 1527-P, Ground, Sector 46, Gurugram, Gurugram, Haryana, 122003",
+      "pan": "AAWFV6500C",
+      "gstin": "06AAWFV6500C1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ballyfin Retreat": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Opposite Metro Pillar No. 103, Shyam Nagar Extension, F-304, New Sanganer Road, Jaipur, Jaipur, Rajasthan, 302019",
+      "pan": "AAFCC6416Q",
+      "gstin": "08AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel ASP Royal Residency I": {
+      "hotel_legal_name": "ASP HOSPITALITY",
+      "address": "WZ-3, OLD LAL DORA, NANGLI JALIB, New Delhi, West Delhi, Delhi, 110058",
+      "pan": "AMZPR5920R",
+      "gstin": "07AMZPR5920R1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via City Walk": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 6th Floor, 183 Nimitaya, Udyog Vihar Phase 1 Road, Udyog Vihar Phase 1, Gurugram, Gurugram, Haryana, 122016",
+      "pan": "AAFCC6416Q",
+      "gstin": "06AAFCC6416Q1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Regent Inn": {
+      "hotel_legal_name": "SHIVNANDINI BIZ PRIVATE LIMITED",
+      "address": "SR NO.80/2, NEAR MOZE SCHOOL, NEAR ABHISHEK HOTEL AND UDYOG, PUNE, Pune, Maharashtra, 412105",
+      "pan": "ABCCS8970M",
+      "gstin": "27ABCCS8970M1ZK",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Oriva Vinflora Residency": {
+      "hotel_legal_name": "HOTEL VINFLORA RESIDENCY",
+      "address": "PLOT NO.157, KAMALAPURI, SRINAGAR COLONY MAIN ROAD, HYDERABAD, Hyderabad, Telangana, 500073",
+      "pan": "AAMFH9872P",
+      "gstin": "36AAMFH9872P1Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Cruz Royale": {
+      "hotel_legal_name": "SHRI HARI HOSPITALITY",
+      "address": "201 ANAND COMMERCIAL COMPLEX, PLOT NO 46 A, Hotel Cruz Royale, S V, ROAD, Mumbai, Mumbai Suburban,, Maharashtra, 400054",
+      "pan": "AFPFS8291F",
+      "gstin": "27AFPFS8291F1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Palm Tree": {
+      "hotel_legal_name": "PALM TREE HOTEL",
+      "address": "8-2-293/82/F/13A, Surya Towers, Road, Number 3, Pratap Recording Theatre,, Jubilee Hills, Hyderabad, Hyderabad,, Telangana, 500096",
+      "pan": "ABIFP2611B",
+      "gstin": "36ABIFP2611B1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Oasis": {
+      "hotel_legal_name": "MSS GROUP",
+      "address": "PLOT NO-131/5, ZONE 2, MP NAGAR, Govindpura, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "EQGPS5179J",
+      "gstin": "23EQGPS5179J2Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golden City": {
+      "hotel_legal_name": "CAFE ADDA",
+      "address": "84, CITY CENTER SCHEEM, AMRITSAR, AMRITSAR, Amritsar, Punjab, 143001",
+      "pan": "GHNPS9659P",
+      "gstin": "03GHNPS9659P1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel All In One Saltlake": {
+      "hotel_legal_name": "HOTEL ALL IN ONE",
+      "address": "CL-246, NA, SECTOR-II, SALT LAKE CITY, KOLKATA, North Twenty Four Parganas, West Bengal, 700091",
+      "pan": "GWSPS4091F",
+      "gstin": "19GWSPS4091F1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pramila Inn": {
+      "hotel_legal_name": "DINESH SINGH & SONS",
+      "address": "NA, BYEPASS ROAD, KANKHAL, Haridwar, Uttarakhand, 249408",
+      "pan": "AADHD1382B",
+      "gstin": "05AADHD1382B1ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Elite Inn": {
+      "hotel_legal_name": "ELITE INN",
+      "address": "Flat No # 401, Plot No # 892, 893, Pragathi Enclave, Road No. 15 B, Hyderabad, Rangareddy, Telangana, 500049",
+      "pan": "AALFE5566E",
+      "gstin": "36AALFE5566E1Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel SR Wakad": {
+      "hotel_legal_name": "AMAYA HOSPITALITY",
+      "address": "Hissa no. 2/2, SR Rooms And Hostel LLP, Survey no.130, Pimpri Chinchwad, Pune, Maharashtra, 411057",
+      "pan": "ABLFA6264E",
+      "gstin": "27ABLFA6264E1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Star Inn Plus": {
+      "hotel_legal_name": "H ANSARUDEEN",
+      "address": "7/192 3, MANPURAM VILLA, KOLLAMKAVU, NEDUMANGAD, Thiruvananthapuram, Kerala, 695561",
+      "pan": "ACMPH1871Q",
+      "gstin": "32ACMPH1871Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Sheela": {
+      "hotel_legal_name": "VIPUL KUMAR",
+      "address": "0, MITHAPUR BUS STAND, NEAR JAKKANPUR POLICE STATION, PATNA, Patna, Bihar, 800001",
+      "pan": "ANZPK4415H",
+      "gstin": "10ANZPK4415H1ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel PVS Grand": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "First Floor Kehar Singh Estate, H-294, Plot 2A, Saidulajab,Lane no. 2, Saket, New Delhi, South Delhi, Delhi, 110030",
+      "pan": "AAFCC6416Q",
+      "gstin": "07AAFCC6416Q1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shivani International": {
+      "hotel_legal_name": "HOTEL SHIVANI INTERNATIONAL",
+      "address": "PLOT NO-529, JEEVANLOK COMPLEX, MAIN ROAD, HINOO, Ranchi, Jharkhand, 834002",
+      "pan": "AAEFH9121M",
+      "gstin": "20AAEFH9121M1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Vishnu Grand": {
+      "hotel_legal_name": "VISHNU GRAND",
+      "address": "36-12-14, WARD NO.20,, SYAMALA THEATRE CENTRE, Rajahmundry, East Godavari, Andhra Pradesh, 533101",
+      "pan": "CCBPS8564E",
+      "gstin": "37CCBPS8564E2Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Regard": {
+      "hotel_legal_name": "M/S HOTEL REGARD",
+      "address": "S.19/19, VARUNABRIDGE, NADESAR, Varanasi, Uttar Pradesh, 221002",
+      "pan": "AAEFH9437Q",
+      "gstin": "09AAEFH9437Q1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel La Palma Suites": {
+      "hotel_legal_name": "LA PALMA SUITES",
+      "address": "No 992/SY-no/3/1, THE HOST - Unit of shells hospitality services, Devarabisanahalli, Varthur Hobli., Bellandur Village,, Bengaluru Urban, Karnataka, 560103",
+      "pan": "AVQPC8735R",
+      "gstin": "29AVQPC8735R1ZH",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golden Stay I": {
+      "hotel_legal_name": "HOTEL GOLDEN STAY",
+      "address": "Third and Fourth Floor, No.02 ,Sai Arcade, Hotel Golden Stay, Basavanapura Main Road, Near Sri Laxminarayana Bhavan,, Bhattarahalli Grama , K.R Puram, Bengaluru, Bengaluru Urban, Karnataka, 560036",
+      "pan": "AATFH0417K",
+      "gstin": "29AATFH0417K1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Aarvi Prime": {
+      "hotel_legal_name": "GRAND AARVI PRIME",
+      "address": "1-58/3/2/1, Plot No 246, Hafeezpet, RamaKrishna Nagar, Hyderabad, Medchal Malkajgiri, Telangana, 500049",
+      "pan": "ABAFG5800F",
+      "gstin": "36ABAFG5800F1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sarah Inn": {
+      "hotel_legal_name": "SARAH INN",
+      "address": "101, 102, 103, 104, 1st Floor, Patil Avenue, Old Agra Road, Bhiwandi, Thane, Maharashtra, 421302",
+      "pan": "AFLFS2982R",
+      "gstin": "27AFLFS2982R1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Saroj Inn": {
+      "hotel_legal_name": "HOTEL SAROJ",
+      "address": "1, 1, SHREE SANKUL, OLD AGRA ROAD, NASHIK, Nashik, Maharashtra, 422001",
+      "pan": "AAQPD6284K",
+      "gstin": "27AAQPD6284K1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel SSR Ikon Suites": {
+      "hotel_legal_name": "Hotel SSR Grand",
+      "address": "H.No. 6-64, Hotel SSR Grand, Chandanagar Road, Hyderabad, Sangareddy, Telangana, 500050",
+      "pan": "BWDPS1889K",
+      "gstin": "36BWDPS1889K1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pishori": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 11/5, Hotel Amrit Residency, South Tukoganj, Nath Mandir Road, Indore, Indore, Madhya Pradesh, 452001",
+      "pan": "AAFCC6416Q",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Tristar Residency": {
+      "hotel_legal_name": "TRISTAR RESIDENCY",
+      "address": "DHAIRIYALAKSHMI STREET,RAJESWARI NAGAR, NO.73, Chennai, Chengalpattu, Tamil Nadu, 600073",
+      "pan": "AAUFT4368C",
+      "gstin": "33AAUFT4368C1ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ranjit Residency": {
+      "hotel_legal_name": "HOTEL RANJIT RESIDENCY",
+      "address": "10-3-190/2, Himmatnagar Sub Post Office, Elephento Underpass, Secunderabad, Hyderabad, Telangana, 500003",
+      "pan": "AAHFH7018Q",
+      "gstin": "36AAHFH7018Q3ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prestige": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Dandos vaddo, House No. 288, Bootstart Cowork, Greenland view, Mandrem, North Goa, Goa, 403527",
+      "pan": "AAFCC6416Q",
+      "gstin": "30AAFCC6416Q1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Silver Cloud": {
+      "hotel_legal_name": "HOTEL SILVER CLOUD",
+      "address": "H.NO.16-11-310/32/A, Puppalagutta Road, Warangal, Hanumakonda, Telangana, 506002",
+      "pan": "AJQPL0068C",
+      "gstin": "36AJQPL0068C1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Jaswitha Grand": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 5th floor, 2-91/12/4/NR, Plot No 4, Doc Bhavan, Kondapur, Hyderabad, Hyderabad, Telangana, 500081",
+      "pan": "AAFCC6416Q",
+      "gstin": "36AAFCC6416Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Water View": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Residency, Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt, Ltd), 3rd Floor, 75C, 3/2, kamdhenu building, Park Street Area, Kolkata, Kolkata, West Bengal, 700010",
+      "pan": "AAFCC6416Q",
+      "gstin": "19AAFCC6416Q1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Black Diamond": {
+      "hotel_legal_name": "DIAMOND HOSPITALITY",
+      "address": "PLOT NO 1,2,3, Patiala Road, Zirakpur, SAS Nagar, Punjab, 140603",
+      "pan": "DSCPS4194A",
+      "gstin": "03DSCPS4194A2ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Vedhanshi": {
+      "hotel_legal_name": "VEDHANSHI HOTELS",
+      "address": "PLOT NO 31, 7-1-414/31, SRINIVASA COLONY, EAST AMEERPET, Secunderabad, Hyderabad, Telangana, 500016",
+      "pan": "AAZFV5643H",
+      "gstin": "36AAZFV5643H1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Wild Wings": {
+      "hotel_legal_name": "",
+      "address": "M/S.WILD WINGS AS RAO NAGAR, P NO 13 S.NO 498 & 499, 2ND FLOOR TO 4RD FLOOR, KAPRA, DR.A.S.RAO NAGAR, Hyderabad, Medchal Malkajgiri,, Telangana, 500062",
+      "pan": "",
+      "gstin": "36AAFCC6416Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sky Bay Residency": {
+      "hotel_legal_name": "SKY BAY RESIDENCY",
+      "address": "OLD NO 3/1 NEW NO 13, 0, SKY BAY, DURAISAMY GRAMANI STREET, Chennai, Chennai, Tamil Nadu, 600026",
+      "pan": "AEWFS8649R",
+      "gstin": "33AEWFS8649R1ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel White Ridge LB Nagar": {
+      "hotel_legal_name": "WHITE RIDGE LB NAGAR",
+      "address": "PLOT NO 9 H NO 8-15-107, SRI RAM NAGAR, Hyderabad, Rangareddy, Telangana, 500074",
+      "pan": "AAEFW3408J",
+      "gstin": "36AAEFW3408J1Z2",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel VK Luxury Room's": {
+      "hotel_legal_name": "VEEKSHA KIARA HOSPITALITIES",
+      "address": "Plot no 2257, HAL Colony, Gajularamaram, Ida Jeedimetla Sub Post Office, Jeedimetla, Hyderabad, Medchal Malkajgiri,, Telangana, 500055",
+      "pan": "AAXFV9829R",
+      "gstin": "36AAXFV9829R1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Kamla Regency": {
+      "hotel_legal_name": "ANNAPURNA HOSPITALITY",
+      "address": "130 MALVIYA NAGAR, New Market Road, Bhopal, Bhopal, Madhya Pradesh, 462003",
+      "pan": "AFBPT5903K",
+      "gstin": "23AFBPT5903K2ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sunshine Residency": {
+      "hotel_legal_name": "HOTEL SUNSHINE RESIDENCY",
+      "address": "PLOT NO PAP-K-47, GROUND FLOOR, TCC INDUSTRIAL AREA, MIDC Road, Navi Mumbai, Thane, Maharashtra, 400708",
+      "pan": "AUWPS9792F",
+      "gstin": "27AUWPS9792F3ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel AR Daffodil Inn": {
+      "hotel_legal_name": "JJ RESIDENCY",
+      "address": "NO. 445, BEML 7TH STAGE , MYLASANDRA , MYSORE ROAD, BANGALORE, Bengaluru Urban, Karnataka, 560069",
+      "pan": "AOGPJ2413L",
+      "gstin": "29AOGPJ2413L1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel TS Inn": {
+      "hotel_legal_name": "T S VENTURE",
+      "address": "124A/203-204 PLOT NO. 72-73, BLOCK 11, GOVIND NAGAR, KANPUR NAGAR, Kanpur Nagar, Uttar Pradesh, 208006",
+      "pan": "AARFT7274L",
+      "gstin": "09AARFT7274L1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pratibha Grand": {
+      "hotel_legal_name": "PRATIBHA HOTELS",
+      "address": "26-9-23, RAMARAO STREET, GANDHINAGAR, Krishna, Andhra Pradesh, 520003",
+      "pan": "AAUFP1928Q",
+      "gstin": "37AAUFP1928Q1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Elegance Suites": {
+      "hotel_legal_name": "MARSROCK HOSPITALITY VENTURES PRIVATE",
+      "address": "LIMITED, A-778, Sector 19, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAPCM2305J",
+      "gstin": "09AAPCM2305J1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Oriva Tulips Inn and Suites": {
+      "hotel_legal_name": "TULIPS INN AND SUITES",
+      "address": "No. 2/8, PID No. 43-4-2/8, Ground, 1st, 2nd Floor, 3rd Cross, Suvarna Vista, Mysore Road, Next Shell Petrol Pump,, Bengaluru, Bengaluru Urban, Karnataka, 560026",
+      "pan": "AAYFT2450R",
+      "gstin": "29AAYFT2450R1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Marol Metro": {
+      "hotel_legal_name": "HOTEL MAROL METRO",
+      "address": "GALA NO 3, STAR TIMBER MART, OPP RUBY COACH, CHIMAT PADA MAROL ANDHERI EAST, Mumbai Suburban,, Maharashtra, 400058",
+      "pan": "AALFH2437D",
+      "gstin": "27AALFH2437D1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Relax Inn": {
+      "hotel_legal_name": "HOTEL RELAX INN",
+      "address": "A-401, 4 TH, PUSHPAK COMPLEX, ANANDNAGAR ROAD, Ahmedabad, Ahmedabad, Gujarat, 380015",
+      "pan": "ATQPR6502B",
+      "gstin": "24ATQPR6502B1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Abrol Suites": {
+      "hotel_legal_name": "HOTEL ABROL SUITES",
+      "address": "Shop No 86, Ground Floor, Jai Hind Market, DR CG Road, Mumbai, Mumbai Suburban, Maharashtra, 400074",
+      "pan": "CTDPA3272J",
+      "gstin": "27CTDPA3272J7ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Tulip Sarover": {
+      "hotel_legal_name": "GOLDEN KEY",
+      "address": "Second Floor, HOUSE NO-37, Block-H, Land Mark Main Road and sanatan Dharam Mandir, BALI NAGAR, West Delhi, Delhi,, 110015",
+      "pan": "CCDPC3318N",
+      "gstin": "07CCDPC3318N1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Orange Suites": {
+      "hotel_legal_name": "VINAY SHOBHNATH SHUKLA",
+      "address": "GROUND FLOOR PLUS UPPER FLOOR, DAWARI NAGAR VAKOLA BRIDGE, NEHRU ROAD MARBLE LANE NEAR, POLICE STATION SANTACRUZ EAST, Mumbai, Mumbai Suburban, Maharashtra, 400055",
+      "pan": "BEOPS0626D",
+      "gstin": "27BEOPS0626D1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Anchorage Inn": {
+      "hotel_legal_name": "Prasenjit Maiti",
+      "address": "Premises No. 50 - 0183, 0, Plot No. CE/1/A/139, Street No. 198, New Town, North Twenty Four Parganas, West Bengal,, 700156",
+      "pan": "ADXPM0568P",
+      "gstin": "19ADXPM0568P1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Skyline": {
+      "hotel_legal_name": "HOTEL SKYLINE",
+      "address": "1,2,3 & 4TH FLOOR, NO.06, 80 FEET RING ROAD, Bengaluru, Bengaluru Urban, Karnataka, 560070",
+      "pan": "AERFS6533F",
+      "gstin": "29AERFS6533F1ZH",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sanviraaj": {
+      "hotel_legal_name": "GS ASSOCIATES",
+      "address": "SF/13, 0, LIG, BARRA-3, Kanpur, Kanpur Nagar, Uttar Pradesh, 208027",
+      "pan": "ABCFG3939P",
+      "gstin": "09ABCFG3939P1ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Spiro Grand": {
+      "hotel_legal_name": "SIDDAPUR CHANDRASHEKAR VEERENDRAKUMAR",
+      "address": "302, BSK 3RD STAGE, BANGALORE, Bengaluru Urban, Karnataka, 560085",
+      "pan": "ABBPV5838K",
+      "gstin": "29ABBPV5838K2ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel MRV Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Center Point 3, No. 2/4, Mount Poonamallee High Road, Manapakkam, Chennai, Chennai, Tamil Nadu, 600089",
+      "pan": "AAFCC6416Q",
+      "gstin": "33AAFCC6416Q1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Global Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), Flat no 67B, Gopal Mansion, Guru Nanak, Marg, Mumabikar's Corner, Bandra West,, Mumbai, Mumbai Suburban, Maharashtra,, 400050",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel SSR Fern Suites": {
+      "hotel_legal_name": "DIVYA REDDY AENUGU",
+      "address": "6-64/402, CHANDANAGAR, HYDERABAD, Rangareddy, Telangana, 500050",
+      "pan": "BCAPA7659C",
+      "gstin": "36BCAPA7659C1ZW",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Landmark Residency": {
+      "hotel_legal_name": "Landmark Guest line",
+      "address": "Unit no A2/11 and Unit No 2/206, opp.APMC Fruit Market Sector 20, Turbhe- Navi mumbai, Thane, Maharashtra, 400703",
+      "pan": "AAGFL2400F",
+      "gstin": "27AAGFL2400F1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Good Luck Residency": {
+      "hotel_legal_name": "HOTEL GOOD LUCK RESIDENCY",
+      "address": "CTS NO.65, B5-1+4, GROUND FLOOR AND UPPER, NOOR MASJID KABRISTAN, Mumbai, Mumbai Suburban,, Maharashtra, 400102",
+      "pan": "AIZPV3210E",
+      "gstin": "27AIZPV3210E1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Esta Inn": {
+      "hotel_legal_name": "BLISS VENTURES",
+      "address": "Ground Floor, Sr. No. 29, Ramvadi, Ramvadi, Ramvadi, Kapil Nagar, Pune, Pune, Maharashtra, 411014",
+      "pan": "ABCFB1309G",
+      "gstin": "27ABCFB1309G1ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Jay Jaga Residency": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "Center Point 3, No. 2/4, Mount Poonamallee High Road, Manapakkam, Chennai, Chennai, Tamil Nadu, 600089",
+      "pan": "AAFCC6416Q",
+      "gstin": "33AAFCC6416Q1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel River View": {
+      "hotel_legal_name": "S K Hospitality",
+      "address": "Shop No 401-402, 4 Floor, Business Bay Center, Shital Char Rasta, Surat, Surat, Gujarat, 395009",
+      "pan": "BLNPV9847D",
+      "gstin": "24BLNPV9847D1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Comfort Stays": {
+      "hotel_legal_name": "COMFORT HOSPITALITIES",
+      "address": "FLAT NO: 2, FLOOR NO: 2, POOJA APARTMENTS, Miramar Circle, Panaji, North Goa, Goa, 403001",
+      "pan": "AQAPC6830G",
+      "gstin": "30AQAPC6830G1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The BTM Palace": {
+      "hotel_legal_name": "RANJAN SURYA BANGERA",
+      "address": "NO. 278, BBMP PID NO 65-94-278,, MICO LAYOUT, 7TH MAIN, BTM 2ND STAGE, BANGALORE, Udupi, Karnataka, 560076",
+      "pan": "BXRPB0393Q",
+      "gstin": "29BXRPB0393Q1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Siddharth Inn": {
+      "hotel_legal_name": "HOTEL SIDDHARTH INN",
+      "address": "822, Hotel siddharth inn, k road,behind HP petrol pump,, Near Siddharth Bunglows,vavol, Gandhinagar, Gujarat, 382016",
+      "pan": "ACNPP3079K",
+      "gstin": "24ACNPP3079K1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Wood Premier": {
+      "hotel_legal_name": "PEACEFUL PETALS HOSPITALITY LLP",
+      "address": "No 660, Domlur Layout, Domlur, Domlur Police Station, Bengaluru, Bengaluru Urban, Karnataka, 560071",
+      "pan": "ABFFP7448B",
+      "gstin": "29ABFFP7448B1Z2",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Oasis Blue": {
+      "hotel_legal_name": "VISHAL YADAV",
+      "address": "25, Hotel Oasis Blue Deluxe, B SECTOR KASTURBA NAGAR, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "AEEPY6965Q",
+      "gstin": "23AEEPY6965Q1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Aayash": {
+      "hotel_legal_name": "AAYASH HOTEL PRIVATE LIMITED",
+      "address": "24A, DD Block, Salt Lake, North Twenty Four Parganas, West Bengal, 700064",
+      "pan": "AAECA2395P",
+      "gstin": "19AAECA2395P1Z2",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Majhali": {
+      "hotel_legal_name": "SUKHADYA",
+      "address": "PLOT NO-17 SR NO-110/4, SUNMOON CO-OPP HSG SOCIETY, vadala road, Nashik, Nashik, Maharashtra, 422006",
+      "pan": "AETFS2475J",
+      "gstin": "27AETFS2475J1Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sayeeda International": {
+      "hotel_legal_name": "SAYEEDA INTERNATIONAL HOTEL LLP",
+      "address": "86A, JHOWTALA ROAD, KOLKATA, Kolkata, West Bengal, 700017",
+      "pan": "AEAFS2683H",
+      "gstin": "19AEAFS2683H1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Khushi Regent": {
+      "hotel_legal_name": "THE KHUSHI REGENT",
+      "address": "PLOT NO. 01, NEAR RAILWAY LINE, ZONE 1 MP NAGAR, BHOPAL, Bhopal, Madhya Pradesh, 462001",
+      "pan": "APUPS4887A",
+      "gstin": "23APUPS4887A2ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Golden Plaza": {
+      "hotel_legal_name": "ROY & GHOSH CO",
+      "address": "NIL, Ground Floor, 45, Kalidas Patitundi, Lane, Kolkata, Kolkata, West Bengal,, 700026",
+      "pan": "ABHFR5738C",
+      "gstin": "19ABHFR5738C1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Phoenix Hospitality": {
+      "hotel_legal_name": "PHOENIX HOSPITALITY",
+      "address": "M 1/28, Gurugram, DLF-II, Gurugram, Gurugram, Haryana, 122002",
+      "pan": "ABAFP7172P",
+      "gstin": "06ABAFP7172P1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Signor": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 401, Vishal Astra, Nexus spaces, 12-A/A, AB Road, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "AAFCC6416Q",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rachana Residency": {
+      "hotel_legal_name": "HOTEL RACHANA",
+      "address": "10, OSWAL PARK, SHIVAJI NAGAR BUS STAND, SHIVAJI NAGAR, Pune, Maharashtra, 411005",
+      "pan": "ABTPB8004D",
+      "gstin": "27ABTPB8004D1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel I Residency": {
+      "hotel_legal_name": "I RESIDENCY",
+      "address": "I RESIDENCY, 5/7, 2ND CROSS ROAD, ZUZUVADI, MARUTHI NAGAR 1ST STAGE,BTM LAYOUT, Bengaluru, Bengaluru, Urban, Karnataka, 560068",
+      "pan": "AAJFI5137P",
+      "gstin": "29AAJFI5137P1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Town Pride": {
+      "hotel_legal_name": "OCEAN HOSPITALITY",
+      "address": "H NO-10B, GREEN ENCLAVE, SECTOR 118, SAS Nagar, Punjab, 140301",
+      "pan": "AAHFO2375B",
+      "gstin": "03AAHFO2375B1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Solitaire Inn": {
+      "hotel_legal_name": "SOLITAIRE INN",
+      "address": "117/K/28, SAVODAYA NAGAR, KANPUR, Kanpur Nagar, Uttar Pradesh, 208025",
+      "pan": "ADHFS7750H",
+      "gstin": "09ADHFS7750H1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel VRJ Residency": {
+      "hotel_legal_name": "VRJ Residency Inn",
+      "address": "NO.82, RAMARKOIL STREET, NANDAMBAKKAM, Chennai, Tamil Nadu, 600089",
+      "pan": "AAUFV0330L",
+      "gstin": "33AAUFV0330L1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Soni Palace": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 401, Vishal Astra, Nexus spaces, 12-A/A, AB Road, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "AAFCC6416Q",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Nestlay Rooms Airport": {
+      "hotel_legal_name": "NEST-LAY ROOMS",
+      "address": "17, V G P MURPHY SQUARE I ST STREET, ST. THOMAS MOUNT, Chennai, Tamil Nadu, 600016",
+      "pan": "AANFN1560F",
+      "gstin": "33AANFN1560F2ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ascot International II": {
+      "hotel_legal_name": "ASCOT INTERNATIONAL",
+      "address": "606, 6TH, Dilkap Centre, ANDHERI KURLA ROAD, Mumbai, Mumbai Suburban, Maharashtra, 400072",
+      "pan": "ABZFA7130M",
+      "gstin": "27ABZFA7130M1ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Liwa International": {
+      "hotel_legal_name": "MOHD ASARUDEEN V K",
+      "address": "D-101/A, 1st FLOOR, AMBIKA TOWER,, NIRVAN CORPORATE, JIJAMATA ROAD, ANDHERI E MIDC NEAR PUMP HOUSE,, Mumbai, Mumbai Suburban, Maharashtra,, 400093",
+      "pan": "AHQPT7627M",
+      "gstin": "27AHQPT7627M4Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prakash Inn": {
+      "hotel_legal_name": "NIHANTRA HOSPITALITY",
+      "address": "B/1302, VINAY APARTMENT, VIDYANAGARI ROAD, Mumbai, Mumbai Suburban, Maharashtra, 400098",
+      "pan": "AATFN8175C",
+      "gstin": "27AATFN8175C1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Touch": {
+      "hotel_legal_name": "ABHIJIT KUMAR RAI",
+      "address": "7573, 2nd FLOOR, RAM NAGAR, PAHAR GANJ, Central Delhi, Delhi, 110055",
+      "pan": "AWGPR6652K",
+      "gstin": "07AWGPR6652K1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Day2Day": {
+      "hotel_legal_name": "DEEPAK REBARI",
+      "address": "1, OPPOSITE JODHPUR SWEETS, NARAYAN NAGAR A.B. ROAD, DEWAS, Dewas, Madhya Pradesh, 455001",
+      "pan": "CFCPR1518B",
+      "gstin": "23CFCPR1518B2Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Majestic Luxurious": {
+      "hotel_legal_name": "MAJESTIC HOTEL",
+      "address": "-, GAT NO 597, PLOT NO 3A, PAWARWASTI, -, KOLWADI, Kolwadi, Pune, Maharashtra, 412110",
+      "pan": "ABYFM6707F",
+      "gstin": "27ABYFM6707F1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Blu Mark": {
+      "hotel_legal_name": "HOTEL BLU MARK",
+      "address": "PLOT NO 2 COMMERICAL BS-1, SECHEME NO 78 VIJAY NAGAR ,INDORE, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "MRXPS2697R",
+      "gstin": "23MRXPS2697R1Z1",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Champion Gateway": {
+      "hotel_legal_name": "JAYARAMAIAH",
+      "address": "NO 430/363, 2ND FLOOR, SANTHE CIRCLE, BB ROAD, YELAHANKA OLD TOWN, Bengaluru Urban, Karnataka, 560064",
+      "pan": "ACDPN5362P",
+      "gstin": "29ACDPN5362P8ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel HSR Gateway": {
+      "hotel_legal_name": "HMR HOSPITALITY",
+      "address": "No.521, 1st Main, Outer Ring Road, Bengaluru, Bengaluru Urban, Karnataka, 560034",
+      "pan": "AARFH0917Q",
+      "gstin": "29AARFH0917Q1ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Purple Grand": {
+      "hotel_legal_name": "SAPTHAGIRI BOARDING AND LODGING",
+      "address": "No.10/1, Jnanajyothi Nagar, Ullal Main Road,1st Main Road, Bengaluru, Bengaluru Urban, Karnataka, 560056",
+      "pan": "CBVPS8186H",
+      "gstin": "29CBVPS8186H1ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rove Inn & Suites": {
+      "hotel_legal_name": "Chombakadath Shajahan",
+      "address": "NO 3, ROVE INN AND SUITES, HESRGATTA MAIN ROAD OPP NRR HOSPITAL, CHIKKASANDRA, Bengaluru Urban,, Karnataka, 560073",
+      "pan": "ARKPS1511K",
+      "gstin": "29ARKPS1511K3ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Tanvi Grand": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), 5th floor, D.No:9-14-5/18/4F, Suite No: 504,, Desk No HD-005, Kotu Empire, VIP road,, Siripuram, Visakhapatnam,, Visakhapatnam, Andhra Pradesh, 530003",
+      "pan": "AAFCC6416Q",
+      "gstin": "37AAFCC6416Q1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rajdhani Residency": {
+      "hotel_legal_name": "AVANTE CORPORATION",
+      "address": "CHUTIA, CHUTIA, HOTEL RAMESHWAR, STATION ROAD, Ranchi, Ranchi, Jharkhand, 834001",
+      "pan": "HSVPK6867B",
+      "gstin": "20HSVPK6867B1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Panchwati Regency": {
+      "hotel_legal_name": "SRIJAN HOSPITALITY",
+      "address": "B 3, Phase 2, BDA ROAD, Galaxy City Temple, Amrawad Khurd, Bhopal, Bhopal, Madhya Pradesh, 462022",
+      "pan": "ALVPJ8787D",
+      "gstin": "23ALVPJ8787D1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Dwarka Suites": {
+      "hotel_legal_name": "THE ROYAL GALAXY",
+      "address": "PLOT NO. 2, THE ROYAL GALAXY, Road Number 203, New Delhi, South West Delhi, Delhi, 110078",
+      "pan": "ALJPB6563F",
+      "gstin": "07ALJPB6563F2Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Darshan Tower": {
+      "hotel_legal_name": "HOTEL DARSHAN TOWERS",
+      "address": "HOTEL DARSHAN TOWER, C A ROAD, NAGPUR, Nagpur, Maharashtra, 440018",
+      "pan": "AAAFH8360G",
+      "gstin": "27AAAFH8360G1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Radium Inn": {
+      "hotel_legal_name": "THE RADIUM INN",
+      "address": "ASHOK PATH, RADIUM ROAD, KUTCHERY,, RANCHI, Ranchi, Jharkhand, 834001",
+      "pan": "AYSPP3284D",
+      "gstin": "20AYSPP3284D1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shubham Inn": {
+      "hotel_legal_name": "COMFORT INN",
+      "address": "162-A, G.S.K HOTEL, L B S MARG, KURLA, Mumbai Suburban, Maharashtra, 400070",
+      "pan": "AXNPS3251M",
+      "gstin": "27AXNPS3251M1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Shree Gopal Inn": {
+      "hotel_legal_name": "S K CREATION",
+      "address": "Ck-13/09, Satti Chautara, Shivam Mart, Lahori Tola, Varanasi, Varanasi, Uttar Pradesh, 221001",
+      "pan": "AFRPY4959E",
+      "gstin": "09AFRPY4959E1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Kailash Dev": {
+      "hotel_legal_name": "THE KAILASH DEV HOTEL",
+      "address": "A-41, SARAI PIPAL THALA EXTENSION, SARAI PIPAL THALA EXTENSION, ADARSH NAGAR, North West Delhi, Delhi,, 110033",
+      "pan": "AALFT7586P",
+      "gstin": "07AALFT7586P2ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Sara Residency": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "Ground Floor, D-9, Sector-3, Noida,, Gautambuddha Nagar, Uttar Pradesh,, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Nashik Inn": {
+      "hotel_legal_name": "Alliance Hospitality",
+      "address": "Plot No. 1, SR. No. 119/A/2/2B, The Nashik INN, Village Wadala, Nashik, Nashik, Maharashtra, 422009",
+      "pan": "ACBFA3446P",
+      "gstin": "27ACBFA3446P1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sanskar": {
+      "hotel_legal_name": "HOTEL SANSKAR",
+      "address": "264, PLOT NO 264, BHOPAL, Bhopal, Bhopal, Madhya Pradesh, 462011",
+      "pan": "AAOFH9577M",
+      "gstin": "23AAOFH9577M1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Unnam": {
+      "hotel_legal_name": "UNNAM HOTELS INDIA PRIVATE LIMITED",
+      "address": "JAYABHERI ENCLAVE, PLOT NO 1, GACHIBOWLI, NEXT TO RADISSON, DLF ROAD, HYDERABAD, Hyderabad,, Telangana, 500032",
+      "pan": "AACCU7346N",
+      "gstin": "36AACCU7346N1ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel RR Residency I": {
+      "hotel_legal_name": "HOTEL RR RESIDENCY",
+      "address": "5-5-3/2/3, Mustafa Nagar, Main Road, Khammam, Khammam, Telangana, 507001",
+      "pan": "ASFPG2649N",
+      "gstin": "36ASFPG2649N1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Keerthi's Anupama": {
+      "hotel_legal_name": "KEERTHI SWARUPA RANI KONDAPAVURI",
+      "address": "12-402-3, SRI RAMA GOVARDHANA GIRI NAGAR, TADEPALLI, Guntur, Andhra Pradesh, 522501",
+      "pan": "ADNPK6237D",
+      "gstin": "37ADNPK6237D1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Z Grand": {
+      "hotel_legal_name": "SYED AHSAN HAIDER",
+      "address": "279, GROUND FLOOR DAD, HOTEL Z GRAND NEAR CENTRA GREEN APARTMENTS, PAKHOWAL ROAD TO, STRELING RESORT, LUDHIANA, Ludhiana, Punjab, 142022",
+      "pan": "AAFPH5801B",
+      "gstin": "03AAFPH5801B3ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Maark Inn": {
+      "hotel_legal_name": "HOTEL MAARK INN",
+      "address": "38/2, 1st Cross Tilak Nagar Bannergatta Road Cross, Bengaluru, Bengaluru Urban, Karnataka, 560041",
+      "pan": "HELPS1712D",
+      "gstin": "29HELPS1712D1ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Silver Inn": {
+      "hotel_legal_name": "HOTEL SILVER INN",
+      "address": "UNIT NO. S/202, SECOND FLOOR, PARTH COMPLEX, ADARSH CO-OPERATIVE HOUSING SOCIETY, SWASTIK CHAR, RASTA, Ahmedabad, Ahmedabad, Gujarat, 380009",
+      "pan": "AAOFH2703B",
+      "gstin": "24AAOFH2703B1ZX",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Siddarth Prime": {
+      "hotel_legal_name": "SRI SAI RAM ENTERPRISES",
+      "address": "40-5-19/27C, Ground, Mogal Raj Puram, Jammichettu Centre, Vijayawada, NTR, Andhra Pradesh, 520010",
+      "pan": "AQHPK6458R",
+      "gstin": "37AQHPK6458R1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Crystal Palace": {
+      "hotel_legal_name": "VHS INC.",
+      "address": "9A HEERAL LAL MARKET, NEAR MCD COLONY, POOTH KALAN EXTN, POOTH KALAN, West Delhi, Delhi, 110086",
+      "pan": "EFKPS1359B",
+      "gstin": "07EFKPS1359B2ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Atithi Regency Home Stay": {
+      "hotel_legal_name": "Sati Corporate Services Private Limited",
+      "address": "FLAT NO-7,SR NO, 87/ 1A, SECOND FLOOR, SALUNKHE COMPLEX, Sus Road, Pune, Pune, Maharashtra, 411021",
+      "pan": "ABNCS8503P",
+      "gstin": "27ABNCS8503P1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Spring inn": {
+      "hotel_legal_name": "HOTEL SPRING INN",
+      "address": "4, 4th floor, AKANKSHA ARCADE, TRIKAMDAS ROAD, KANDIVALI, Mumbai, Maharashtra, 400067",
+      "pan": "AAKFH5743F",
+      "gstin": "27AAKFH5743F1Z9",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel New Journey Hospitality": {
+      "hotel_legal_name": "NEW JOURNEY HOSPITALITY",
+      "address": "J-5/11, DLF PHASE II, Gurugram, Gurugram, Haryana, 122002",
+      "pan": "AAWFN6882B",
+      "gstin": "06AAWFN6882B1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel SRS Grand": {
+      "hotel_legal_name": "SRS GRAND",
+      "address": "H NO 5-6-23/A, Dayarguda, Kukatpally Main Road, Hyderabad, Medchal Malkajgiri, Telangana, 500072",
+      "pan": "BEWPG7931P",
+      "gstin": "36BEWPG7931P1ZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Broholic Prime Suites": {
+      "hotel_legal_name": "BROHOLIC PRIME SUITES",
+      "address": "PLOT NO.53,54,55, BESIDE KAPIL CHIT FUNDS, KPHB 9th Phase Road, Hyderabad, Medchal Malkajgiri, Telangana,, 500072",
+      "pan": "ABDFB6367K",
+      "gstin": "36ABDFB6367K1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via The Corporate Hub": {
+      "hotel_legal_name": "THE HIGHSTREET VENTURE",
+      "address": "B-1, Ground, Riddhi Siddhi Apartment, Baner, Pimpri Chinchwad, Pune, Maharashtra, 411045",
+      "pan": "AAXFT1042N",
+      "gstin": "27AAXFT1042N1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Lalita Residency": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "4th Floor, Desk No.CS4-19, 83 S P Mukherjee Road, Devi Market, Kolkata, Kolkata, West Bengal, 700026",
+      "pan": "AAFCC6416Q",
+      "gstin": "19AAFCC6416Q1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Ravikiran": {
+      "hotel_legal_name": "GANESH SURYABHAN SATPUTE",
+      "address": "S No 20/2/3, H No.1782 Dhankawadi, Balaji nagar Pune Satara Road, Pune, Pune, Pune, Maharashtra, 411043",
+      "pan": "BLIPS1234C",
+      "gstin": "27BLIPS1234C2ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ayodhya": {
+      "hotel_legal_name": "HOTEL AYODHYA",
+      "address": "GAT No 480, GAT No 480, D K Chowk Near Bharat Steel, Kuruli, Pune, Maharashtra, 410501",
+      "pan": "AASFH8301H",
+      "gstin": "27AASFH8301H1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Corporate Crown": {
+      "hotel_legal_name": "AFSHAN SHARIFF",
+      "address": "NO 81 D, KHB COLONY, 5TH BLOCK, BANGALORE, Bengaluru Urban, Karnataka, 560095",
+      "pan": "BXIPS0522F",
+      "gstin": "29BXIPS0522F2ZF",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel RK International": {
+      "hotel_legal_name": "HOTEL R. K. INTERNATIONAL",
+      "address": "Shahnawaz Building, 1ST Floor, Kale Marg, Bail Bazar, Mumbai, Mumbai Suburban, Maharashtra, 400070",
+      "pan": "AAOFH8642M",
+      "gstin": "27AAOFH8642M1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Arsh Executive Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Level 5, Technopolis Knowledge Park, Mahakali Caves Road, Mumbai, Mumbai Suburban, Maharashtra, 400093",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel White Star Residency": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Center Point 3, No. 2/4, Mount Poonamallee High Road, Manapakkam, Chennai, Chennai, Tamil Nadu, 600089",
+      "pan": "AAFCC6416Q",
+      "gstin": "33AAFCC6416Q1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prince Residency": {
+      "hotel_legal_name": "MINERVA SWEETS AND BAKERY",
+      "address": "47/14, Kandasamy Jamedar Street, Kosapet, Vellore, Vellore, Tamil Nadu, 632001",
+      "pan": "AZAPR9746B",
+      "gstin": "33AZAPR9746B2ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel De Sivalika": {
+      "hotel_legal_name": "FabHotel De Sivalika-De Sivalika (ASHOK JAISWAL)",
+      "address": "317, G.T.ROAD, HOWRAH, Howrah, West Bengal, 711101",
+      "pan": "AEMPJ0819C",
+      "gstin": "19AEMPJ0819C2ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Olive": {
+      "hotel_legal_name": "MVR SERVICES",
+      "address": "VILLAGE RAIPUR, SECTOR-126, NOIDA, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AIDPC6429N",
+      "gstin": "09AIDPC6429N2ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Shivani Residency": {
+      "hotel_legal_name": "SEA MAGIC RESTAURANT AND BAR",
+      "address": "106/3, BHANJI UDYOG NAGAR,MAHAJAN WADI, NEAR AJIT PALACE, THANE MIRA ROAD EAST, Thane, Maharashtra,, 401101",
+      "pan": "AAHPA4591R",
+      "gstin": "27AAHPA4591R2Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Gunas": {
+      "hotel_legal_name": "Royal Residency",
+      "address": "58A, A.S Pettai Main Road, Namakkal, Namakkal, Tamil Nadu, 637001",
+      "pan": "ATEPA2904Q",
+      "gstin": "33ATEPA2904Q1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel JHS Studio": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "6th Floor, 183 Nimitaya, Udyog Vihar Phase 1 Road, Udyog Vihar Phase 1, Gurugram, Gurugram, Haryana, 122016",
+      "pan": "AAFCC6416Q",
+      "gstin": "06AAFCC6416Q1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Samrat Regency": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), Opposite Metro Pillar No. 103, Shyam, Nagar Extension, F-304, New Sanganer, Road, Jaipur, Jaipur, Rajasthan, 302019",
+      "pan": "AAFCC6416Q",
+      "gstin": "08AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Waves": {
+      "hotel_legal_name": "THE WAVES BOARDING AND LODGING WITH HOTEL",
+      "address": "1100/4,PIDNo.150200102300102594, Sarjapura road, Bengaluru, Bengaluru Urban, Karnataka, 562125",
+      "pan": "BCHPC4218A",
+      "gstin": "29BCHPC4218A1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Moro Paschim Vihar": {
+      "hotel_legal_name": "HOTEL MORO",
+      "address": "PLOT NO C-48,49 KH. NO. 93/9/1 BLK-C, PARKING FLOOR, OLD PLOT NO.7A & 47 B-48 & 8, Vijay Vihar Phase-II, New, Delhi, North West Delhi, Delhi, 110085",
+      "pan": "AAQCM2366J",
+      "gstin": "07AAQCM2366J1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Home Tree Service": {
+      "hotel_legal_name": "HOME TREE SERVICE APARTMENT",
+      "address": "Apartment I, HOME TREE SERVICE APARTMENT, NO 28/12, PG ILLAM FLATE NO B2,C3, BAGAVANTHAM STREET,VENKATNARAYANA ROAD, T.NAGAR CHENNAI,, Chennai, Tamil Nadu, 600017",
+      "pan": "BQPPR2169R",
+      "gstin": "33BQPPR2169R1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Lloyds Inn": {
+      "hotel_legal_name": "BHAGAVATHI RAJ RADHAKRISHNAN",
+      "address": "No 62, Lloyd's Nest, Avvai Shanmugam Salai, Lloyds Road, Chennai, Chennai, Tamil Nadu, 600014",
+      "pan": "BERPR0309R",
+      "gstin": "33BERPR0309R2ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Mirage": {
+      "hotel_legal_name": "J.R. CATERERS C/O THE MIRAGE",
+      "address": "OPP BHAI BALA JI GURUDWARA, J.R. CATERERS C/O THE MIRAGE, PAKHOWAL ROAD, LUDHIANA, Ludhiana, Punjab,, 141108",
+      "pan": "IRQPS5815A",
+      "gstin": "03IRQPS5815A1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Yellow Leaf": {
+      "hotel_legal_name": "SAGAR KAKKAR",
+      "address": "B-18-1533, HOTEL YELLOW LEAF, LAJPAT NAGAR NEAR MIDDHAR CHOWK, Ludhiana, Ludhiana, Punjab, 141002",
+      "pan": "AWZPK2137R",
+      "gstin": "03AWZPK2137RBZI",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Bee Town": {
+      "hotel_legal_name": "AILDASANI HOTELS & RESORTS",
+      "address": "0, HUKMAKHEDI A B ROAD, NEAR HOTEL UTSAV, Indore, Madhya Pradesh, 452012",
+      "pan": "AATFA1159K",
+      "gstin": "23AATFA1159K1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Saravana Shelters": {
+      "hotel_legal_name": "SARAVANA SHELTERS",
+      "address": "Residency, SARAVANA SHELTERS, KADAPERI TAMBARAM, NO 27 BOUND STREET, NO 27 BOUND STREET, NO 27 BOUND STREET, Tambaram, Sanatorium Sub Post Office, Sanatorium, Chennai, Chengalpattu, Tamil Nadu, 600047",
+      "pan": "AWTPS1480P",
+      "gstin": "33AWTPS1480P2ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Galaxy Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Level 5, Technopolis Knowledge Park, Mahakali Caves Road, Mumbai, Mumbai Suburban, Maharashtra, 400093",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Adhiraj Inn": {
+      "hotel_legal_name": "ADHIRAJ INN",
+      "address": "25A, Golden Residency, Shyama Prasad Mrkherjee Road, Kolkata, Kolkata, West Bengal, 700025",
+      "pan": "ACKFA8015B",
+      "gstin": "19ACKFA8015B1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Residency II": {
+      "hotel_legal_name": "HOTEL ROYAL RESIDENCY",
+      "address": "11-5-430, LAKIDIKAPOOL, LAKIDIKAPOOL REDHILL ROAD, HYDERABAD, Hyderabad, Telangana, 500004",
+      "pan": "AAMFR5146E",
+      "gstin": "36AAMFR5146E1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Blue Inn": {
+      "hotel_legal_name": "CHHAPPAN BHOG",
+      "address": "S. No. 7/2B, Plot No. 17 to 27/1, Bolhegaon Fata, Nagar-Manmad Road, Bolhegaon Fata, Nagapur, Ahmednagar,, Ahilyanagar, Maharashtra, 414111",
+      "pan": "AAIPF5379H",
+      "gstin": "27AAIPF5379H1ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Symphony Grand": {
+      "hotel_legal_name": "DAYALAL DALJI PATEL",
+      "address": "TF/B/ 1 TO 6, SURVE NO. 47/48, Barcelona MULTIPLE BUSINESS COMPLEX, S P RING ROAD, Odhav, Ahmedabad,, Ahmedabad, Gujarat, 382415",
+      "pan": "CUYPP5509B",
+      "gstin": "24CUYPP5509B1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Galaxy II": {
+      "hotel_legal_name": "HOTEL GALAXY",
+      "address": "5B-9 B P, I, II, III, HOTEL GALAXY, RAILWAY ROAD, Faridabad, Faridabad, Haryana, 121001",
+      "pan": "BOCPM8914C",
+      "gstin": "06BOCPM8914C2Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via KRV Residency": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Travelstack Tech Limited (formerly known, as Travelstack Tech Private Limited and, Casa2 Stays Pvt Ltd), Center Point 3, No. 2/4, Mount, Poonamallee High Road, Manapakkam,, Chennai, Chennai, Tamil Nadu, 600089",
+      "pan": "AAFCC6416Q",
+      "gstin": "33AAFCC6416Q1ZD",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Ajanta": {
+      "hotel_legal_name": "Sapphire Hospitality",
+      "address": "D-85, Ambabari, Jaipur, Jaipur, Rajasthan, 302039",
+      "pan": "AALHB7903A",
+      "gstin": "08AALHB7903A1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Axis International": {
+      "hotel_legal_name": "Hotel Axis International",
+      "address": "UNIT NO. 2, GROUND FLR, T SQUARE,, CHANDIVALI PETROL PUMP, SAKI, VIHAR ROAD, SAKINAKA, MUMBAI,, Mumbai Suburban, Maharashtra, 400072",
+      "pan": "AALFH0631H",
+      "gstin": "27AALFH0631H1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Peralz": {
+      "hotel_legal_name": "HOTEL PERALZ",
+      "address": "Plot No. 350-370, Survey No. 191 RSC37, Gorai, Mumbai, Mumbai Suburban, Maharashtra, 400092",
+      "pan": "AARFH0476N",
+      "gstin": "27AARFH0476N1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel New Dream Palace": {
+      "hotel_legal_name": "JANKI GROUP",
+      "address": "NA, NA, NA, 406 PRANTIK PALLY, Kolkata, Kolkata, West Bengal, 700107",
+      "pan": "AASFJ6560G",
+      "gstin": "19AASFJ6560G1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via MS Hospitality": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 261, Bund Garden Road, Pune, Pune, Maharashtra, 411001",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Paramhans Guest House": {
+      "hotel_legal_name": "A K Enterprises",
+      "address": "B 32/18-A, Lanka, Varanasi, Varanasi, Uttar Pradesh, 221005",
+      "pan": "JGLPK4167E",
+      "gstin": "09JGLPK4167E1ZZ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Aman": {
+      "hotel_legal_name": "HOTEL AMAN",
+      "address": "Hotel Aman, N A, Hotel Aman, Braham Sthan Path, Patna, Patna, Bihar, 800014",
+      "pan": "AQWPS0973N",
+      "gstin": "10AQWPS0973N4Z1",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Veeraj Suites": {
+      "hotel_legal_name": "VEERAJ SUITE",
+      "address": "PLOT NO 69 70, VEERAJ SUITES,, LUMBINI AVENUE OPP MY HOME, BHOOJA, GACHI BOWLI, Rangareddy,, Telangana, 500032",
+      "pan": "AAQFV2204F",
+      "gstin": "36AAQFV2204F1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Tordi Haveli": {
+      "hotel_legal_name": "TORDI HAVELI",
+      "address": "SECTOR 6, 32, CHITRAKOOT, VAISHALI NAGAR, JAIPUR, Jaipur, Rajasthan, 302026",
+      "pan": "ARHPK7616E",
+      "gstin": "08ARHPK7616E1ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Utsav Residency": {
+      "hotel_legal_name": "Utsav Residency",
+      "address": "15, Utsav Residency, Road Number 3, Navi Mumbai, Raigad, Maharashtra, 410206",
+      "pan": "AAIFU1349J",
+      "gstin": "27AAIFU1349J1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Inn": {
+      "hotel_legal_name": "ROBERT THAPAR",
+      "address": "NA 86/4, JAGATPURA, NEAR DAMORIA PULL, JALANDHAR, Jalandhar, Punjab, 144001",
+      "pan": "AKNPT1107C",
+      "gstin": "03AKNPT1107C1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ceerock": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 401, Vishal Astra, Nexus spaces, 12-A/A, AB Road, Indore, Indore, Madhya Pradesh, 452010",
+      "pan": "AAFCC6416Q",
+      "gstin": "23AAFCC6416Q1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Perfect": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Pearl Inn": {
+      "hotel_legal_name": "THE PEARL INN",
+      "address": "GAT NO 357/1, THE PEARL INN, Chakan Ambethan Road, Chakan, Pune, Maharashtra, 410501",
+      "pan": "DFJPS2113R",
+      "gstin": "27DFJPS2113R2ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Hari Kunj 900 m from": {
+      "hotel_legal_name": "HOTEL HARI KUNJ",
+      "address": "Kashi Vishwanath Temple, HOTEL HARI KUNJ, D48/142-G-1, GIRIJAGHAR, Dashaswamedh Ghat Road, Varanasi, Varanasi, Uttar Pradesh, 221001",
+      "pan": "ANQPJ1807K",
+      "gstin": "09ANQPJ1807K2ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel SRH": {
+      "hotel_legal_name": "SUBHARATNA KRISHNAIAH SANGANA",
+      "address": "SR NO -258/3B, SR NO -258/3B, MUKAI NAGAR, HINJEWADI,MULSHI, Pune, , Maharashtra, 411057",
+      "pan": "GQUPS1649D",
+      "gstin": "27GQUPS1649D1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Exotica": {
+      "hotel_legal_name": "UMESH KAKKAR",
+      "address": "E-5, GROUND FLOOR, GREEN PARK EXTENSION, SOUTH DELHI, South Delhi, Delhi, 110016",
+      "pan": "AAIPK5222E",
+      "gstin": "07AAIPK5222E2Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Awadh Royal": {
+      "hotel_legal_name": "AWADH ROYAL HOTEL",
+      "address": "awadh royal hotel, 0, awadh royal hotel, Panchakosi Parikrama Marg, Ayodhya, Ayodhya, Uttar Pradesh, 224123",
+      "pan": "BVEPA9616G",
+      "gstin": "09BVEPA9616G1ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golf Luxury": {
+      "hotel_legal_name": "GOLF LUXURY HOTEL",
+      "address": "1041, SECTOR 43, Gurugram, Gurugram, Haryana, 122009",
+      "pan": "EVAPD1331Q",
+      "gstin": "06EVAPD1331Q1ZO",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel VK’s Bahadurpally": {
+      "hotel_legal_name": "VEEKSHA KIARA HOSPITALITIES",
+      "address": "Sy No 188, 233, Bahadurpally Village, Hyderabad, Medchal Malkajgiri, Telangana, 500043",
+      "pan": "AAXFV9829R",
+      "gstin": "36AAXFV9829R1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Dev Palace I": {
+      "hotel_legal_name": "HOTEL DEV PALACE",
+      "address": "11, BLOCK -A, FIRST AND SECOND FLOOR, G.T. KARNAL ROAD , VILL. BHAROLA, KH. NO -38, New Delhi, North West, Delhi, Delhi, 110033",
+      "pan": "DOMPM4365B",
+      "gstin": "07DOMPM4365B1ZV",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Aashraye": {
+      "hotel_legal_name": "Encore Realtech Private Limited",
+      "address": "10/5 Nehru Enclave Kalkaji Extension",
+      "pan": "AAACE8494P",
+      "gstin": "07AAACE8494P2ZU",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Aura Homes": {
+      "hotel_legal_name": "CHEZIEL HOSPITALITY",
+      "address": "Shivtej Nagar, 1st floor, AURA HOMES, SECTOR NO -18, Pimpri Chinchwad, Pune, Maharashtra, 411019",
+      "pan": "AAHPZ7398D",
+      "gstin": "27AAHPZ7398D1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Mishika Inn": {
+      "hotel_legal_name": "MRM HOSPITALITIES",
+      "address": "XV-212, PAHARGANJ, New Delhi, Central Delhi, Delhi, 110055",
+      "pan": "ACCFM7139E",
+      "gstin": "07ACCFM7139E1ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Yagna Grand": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), 5th floor, 2-91/12/4/NR, Plot No 4, Doc Bhavan, Kondapur, Hyderabad, Hyderabad, Telangana, 500081",
+      "pan": "AAFCC6416Q",
+      "gstin": "36AAFCC6416Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Crescent": {
+      "hotel_legal_name": "CRESCENT HOTEL",
+      "address": "2ND & 3RD FLOOR SECTOR 30-33 SLF MALL Indraprastha Colony, SLF MALL, Faridabad Bypass, Faridabad, Faridabad,, Haryana, 121003",
+      "pan": "BIIPS8414D",
+      "gstin": "06BIIPS8414D1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Welkin": {
+      "hotel_legal_name": "WELKIN HOTEL",
+      "address": "ground,third and fourth, 1-7-227 to 234, shyam towers, paradise circle, secunderabad, Hyderabad, Telangana, 500003",
+      "pan": "AAKHM7228J",
+      "gstin": "36AAKHM7228J2ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Balaji Paradise": {
+      "hotel_legal_name": "KAJAL SANJAY THAKUR",
+      "address": "2338E, INDORE, Indore, Indore, Madhya Pradesh, 452009",
+      "pan": "AKXPT7890G",
+      "gstin": "23AKXPT7890G1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Love Birds Chinar Park": {
+      "hotel_legal_name": "LOVE BIRDS HOTEL",
+      "address": "935, GF 1 2 3 4, LOVE BIRDS HOTEL, Unnamed Road, New Town, North Twenty Four Parganas, West Bengal, 700157",
+      "pan": "AATCM0009R",
+      "gstin": "19AATCM0009R1ZS",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Bentree": {
+      "hotel_legal_name": "MSS GROUP",
+      "address": "PLOT NO-131/5, ZONE 2, MP NAGAR,, Bhopal, Bhopal, Madhya Pradesh, 462023",
+      "pan": "EQGPS5179J",
+      "gstin": "23EQGPS5179J2Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Step Inn": {
+      "hotel_legal_name": "STEP IN STAYS PRIVATE LIMITED",
+      "address": "G6 TAGORE PARK, 816 NASKARHAT ROAD, KOLKATA, Kolkata, West Bengal, 700039",
+      "pan": "AAZCS6389Q",
+      "gstin": "19AAZCS6389Q1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Mayuri Residency": {
+      "hotel_legal_name": "Mayuri Residency",
+      "address": "Sy No 35/7, Nagaraj Building, Hosur Road,Attibele Hobli, Yadavanahalli, Bengaluru, Bengaluru Urban, Karnataka, 562107",
+      "pan": "BXZPS1168J",
+      "gstin": "29BXZPS1168J1ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Casa Grand Ecil": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "5th floor, 2-91/12/4/NR, Plot No 4, Doc Bhavan, Kondapur, Hyderabad, Hyderabad, Telangana, 500081",
+      "pan": "AAFCC6416Q",
+      "gstin": "36AAFCC6416Q1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Log Inn": {
+      "hotel_legal_name": "M/s. HOTEL LOG INN",
+      "address": "6-3-801/803, Elephant House, Ameerpet Road, Begumpet Sub Post Office, Ameerpet, Hyderabad, Hyderabad, Telangana,, 500016",
+      "pan": "AAPFH7430J",
+      "gstin": "36AAPFH7430J1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Familto": {
+      "hotel_legal_name": "FAMILTO",
+      "address": "PLOT NO DD-141, GROUND FLOOR, PREMIISES NO 60-0269, Street Number 326, New Town, North Twenty Four, Parganas, West Bengal, 700156",
+      "pan": "AAJFF7721N",
+      "gstin": "19AAJFF7721N1ZU",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Avasa Grand": {
+      "hotel_legal_name": "OCEANA THE HOLIDAY HOME",
+      "address": "B - 320, BETIM, NEAR FERRY WHARF, REIS MAGOS, North Goa, Goa, 403114",
+      "pan": "AACFO6967C",
+      "gstin": "30AACFO6967C4ZE",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel AR Executive": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Level 5, Technopolis Knowledge Park, Mahakali Caves Road, Mumbai, Mumbai Suburban, Maharashtra, 400093",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel White House BNB": {
+      "hotel_legal_name": "SUMIT BHASIN",
+      "address": "PROPERTY NO.38, BLOCK C, POCKET 8,SECTOR-17, DWARKA, North West Delhi, Delhi, 110075",
+      "pan": "AIRPB0659B",
+      "gstin": "07AIRPB0659B1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Golden Eye Inn": {
+      "hotel_legal_name": "SAI HOTELS & FOODS SERVICES",
+      "address": "FIRST FLOOR, K-8 AB, K BLOCK LOCAL ROAD, NEAR MCD PARK, Kalkaji, New Delhi, South East Delhi, Delhi, 110019",
+      "pan": "ATRPB6588Q",
+      "gstin": "07ATRPB6588Q2ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sri Balaji Grand": {
+      "hotel_legal_name": "SRI BALAJI GRAND HOTEL",
+      "address": "H.no. 3-13-123, Inner Ring Road, Hyderabad, Rangareddy, Telangana, 500074",
+      "pan": "ADWPV7470Q",
+      "gstin": "36ADWPV7470Q1Z2",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Srikara Grand Luxury": {
+      "hotel_legal_name": "TARA GRAND LUXURY ROOMS",
+      "address": "Rooms, TARA GRAND LUXURY ROOMS, H NO 5-11-585/1, FIRST FLOOR, STREET 4, Hanumakonda, Hanumakonda, Telangana, 506009",
+      "pan": "CLFPR3101M",
+      "gstin": "36CLFPR3101M1Z0",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel De Rajnigandha": {
+      "hotel_legal_name": "HOTEL DE RAJNIGANDHA",
+      "address": "HOTEL RAJANIGANDHA, DREAM SQUARE SANKUL A, NASHIK, Nashik, Nashik, Maharashtra, 422101",
+      "pan": "AASFH0658P",
+      "gstin": "27AASFH0658P1ZK",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel TP Suites": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), First Floor Kehar Singh Estate, H-294, Plot 2A, Saidulajab,Lane no. 2, Saket, New Delhi, South Delhi, Delhi, 110030",
+      "pan": "AAFCC6416Q",
+      "gstin": "07AAFCC6416Q1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Satyan Inn": {
+      "hotel_legal_name": "Travelstack Tech Limited (formerly known as Travelstack",
+      "address": "Tech Private Limited and Casa2 Stays Pvt, Ltd), Level 5, Technopolis Knowledge Park, Mahakali Caves Road, Mumbai, Mumbai Suburban, Maharashtra, 400093",
+      "pan": "AAFCC6416Q",
+      "gstin": "27AAFCC6416Q1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via The Chaitanyas": {
+      "hotel_legal_name": "CHITRA EXCELLENCE SERVICES PRIVATE LIMITED",
+      "address": "REGISTRATION OFFICE - 36, S - 1, DILSHAD COLONY, DILSHAD, North East Delhi, Delhi, 110095",
+      "pan": "AAHCC2423K",
+      "gstin": "07AAHCC2423K2ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Sandalwood Vibes": {
+      "hotel_legal_name": "IGNITED FOUR",
+      "address": "SHOP NO 311,319, BDA COMPLEX, 7 NO. STOP SHIVAJI NAGAR, BHOPAL, Bhopal, Madhya Pradesh, 462016",
+      "pan": "AAHFI6932L",
+      "gstin": "23AAHFI6932L1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Santoor": {
+      "hotel_legal_name": "HOTEL SOFITEL PRIVATE LIMITED",
+      "address": "158, KANCHAN BAGH, INDORE, Indore, Madhya Pradesh, 452001",
+      "pan": "AAACH8399G",
+      "gstin": "23AAACH8399G2ZC",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Seven Hills": {
+      "hotel_legal_name": "ABDUL MAJEED KALAI HOUSE",
+      "address": "GALA NO 307 AND 308 PLOT NO 6 CTS NO 78, 3RD FLOOR,, MILLENIUM PLAZA PRE CHS LTD, Sakinaka Telephone, Exchange Lane, Mumbai, Mumbai Suburban, Maharashtra, 400072",
+      "pan": "AHKPA2283J",
+      "gstin": "27AHKPA2283J2ZA",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime Phoenix Hospitality": {
+      "hotel_legal_name": "PHOENIX HOSPITALITY",
+      "address": "M 1/28, Gurugram, Gurugram, Gurugram, Haryana, 122002",
+      "pan": "ABAFP7172P",
+      "gstin": "06ABAFP7172P1ZP",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Oyster Villa": {
+      "hotel_legal_name": "TRIPGO HOSPITALITY",
+      "address": "Plot No. 1315, St Thomas Marg, Sector 43, Gurugram, Gurugram, Haryana, 122003",
+      "pan": "AAPFT3254N",
+      "gstin": "06AAPFT3254N1ZL",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel The Stem": {
+      "hotel_legal_name": "HOTEL THE STEM",
+      "address": "PLOT NO 13, PATRIKA NAGAR, Medicover Hospital, Hyderabad, Rangareddy, Telangana, 500081",
+      "pan": "AOSPT4454K",
+      "gstin": "36AOSPT4454K1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel GRK Comforts": {
+      "hotel_legal_name": "SSN HOTELS",
+      "address": "No.1503/24, 40th Cross Road, Bengaluru, Bengaluru Urban, Karnataka, 560041",
+      "pan": "OVGPS8669C",
+      "gstin": "29OVGPS8669C1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Vista Park": {
+      "hotel_legal_name": "HOTEL VARSHA UNIT OF G.K. CATERERS",
+      "address": "PLOT NO-45, SABARI NAGAR 2ND MAIN ROAD, PORUR, Kancheepuram, Tamil Nadu, 600116",
+      "pan": "AQYPK9438L",
+      "gstin": "33AQYPK9438L1ZW",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Prime The Vintage Inn": {
+      "hotel_legal_name": "GNR ASSOCIATES",
+      "address": "SY No.64,NO.81, 82, NAGANATHAPURA VILLAGE,BEGUR HOBLI, Bengaluru, Bengaluru Urban, Karnataka, 560100",
+      "pan": "AAXFG8631J",
+      "gstin": "29AAXFG8631J1ZJ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel MN International": {
+      "hotel_legal_name": "BESTRADING ENTERPRISES",
+      "address": "30,, RAFI AHMED KIDWAI ROAD,, KOLKATA, Kolkata, West Bengal, 700016",
+      "pan": "ABIPH9227R",
+      "gstin": "19ABIPH9227R1ZT",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rotano Suites": {
+      "hotel_legal_name": "ROTANO SUITES YELAHANKA",
+      "address": "NO.412/353, ROTANO SUITES, B.B. MAIN ROAD, YELAHANKA OLD TOWN, BANGALORE NORTH TALUK, BANGALORE,, Bengaluru Urban, Karnataka, 560064",
+      "pan": "ARKPS1511K",
+      "gstin": "29ARKPS1511K2ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Indian Suites": {
+      "hotel_legal_name": "INDIAN RESIDENCY",
+      "address": "No 232, Patalamma Layout, 1st Cross, Opp, to Adams School, Bengaluru, Bengaluru, Urban, Karnataka, 560067",
+      "pan": "AFJPL9346J",
+      "gstin": "29AFJPL9346J1ZR",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Rachna Palace and": {
+      "hotel_legal_name": "RIDDHISBB ASSOCIATES PRIVATE LIMITED",
+      "address": "Banquets, RIDDHISBB ASSOCIATES PRIVATE LIMITED, 22/204, FIRST FLOOR, SECTOR-22, INDIRA NAGAR, Lucknow, Uttar Pradesh, 226016",
+      "pan": "AALCR5873J",
+      "gstin": "09AALCR5873J1ZM",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via RN Residency": {
+      "hotel_legal_name": "R.N RESIDENCY",
+      "address": "B-6, KAUSHAMBI, Ghaziabad, Ghaziabad, Uttar Pradesh, 201010",
+      "pan": "BEVPN1723F",
+      "gstin": "09BEVPN1723F1Z8",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Expo Centre Inn": {
+      "hotel_legal_name": "DSY HOSPITALITY PRIVATE LIMITED",
+      "address": "D-9, SECTOR 3, NOIDA, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAHCD9857G",
+      "gstin": "09AAHCD9857G1Z3",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via The Prasiddh": {
+      "hotel_legal_name": "SWASTIK TRADERS",
+      "address": "212, Narmada Tower 4, Ganpati Smart City, Mauja Bainpur, Sikandra, Agra, Agra, Uttar Pradesh, 282007",
+      "pan": "LWNPS4434A",
+      "gstin": "09LWNPS4434A1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Knight Airways": {
+      "hotel_legal_name": "KNIGHT AIRWAYS INN",
+      "address": "1, DEKAPARA, DEKAPARA, Kamrup, Assam, 781015",
+      "pan": "AAXFK0631N",
+      "gstin": "18AAXFK0631N1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "Via Dewa": {
+      "hotel_legal_name": "Hotel Dewa Goa",
+      "address": "1ST 2ND 3RD FLOOR, NEAR PARBHU SKY PANORMIC, H NO NO 232 GF1, ALTO DABOLIM, DABOLIM, South Goa, Goa,, 403802",
+      "pan": "BBJPK6837J",
+      "gstin": "30BBJPK6837J3ZG",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Royal Park Inn": {
+      "hotel_legal_name": "ROYAL PARK INN",
+      "address": "54/1, Rafi Ahmed Kidwai Road, Kolkata, Kolkata, West Bengal, 700016",
+      "pan": "ABHFR6107P",
+      "gstin": "19ABHFR6107P1ZK",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Ivy Inn": {
+      "hotel_legal_name": "IVY INN",
+      "address": "A-16,, SECTOR-35,, NOIDA, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAGFI3918M",
+      "gstin": "09AAGFI3918M1ZY",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Grand Palazzo": {
+      "hotel_legal_name": "HOTEL GRAND PALAZZO",
+      "address": "PLOT NO. 2, FIRST FLOOR, JAWALA HERI MARKET, New Delhi, West Delhi, Delhi, 110063",
+      "pan": "AKIPG0706F",
+      "gstin": "07AKIPG0706F1ZN",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Suvee Boutique": {
+      "hotel_legal_name": "SUVEE GROUP",
+      "address": "304, BSK 3RD STAGE, BANGALORE, Bengaluru Urban, Karnataka, 560070",
+      "pan": "ABTFS4949Q",
+      "gstin": "29ABTFS4949Q1ZQ",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Premium Kashi": {
+      "hotel_legal_name": "ROOMER HOSPITALITY PRIVATE LIMITED",
+      "address": "18/1, Ground Floor, Shantipuram, Sanigawan, Kanpur, Kanpur Nagar, Uttar Pradesh, 208021",
+      "pan": "AALCR2536G",
+      "gstin": "09AALCR2536G1Z7",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Silver Stone": {
+      "hotel_legal_name": "TRAVELSTACK TECH LIMITED",
+      "address": "Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "pan": "AAFCC6416Q",
+      "gstin": "09AAFCC6416Q1Z4",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Shravan": {
+      "hotel_legal_name": "KAMAL RAMESH MOHTA",
+      "address": "MOHTA BUILDING, RANI JHANSI SQUARE, SITABULDI, Nagpur, Maharashtra, 440012",
+      "pan": "ACGPM0643R",
+      "gstin": "27ACGPM0643R1Z5",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Church View": {
+      "hotel_legal_name": "CHURCH VIEW",
+      "address": "8580, GF, Arakashan Road, New Delhi, Central Delhi, Delhi, 110055",
+      "pan": "FFOPS3654N",
+      "gstin": "07FFOPS3654N1ZH",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    },
+    "FabHotel Seven Inn": {
+      "hotel_legal_name": "SEVEN INN",
+      "address": "PLOT NO. 810/2751 BEHERA SAHI, BEHERA SAHI, BEHERA SAHI, NAYAPALLI, BHUBANESWAR, Khordha, Odisha,, 751012",
+      "pan": "AWGPN2821C",
+      "gstin": "21AWGPN2821C1Z6",
+      "email": "bookings@fabhotels.com",
+      "tel": "+917042424242"
+    }
+  },
+  "payees": {
+    "33": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) Center Point 3, No. 2/4, Mount Poonamallee High Road, Manapakkam, Chennai, Chennai, Tamil Nadu",
+      "payee_gstin": "33AAFCC6416Q1ZD"
+    },
+    "37": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) D.No. 9-14-5/18/4F, Suite No 504, Desk No. HD-005, Kotu Empire,VIP Road, Siripuram,Visakhapatnam, Andhra Pradesh",
+      "payee_gstin": "37AAFCC6416Q1Z5"
+    },
+    "07": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) First Floor Kehar Singh Estate, H-294, Plot 2A, Saidulajab,Lane no. 2, Saket, New Delhi, South Delhi, Delhi, 110030",
+      "payee_gstin": "07AAFCC6416Q1Z8"
+    },
+    "30": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) N-66, Phase IV, WISDOMLAB, Verna Industrial Estate Verna, Chicalim, Goa",
+      "payee_gstin": "30AAFCC6416Q1ZJ"
+    },
+    "19": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) Desk No.CS4-19,4th Floor, 83 SP Mukherjee Road, Devi Market, Kolkata, West Bengal, 700026",
+      "payee_gstin": "19AAFCC6416Q1Z3"
+    },
+    "06": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 6th Floor, 183 Nimitaya, Udyog Vihar Phase 1 Road, Udyog Vihar Phase 1, Gurugram, Gurugram, Haryana",
+      "payee_gstin": "06AAFCC6416Q1ZA"
+    },
+    "09": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) Ground Floor, D-9, Sector-3, Noida, Gautambuddha Nagar, Uttar Pradesh, 201301",
+      "payee_gstin": "09AAFCC6416Q1Z4"
+    },
+    "36": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 5th floor, 2-91/12/4/NR, Plot No 4, Doc Bhavan, Kondapur, Hyderabad, Hyderabad, Telangana",
+      "payee_gstin": "36AAFCC6416Q1Z7"
+    },
+    "27": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 20th Floor, CTS No 95 4B 3&4 590, We Work Oberoi Commerz II, Padmavati Road Off W.E. Highway, Oberoi Garden City, Mumbai",
+      "payee_gstin": "27AAFCC6416Q1Z6"
+    },
+    "29": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) No.77/A, Koramangala Industrial Layout, JNC College Road, Bangalore-560095",
+      "payee_gstin": "29AAFCC6416Q1Z2"
+    },
+    "24": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Stays Pvt Ltd)) does not own or directly operate the functioning of the FabHotel Bliss (HOTEL BLISS) and is only collaborating with HOTEL BLISS for marketing and sales support services along with providing expertise in maintaining the service standards. All applicable above mentioned taxes are charged by the HOTEL BLISS and FabHotels denies any liability that may arise in this regard.  https://www.facebook.com /fabhotelscom https://www.fabhotels.com/ https://www.twitter.com/fabhotels   TOTAL: Rupees one thousand nine hundred ninety five and zero paise only E&O.E  Pan No. : AAPFH9715E",
+      "payee_gstin": "24AAACE0890P1ZF"
+    },
+    "03": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 547, Industrial Area, Modern Tower, Phase 8A, Sector- 75, Mohali, SAS Nagar, Punjab",
+      "payee_gstin": "03AAFCC6416Q1ZG"
+    },
+    "08": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) Opposite Metro Pillar No. 103, Shyam Nagar Extension, F-304, New Sanganer Road, Jaipur, Jaipur, Rajasthan, 302019",
+      "payee_gstin": "08AAFCC6416Q1Z6"
+    },
+    "23": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 401, Vishal Astra, Nexus spaces, 12-A/A, AB Road, Indore, Indore, Madhya Pradesh,",
+      "payee_gstin": "23AAFCC6416Q1ZE"
+    },
+    "21": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 03, Unit 308, Plot No 30 & 30/982, Odyssa Business center, Bomikhal Rasulgarh Square, Bhubaneshwar 751010",
+      "payee_gstin": "21AAFCC6416Q1ZI"
+    },
+    "10": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 6th Floor, D S Business Park, Drowsy Monks Co Working, Near Saguna More, Bailey Road, Patna, Patna, Bihar, 801503",
+      "payee_gstin": "10AAFCC6416Q1ZL"
+    },
+    "05": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) First Floor 75/1, CoSapces, Prem Tower, Shaiv Nagar, Araghar, Dalanwala, Vision & Voice, Dehradun, Uttarakhand-248001",
+      "payee_gstin": "05AAFCC6416Q1ZC"
+    },
+    "20": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 6002 6th floor, Skyline Complex Kadru, Ranchi, 834002",
+      "payee_gstin": "20AAFCC6416Q1ZK"
+    },
+    "04": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Tech Private Limited and Casa2 Stays Pvt Ltd) SNo. Particulars Stay Date Sell Rate Inclusion Discount Sub Total CGST UTGST Total 1. Deluxe Room (1 guest) Room with Breakfast 2026-06-25 1270.23 0.00 0.00 1270.23 31.76 31.76 1333.75 - - 1270.23 0.00 0.00 1270.23 31.76 31.76 1333.75 Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) Work Yard, Plot No. 337, Business & Industrial Park, Phase 2, Chandigarh, Chandigarh, Chandigarh,",
+      "payee_gstin": "04AAFCC6416Q1ZE"
+    },
+    "01": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) First Floor, RV Square, Lane No 11, Graiter Kailash, Jammu, Jammu, Jammu and Kashmir,",
+      "payee_gstin": "01AAFCC6416Q1ZK"
+    },
+    "32": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 39/2475-B1,Suite C84,, LR Towers, SJRRA 104, Palarivattom, South Janatha Road, Kochi, Ernakulam, Kerala",
+      "payee_gstin": "32AAFCC6416Q1ZF"
+    },
+    "18": {
+      "payee_name": "Travelstack Tech Limited",
+      "payee_address": "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd) 2nd floor Kalpana Market,GNB road, Silpukhuri, guwahati Assam 781103",
+      "payee_gstin": "18AAFCC6416Q1Z5"
+    }
+  }
+}
