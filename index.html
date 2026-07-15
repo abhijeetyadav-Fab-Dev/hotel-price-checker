@@ -457,11 +457,21 @@
     .invoice-print-area table {
       width: 100%;
       border-collapse: collapse;
+      border-spacing: 0;
     }
     .invoice-print-area th, .invoice-print-area td {
-      border: 1px solid #000;
+      border: none;
+      border-bottom: 1px solid #e2e8f0;
       padding: 4px 6px;
       font-size: 0.72rem;
+    }
+    .invoice-print-area thead tr {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    .invoice-print-area thead th {
+      border: none;
+      padding: 4px 6px;
     }
     
     /* Style checkboxes on mybiz table */
@@ -3527,7 +3537,7 @@ function generateInvoiceHtml(fields) {
   }
 
   // Determine Seller Information
-  const sellerLegalName = isHotelDirect ? fields.hotelLegalName : fields.payeeName;
+  const sellerLegalName = isHotelDirect ? fields.hotelLegalName : "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd)";
   const sellerGst = isHotelDirect ? fields.hotelGst : fields.payeeGst;
   const sellerPan = isHotelDirect ? fields.hotelPan : (fields.payeeGst ? fields.payeeGst.substring(2, 12) : 'AAFCC6416Q');
   const sellerAddress = isHotelDirect ? fields.hotelAddress : cleanPayeeAddress;
@@ -3549,7 +3559,7 @@ function generateInvoiceHtml(fields) {
   const customerState = gstStates[travellerGstState] || 'Delhi';
 
   // Buyer Info Configuration
-  const buyerName = isHotelDirect ? fields.orgName : fields.payeeName;
+  const buyerName = isHotelDirect ? fields.orgName : "Travelstack Tech Limited (formerly known as Travelstack Tech Private Limited and Casa2 Stays Pvt Ltd)";
   const buyerAddress = isHotelDirect ? `Corporate Office, ${customerState}` : cleanPayeeAddress;
   const buyerGstin = isHotelDirect ? fields.travellerGst : fields.payeeGst;
 
@@ -3575,7 +3585,7 @@ function generateInvoiceHtml(fields) {
     // Travelstack direct layout: Centered payee details at the top
     headerHtml = `
       <div style="text-align: center; margin-bottom: 12px; font-size: 10px; color: #000; line-height: 1.35;">
-        <div style="font-weight: bold; font-size: 11px; margin-bottom: 2px;">${fields.payeeName}</div>
+        <div style="font-weight: bold; font-size: 11px; margin-bottom: 2px;">${sellerLegalName}</div>
         <div style="max-width: 600px; margin: 0 auto;">${cleanPayeeAddress}</div>
         <div>State: ${sellerState}</div>
         <div>Email: bookings@fabhotels.com | Tel: +917042424242</div>
@@ -3753,16 +3763,16 @@ function generateInvoiceHtml(fields) {
             }
 
             rowsHtml += `
-              <tr style="border-top: 1px solid #000; font-weight: bold;">
-                <td colspan="3" style="padding: 4px; text-align: right;"></td>
-                <td style="padding: 4px; text-align: right;">${cumulativeSubtotal.toFixed(2)}</td>
-                <td style="padding: 4px; text-align: right;">0.00</td>
-                <td style="padding: 4px; text-align: right;">0.00</td>
-                <td style="padding: 4px; text-align: right;">${cumulativeSubtotal.toFixed(2)}</td>
-                ${!isInterstate ? `<td style="padding: 4px; text-align: right;">${cumulativeCgst.toFixed(2)}</td>` : ''}
-                ${!isInterstate ? `<td style="padding: 4px; text-align: right;">${cumulativeSgst.toFixed(2)}</td>` : ''}
-                ${isInterstate ? `<td style="padding: 4px; text-align: right;">${cumulativeIgst.toFixed(2)}</td>` : ''}
-                <td style="padding: 4px; text-align: right;">${cumulativeTotal.toFixed(2)}</td>
+              <tr style="border-top: 1px solid #000; border-bottom: 1px solid #000; font-weight: bold;">
+                <td colspan="3" style="padding: 4px; text-align: right; border-bottom: none;"></td>
+                <td style="padding: 4px; text-align: right; border-bottom: none;">${cumulativeSubtotal.toFixed(2)}</td>
+                <td style="padding: 4px; text-align: right; border-bottom: none;">0.00</td>
+                <td style="padding: 4px; text-align: right; border-bottom: none;">0.00</td>
+                <td style="padding: 4px; text-align: right; border-bottom: none;">${cumulativeSubtotal.toFixed(2)}</td>
+                ${!isInterstate ? `<td style="padding: 4px; text-align: right; border-bottom: none;">${cumulativeCgst.toFixed(2)}</td>` : ''}
+                ${!isInterstate ? `<td style="padding: 4px; text-align: right; border-bottom: none;">${cumulativeSgst.toFixed(2)}</td>` : ''}
+                ${isInterstate ? `<td style="padding: 4px; text-align: right; border-bottom: none;">${cumulativeIgst.toFixed(2)}</td>` : ''}
+                <td style="padding: 4px; text-align: right; border-bottom: none;">${cumulativeTotal.toFixed(2)}</td>
               </tr>
             `;
 
