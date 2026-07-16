@@ -1693,7 +1693,7 @@ function downloadSingleParityCSV(row) {
   const coupon = Math.round(row.mmtCoupon);
   const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
   const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
-  const text = getRebuttalTextContent(row);
+  const text = getRebuttalTextContent(row).replace(/\r?\n/g, ' | ');
   
   const rowData = [
     `"${row.hotelName.replace(/"/g, '""')}"`,
@@ -1773,7 +1773,7 @@ function exportFilteredParityCSV() {
     const coupon = Math.round(row.mmtCoupon);
     const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
     const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
-    const text = getRebuttalTextContent(row);
+    const text = getRebuttalTextContent(row).replace(/\r?\n/g, ' | ');
     
     return [
       `"${row.hotelName.replace(/"/g, '""')}"`,
