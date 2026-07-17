@@ -1467,6 +1467,7 @@ function processParityData(rows) {
     const mmtCoupon = parseFloat(row['mmt_cheapest_coupon_discount'] ?? 0);
     const mmtFp = parseFloat(row['mmt_cheapest_final_price'] ?? 0);
     const agdFp = parseFloat(row['agd_cheapest_final_price'] ?? 0);
+    const dnd = row['DND'] ?? row['dnd'] ?? '';
     
     let cause = 'Parity Met';
     let badgeClass = 'badge-meet';
@@ -1526,7 +1527,8 @@ function processParityData(rows) {
       mmtFp,
       agdFp,
       cause,
-      badgeClass
+      badgeClass,
+      dnd
     });
   });
   
@@ -1552,29 +1554,44 @@ function renderParityTable(data) {
     return;
   }
   
-  data.forEach((row) => {
-    const tr = document.createElement('tr');
-    tr.style.borderBottom = '1px solid #f1f5f9';
+  const chunkSize = 150;
+  let index = 0;
+  
+  function renderChunk() {
+    let html = '';
+    const limit = Math.min(index + chunkSize, data.length);
+    for (let i = index; i < limit; i++) {
+      const row = data[i];
+      const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
+      
+      html += `
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px; font-weight: 500;" title="${row.hotelName.replace(/"/g, '&quot;')}">${displayName}<br><span style="font-size:0.75rem; color:#888;">ID: ${row.hotelId}</span></td>
+          <td style="padding: 10px;">${row.checkin}</td>
+          <td style="padding: 10px; text-align: right;">₹${Math.round(row.mmtSp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right;">₹${Math.round(row.agdSp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right; color:#d97706;">₹${Math.round(row.mmtFee).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right; font-weight: 600;">₹${Math.round(row.mmtFp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right; font-weight: 600; color:#059669;">₹${Math.round(row.agdFp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: center;">
+            <span class="badge ${row.badgeClass}">${row.cause}</span>
+          </td>
+          <td style="padding: 10px; text-align: center;">
+            <button class="btn-copy" onclick="openRebuttal('${row.caseId}')">Defense</button>
+          </td>
+        </tr>
+      `;
+    }
     
-    const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
+    tbody.insertAdjacentHTML('beforeend', html);
+    index = limit;
     
-    tr.innerHTML = `
-      <td style="padding: 10px; font-weight: 500;" title="${row.hotelName}">${displayName}<br><span style="font-size:0.75rem; color:#888;">ID: ${row.hotelId}</span></td>
-      <td style="padding: 10px;">${row.checkin}</td>
-      <td style="padding: 10px; text-align: right;">₹${Math.round(row.mmtSp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right;">₹${Math.round(row.agdSp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right; color:#d97706;">₹${Math.round(row.mmtFee).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right; font-weight: 600;">₹${Math.round(row.mmtFp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right; font-weight: 600; color:#059669;">₹${Math.round(row.agdFp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: center;">
-        <span class="badge ${row.badgeClass}">${row.cause}</span>
-      </td>
-      <td style="padding: 10px; text-align: center;">
-        <button class="btn-copy" onclick="openRebuttal('${row.caseId}')">Defense</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+    if (index < data.length) {
+      requestAnimationFrame(renderChunk);
+    }
+  }
+  
+  renderChunk();
 }
 
 function filterParityTable() {
@@ -1682,6 +1699,7 @@ function downloadSingleParityCSV(row) {
     'Service Fee',
     'Burn %',
     'Final Classification',
+    'DND',
     'Rebuttal/Defense Text'
   ];
   
@@ -1693,7 +1711,8 @@ function downloadSingleParityCSV(row) {
   const coupon = Math.round(row.mmtCoupon);
   const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
   const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
-  const text = getRebuttalTextContent(row).replace(/\r?\n/g, ' | ');
+  const text = getRebuttalTextContent(row); // Keep raw newlines
+  const dndVal = row.dnd || '';
   
   const rowData = [
     `"${row.hotelName.replace(/"/g, '""')}"`,
@@ -1707,6 +1726,7 @@ function downloadSingleParityCSV(row) {
     fee,
     `"${burn}"`,
     `"${row.cause}"`,
+    `"${dndVal.replace(/"/g, '""')}"`,
     `"${text.replace(/"/g, '""')}"`
   ];
   
@@ -1761,6 +1781,7 @@ function exportFilteredParityCSV() {
     'Service Fee',
     'Burn %',
     'Final Classification',
+    'DND',
     'Rebuttal/Defense Text'
   ];
   
@@ -1773,7 +1794,8 @@ function exportFilteredParityCSV() {
     const coupon = Math.round(row.mmtCoupon);
     const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
     const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
-    const text = getRebuttalTextContent(row).replace(/\r?\n/g, ' | ');
+    const text = getRebuttalTextContent(row); // Keep raw newlines
+    const dndVal = row.dnd || '';
     
     return [
       `"${row.hotelName.replace(/"/g, '""')}"`,
@@ -1787,6 +1809,7 @@ function exportFilteredParityCSV() {
       fee,
       `"${burn}"`,
       `"${row.cause}"`,
+      `"${dndVal.replace(/"/g, '""')}"`,
       `"${text.replace(/"/g, '""')}"`
     ];
   });

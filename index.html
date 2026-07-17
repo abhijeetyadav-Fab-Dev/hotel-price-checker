@@ -1670,12 +1670,7 @@ function exportData(format) {
 }
 
 function downloadFile(content, filename, mime) {
-  let blobContent = content;
-  if (mime === 'text/csv') {
-    // Prefix with UTF-8 BOM so Excel opens it with correct encoding (no mojibake)
-    blobContent = '\uFEFF' + content;
-  }
-  const blob = new Blob([blobContent], { type: mime + ';charset=utf-8;' });
+  const blob = new Blob([content], { type: mime + ';charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -1911,6 +1906,7 @@ function processParityData(rows) {
     const diffSegment = mmtSp > 0 && agdSp > 0 ? (Math.abs(diffPct) > 10.0 ? '>10%' : '<10%') : '-';
     const origAgodaStatusSp = getRowValue(row, ['Cheapest_Agoda_Status_at_sp', 'Cheapest_Agoda_Status']) || '-';
     const origAgodaStatusFp = getRowValue(row, ['Cheapest_Agoda_Status_at_fp']) || '-';
+    const dnd = getRowValue(row, ['DND', 'dnd']) || '';
 
     parityData.push({
       caseId,
@@ -1931,7 +1927,8 @@ function processParityData(rows) {
       diffPct,
       diffSegment,
       origAgodaStatusSp,
-      origAgodaStatusFp
+      origAgodaStatusFp,
+      dnd
     });
   });
   
@@ -1953,60 +1950,75 @@ function renderParityTable(data) {
   tbody.innerHTML = '';
   
   if (data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #888; padding: 40px;">No matching records found.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="15" style="text-align: center; color: #888; padding: 40px;">No matching records found.</td></tr>`;
     return;
   }
   
-  data.forEach((row) => {
-    const tr = document.createElement('tr');
-    tr.style.borderBottom = '1px solid #f1f5f9';
-    
-    const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
-    
-    let badgeClass = 'badge-unavailable';
-    if (row.cheapestAgodaStatusAtSp === 'Beat') badgeClass = 'badge-beat';
-    else if (row.cheapestAgodaStatusAtSp === 'Meet') badgeClass = 'badge-meet';
-    else if (row.cheapestAgodaStatusAtSp === 'Disparity By ~1%') badgeClass = 'badge-fee';
-    else if (row.cheapestAgodaStatusAtSp === 'Disparity') badgeClass = 'badge-true';
+  const chunkSize = 150;
+  let index = 0;
+  
+  function renderChunk() {
+    let html = '';
+    const limit = Math.min(index + chunkSize, data.length);
+    for (let i = index; i < limit; i++) {
+      const row = data[i];
+      const displayName = row.hotelName.length > 50 ? row.hotelName.substring(0, 47) + '...' : row.hotelName;
+      
+      let badgeClass = 'badge-unavailable';
+      if (row.cheapestAgodaStatusAtSp === 'Beat') badgeClass = 'badge-beat';
+      else if (row.cheapestAgodaStatusAtSp === 'Meet') badgeClass = 'badge-meet';
+      else if (row.cheapestAgodaStatusAtSp === 'Disparity By ~1%') badgeClass = 'badge-fee';
+      else if (row.cheapestAgodaStatusAtSp === 'Disparity') badgeClass = 'badge-true';
 
-    const diffNumColor = row.diffNum > 0 ? '#b91c1c' : row.diffNum < 0 ? '#15803d' : '#000';
-    const diffPctColor = row.diffPct > 0 ? '#b91c1c' : row.diffPct < 0 ? '#15803d' : '#000';
+      const diffNumColor = row.diffNum > 0 ? '#b91c1c' : row.diffNum < 0 ? '#15803d' : '#000';
+      const diffPctColor = row.diffPct > 0 ? '#b91c1c' : row.diffPct < 0 ? '#15803d' : '#000';
 
-    tr.innerHTML = `
-      <td style="padding: 10px; font-weight: 500;" title="${row.hotelName}">${displayName}<br><span style="font-size:0.75rem; color:#888;">ID: ${row.hotelId}</span></td>
-      <td style="padding: 10px;">${row.checkin}</td>
-      <td style="padding: 10px; text-align: right;">₹${Math.round(row.mmtSp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right;">₹${Math.round(row.agdSp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: center;">
-        <span class="badge ${badgeClass}">${row.cheapestAgodaStatusAtSp}</span>
-      </td>
-      <td style="padding: 10px; text-align: right; color: ${diffNumColor}; font-weight: 500;">
-        ${row.diffNum !== 0 ? (row.diffNum > 0 ? '+' : '') + Math.round(row.diffNum).toLocaleString() : '0'}
-      </td>
-      <td style="padding: 10px; text-align: right; color: ${diffPctColor}; font-weight: 500;">
-        ${row.diffPct !== 0 ? (row.diffPct > 0 ? '+' : '') + row.diffPct.toFixed(2) + '%' : '0.00%'}
-      </td>
-      <td style="padding: 10px; text-align: center; font-weight: 500;">
-        ${row.diffSegment}
-      </td>
-      <td style="padding: 10px; text-align: center; font-weight: 500; color: #1e293b;">
-        ${row.origAgodaStatusSp}
-      </td>
-      <td style="padding: 10px; text-align: center; font-weight: 500; color: #1e293b;">
-        ${row.origAgodaStatusFp}
-      </td>
-      <td style="padding: 10px; text-align: right; color:#d97706;">₹${Math.round(row.mmtFee).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right; font-weight: 600;">₹${Math.round(row.mmtFp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: right; font-weight: 600; color:#059669;">₹${Math.round(row.agdFp).toLocaleString()}</td>
-      <td style="padding: 10px; text-align: center;">
-        <span class="badge ${row.badgeClass}">${row.cause}</span>
-      </td>
-      <td style="padding: 10px; text-align: center;">
-        <button class="btn-copy" onclick="openRebuttal('${row.caseId}')">Defense</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
+      html += `
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 10px; font-weight: 500;" title="${row.hotelName.replace(/"/g, '&quot;')}">${displayName}<br><span style="font-size:0.75rem; color:#888;">ID: ${row.hotelId}</span></td>
+          <td style="padding: 10px;">${row.checkin}</td>
+          <td style="padding: 10px; text-align: right;">₹${Math.round(row.mmtSp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right;">₹${Math.round(row.agdSp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: center;">
+            <span class="badge ${badgeClass}">${row.cheapestAgodaStatusAtSp}</span>
+          </td>
+          <td style="padding: 10px; text-align: right; color: ${diffNumColor}; font-weight: 500;">
+            ${row.diffNum !== 0 ? (row.diffNum > 0 ? '+' : '') + Math.round(row.diffNum).toLocaleString() : '0'}
+          </td>
+          <td style="padding: 10px; text-align: right; color: ${diffPctColor}; font-weight: 500;">
+            ${row.diffPct !== 0 ? (row.diffPct > 0 ? '+' : '') + row.diffPct.toFixed(2) + '%' : '0.00%'}
+          </td>
+          <td style="padding: 10px; text-align: center; font-weight: 500;">
+            ${row.diffSegment}
+          </td>
+          <td style="padding: 10px; text-align: center; font-weight: 500; color: #1e293b;">
+            ${row.origAgodaStatusSp}
+          </td>
+          <td style="padding: 10px; text-align: center; font-weight: 500; color: #1e293b;">
+            ${row.origAgodaStatusFp}
+          </td>
+          <td style="padding: 10px; text-align: right; color:#d97706;">₹${Math.round(row.mmtFee).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right; font-weight: 600;">₹${Math.round(row.mmtFp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: right; font-weight: 600; color:#059669;">₹${Math.round(row.agdFp).toLocaleString()}</td>
+          <td style="padding: 10px; text-align: center;">
+            <span class="badge ${row.badgeClass}">${row.cause}</span>
+          </td>
+          <td style="padding: 10px; text-align: center;">
+            <button class="btn-copy" onclick="openRebuttal('${row.caseId}')">Defense</button>
+          </td>
+        </tr>
+      `;
+    }
+    
+    tbody.insertAdjacentHTML('beforeend', html);
+    index = limit;
+    
+    if (index < data.length) {
+      requestAnimationFrame(renderChunk);
+    }
+  }
+  
+  renderChunk();
 }
 
 function filterParityTable() {
@@ -2120,6 +2132,7 @@ function downloadSingleParityCSV(row) {
     'Service Fee',
     'Burn %',
     'Final Classification',
+    'DND',
     'Rebuttal/Defense Text'
   ];
   
@@ -2131,9 +2144,10 @@ function downloadSingleParityCSV(row) {
   const coupon = Math.round(row.mmtCoupon);
   const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
   const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
-  const text = getRebuttalTextContent(row).replace(/\r?\n/g, ' | ');
+  const text = getRebuttalTextContent(row); // Keep raw newlines
   const diffPctStr = row.diffPct !== 0 ? (row.diffPct > 0 ? '+' : '') + row.diffPct.toFixed(2) + '%' : '0.00%';
   const diffNumStr = row.diffNum !== 0 ? (row.diffNum > 0 ? '+' : '') + Math.round(row.diffNum) : '0';
+  const dndVal = row.dnd || '';
   
   const rowData = [
     `"${row.hotelName.replace(/"/g, '""')}"`,
@@ -2147,12 +2161,13 @@ function downloadSingleParityCSV(row) {
     `"${diffNumStr}"`,
     `"${diffPctStr}"`,
     `"${row.diffSegment}"`,
-    `"${row.origAgodaStatusSp}"`,
-    `"${row.origAgodaStatusFp}"`,
+    `" ${row.origAgodaStatusSp}"`,
+    `" ${row.origAgodaStatusFp}"`,
     `"${couponApplied}"`,
     fee,
     `"${burn}"`,
     `"${row.cause}"`,
+    `"${dndVal.replace(/"/g, '""')}"`,
     `"${text.replace(/"/g, '""')}"`
   ];
   
@@ -2213,6 +2228,7 @@ function exportFilteredParityCSV() {
     'Service Fee',
     'Burn %',
     'Final Classification',
+    'DND',
     'Rebuttal/Defense Text'
   ];
   
@@ -2225,9 +2241,10 @@ function exportFilteredParityCSV() {
     const coupon = Math.round(row.mmtCoupon);
     const burn = mmtSp > 0 ? ((coupon / mmtSp) * 100).toFixed(1) + '%' : '0%';
     const couponApplied = coupon > 0 ? `Yes (₹${coupon})` : 'No (₹0)';
-    const text = getRebuttalTextContent(row).replace(/\r?\n/g, ' | ');
+    const text = getRebuttalTextContent(row); // Keep raw newlines
     const diffPctStr = row.diffPct !== 0 ? (row.diffPct > 0 ? '+' : '') + row.diffPct.toFixed(2) + '%' : '0.00%';
     const diffNumStr = row.diffNum !== 0 ? (row.diffNum > 0 ? '+' : '') + Math.round(row.diffNum) : '0';
+    const dndVal = row.dnd || '';
     
     return [
       `"${row.hotelName.replace(/"/g, '""')}"`,
@@ -2241,12 +2258,13 @@ function exportFilteredParityCSV() {
       `"${diffNumStr}"`,
       `"${diffPctStr}"`,
       `"${row.diffSegment}"`,
-      `"${row.origAgodaStatusSp}"`,
-      `"${row.origAgodaStatusFp}"`,
+      `" ${row.origAgodaStatusSp}"`,
+      `" ${row.origAgodaStatusFp}"`,
       `"${couponApplied}"`,
       fee,
       `"${burn}"`,
       `"${row.cause}"`,
+      `"${dndVal.replace(/"/g, '""')}"`,
       `"${text.replace(/"/g, '""')}"`
     ];
   });
@@ -2294,10 +2312,11 @@ function parseGoogleSheetUrl(url) {
   return { sheetId, gid };
 }
 
-function parseExcelDate(serial) {
+function parseExcelDateObj(serial) {
   if (!serial) return null;
-  const num = parseFloat(serial);
-  if (!isNaN(num)) {
+  const isSerial = /^\d+(\.\d+)?$/.test(String(serial).trim());
+  if (isSerial) {
+    const num = parseFloat(serial);
     // Excel epoch starts Dec 30, 1899
     return new Date(Math.round((num - 25569) * 86400 * 1000));
   }
@@ -2632,7 +2651,7 @@ async function runPlbAutomation() {
         let isOldEnough = true;
         let ageMonths = null;
         if (meta.liveDate) {
-          const liveDate = parseExcelDate(meta.liveDate);
+          const liveDate = parseExcelDateObj(meta.liveDate);
           if (liveDate) {
             const currentYear = new Date().getFullYear();
             const monthNamesArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
